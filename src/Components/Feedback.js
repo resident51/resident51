@@ -12,7 +12,7 @@ import FeedbackFAQ from './FeedbackComponents/FeedbackFAQ';
 
 import WebsiteForm  from "./FeedbackComponents/WebsiteForm";
 import StaffForm    from "./FeedbackComponents/StaffForm";
-import ExecForm     from "./FeedbackComponents/ExecForm";
+import EventForm    from "./FeedbackComponents/EventForm";
 import OtherForm    from "./FeedbackComponents/OtherForm";
 
 // // Dev
@@ -53,7 +53,7 @@ const Feedback = () => (
                   <StaffForm />
                 </Tab.Pane>
                 <Tab.Pane eventKey="exec">
-                  <ExecForm />
+                  <EventForm />
                 </Tab.Pane>
                 <Tab.Pane eventKey="other">
                   <OtherForm />

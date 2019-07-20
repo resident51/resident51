@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ExecForm = () => {
+const EventForm = () => {
   let [fbType, setFbType] = useState("");
   let [feedback, setFeedback] = useState("");
 
@@ -13,7 +13,7 @@ const ExecForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1>Exec</h1>
+      <h1>Event</h1>
       <input
         type="text"
         value={fbType}
@@ -30,4 +30,4 @@ const ExecForm = () => {
   );
 };
 
-export default ExecForm;
+export default EventForm;
