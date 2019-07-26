@@ -68,7 +68,42 @@ const CreateEvent = props => {
               </Form.Group>
             </fieldset>
 
-            <PickLocation />
+            <fieldset>
+              <Form.Group>
+                <Form.Label as="legend">
+                  Where will the event be held?
+                </Form.Label>
+                <Row>
+                  <Col sm={4}>
+                    <Form.Check
+                      type="radio"
+                      label="In complex"
+                      value="scholhalls"
+                      name="locationType"
+                      id="location-complex"
+                    />
+                  </Col>
+                  <Col sm={4}>
+                    <Form.Check
+                      type="radio"
+                      value="campus"
+                      label="On campus"
+                      name="locationType"
+                      id="location-campus"
+                    />
+                  </Col>
+                  <Col sm={4}>
+                    <Form.Check
+                      type="radio"
+                      value="other"
+                      label="Elsewhere"
+                      name="locationType"
+                      id="location-elsewhere"
+                    />
+                  </Col>
+                </Row>
+              </Form.Group>
+            </fieldset>
 
             <Form.Group controlId="eventDescription">
               <Form.Label>Event description</Form.Label>

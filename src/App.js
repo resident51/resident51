@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import Jumbotron from "react-bootstrap/Jumbotron";
 
-import './Firebase/firebase';
+// import './Firebase/firebase';
 
 import Header from "./Components/Header/Header";
 import Routes from "./Components/Routes";
