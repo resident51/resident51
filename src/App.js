@@ -3,21 +3,22 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import Jumbotron from "react-bootstrap/Jumbotron";
 
-import './firebase/firebase';
+import './Firebase/firebase';
 
 import Header from "./Components/Header/Header";
 import Routes from "./Components/Routes";
 
-import "./App.css";
+import "./Styles/App.scss";
+import "./Styles/Events.scss"
+// import "./Styles/R51-Title.scss";
 
-function App() {
+const App = () => {
   return (
     <Router>
-      <div>
-        <Jumbotron className="no-margin">
-          <h1 className="display-1 text-center">Resident 51</h1>
-        </Jumbotron>
-
+      <Jumbotron id="r51" className="no-margin">
+        <h1 id="title" className="display-1 text-center">Resident 51</h1>
+      </Jumbotron>
+      <div id="everything-else">
         <Header />
         <Routes />
       </div>

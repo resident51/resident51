@@ -1,0 +1,44 @@
+
+/* ================================================= */
+/* ============== Event Borders ==================== */
+.event-subtitle {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: wrap;
+}
+/* ================================================= */
+
+/* ============== Event Buttons ==================== */
+.type-buttons {
+    display: flex;
+    justify-content: center;
+    flex-flow: wrap;
+}
+/* ================================================= */
+
+
+/* ================================================= */
+/* ============ Event Card Styling ================= */
+.event-hide {
+    display: none;
+}
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 320px)
+and (max-device-width : 540px) {
+    .event-header * {
+        display: block;
+    }
+}
+/* Everything else */
+@media only screen 
+and (min-device-width : 541px) {
+    .event-header {
+        display: flex;
+        justify-content: space-between;
+        flex-flow: wrap;
+    }
+}
+/* ================================================= */
+
+/* ================================================= */

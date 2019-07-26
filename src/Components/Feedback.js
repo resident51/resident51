@@ -20,13 +20,14 @@ import OtherForm    from "./FeedbackComponents/OtherForm";
 // const gen = lorem.generateSentences.bind(lorem);
 
 const Feedback = () => (
-  <Container fluid={true}>
+  <Container className="HomeCard margin-bottom" fluid={true}>
     <Row className="justify-content-md-center">
       <Col sm={12} md={4}>
         <FeedbackFAQ />
       </Col>
-      <Col sm={12} md={8}>
-        <Card className="HomeCard margin-bottom">
+      <Col sm={12} md={7}>
+        <h2>Provide Feedback</h2>
+        <Card>
           <Tab.Container defaultActiveKey="website">
             <Card.Header>
               <Nav justify variant="tabs">
@@ -34,10 +35,10 @@ const Feedback = () => (
                   <Nav.Link eventKey="website">Website</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="staff">Staff</Nav.Link>
+                  <Nav.Link eventKey="events">Events</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="exec">Exec</Nav.Link>
+                  <Nav.Link eventKey="staff">Staff</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link eventKey="other">Other</Nav.Link>
@@ -49,11 +50,11 @@ const Feedback = () => (
                 <Tab.Pane eventKey="website">
                   <WebsiteForm />
                 </Tab.Pane>
+                <Tab.Pane eventKey="events">
+                  <EventForm />
+                </Tab.Pane>
                 <Tab.Pane eventKey="staff">
                   <StaffForm />
-                </Tab.Pane>
-                <Tab.Pane eventKey="exec">
-                  <EventForm />
                 </Tab.Pane>
                 <Tab.Pane eventKey="other">
                   <OtherForm />

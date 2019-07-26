@@ -2,7 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 
 const FeedbackFAQ = () => (
-  <Card className="HomeCard margin-bottom">
+  <Card>
     <Card.Body>
       <Card.Text>
         <strong>What is this section for?</strong> This area is where you can

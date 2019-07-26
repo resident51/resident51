@@ -5,9 +5,7 @@ import Container from "react-bootstrap/Container";
 // import CardDeck from "react-bootstrap/CardDeck";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import HomeCard from "./HomeCard";
-
-import "./Home.css";
+import R51Card from "./R51Card";
 
 // Dev
 import lorem from "../tests/lorem";
@@ -17,12 +15,12 @@ const Home = () => (
   <Container fluid={true}>
     <Row className="justify-content-md-center">
       <Col md={10} lg={6}>
-        <HomeCard title="Events">{gen(11)}</HomeCard>
-        <HomeCard title="Resources">{gen(7)}</HomeCard>
+        <R51Card.Home title="Events">{gen(11)}</R51Card.Home>
+        <R51Card.Home title="Resources">{gen(7)}</R51Card.Home>
       </Col>
       <Col md={10} lg={6}>
-        <HomeCard title="Legacy">{gen(12)}</HomeCard>
-        <HomeCard title="Feedback">{gen(2)}</HomeCard>
+        <R51Card.Home title="Legacy">{gen(12)}</R51Card.Home>
+        <R51Card.Home title="Feedback">{gen(2)}</R51Card.Home>
       </Col>
     </Row>
   </Container>
