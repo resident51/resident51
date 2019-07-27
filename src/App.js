@@ -8,6 +8,7 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Header from "./Components/Header/Header";
 import Routes from "./Components/Routes";
 
+import 'react-dates/lib/css/_datepicker.css';
 import "./Styles/App.scss";
 import "./Styles/Events.scss"
 // import "./Styles/R51-Title.scss";

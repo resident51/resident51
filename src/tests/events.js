@@ -37,9 +37,8 @@ const bshmeck_0 = {
   recurring: false,
   location: "Pearson Hall",
   publicStatus: {
-    isPublic: false,
-    hallsInvited: ["Pearson", "Miller", "Sellards"],
-    openToCampus: false
+    type: "complex", // "any" | "complex" | "halls" | "hall"
+    halls: [] // only needed with halls | hall
   },
   facilitation: {
     organizationType: "Hall", // hall, ASHC, staff, committee, campus, other
@@ -62,9 +61,8 @@ const bshmeck_1 = {
   recurring: false,
   location: "Pearson Hall",
   publicStatus: {
-    isPublic: false,
-    hallsInvited: ["Pearson", "Douthart", "Watkins"],
-    openToCampus: false
+    type: "complex", // "any" | "complex" | "halls" | "hall"
+    halls: []
   },
   facilitation: {
     organizationType: "Hall", // hall, ASHC, staff, committee, campus, other
@@ -87,9 +85,8 @@ const bshmeck_2 = {
   recurring: false,
   location: "Pearson Hall",
   publicStatus: {
-    isPublic: false,
-    hallsInvited: ["Pearson", "Maggie", "Rieger"],
-    openToCampus: false
+    type: "complex", // "any" | "complex" | "halls" | "hall"
+    halls: []
   },
   facilitation: {
     organizationType: "Hall", // hall, ASHC, staff, committee, campus, other
@@ -112,9 +109,8 @@ const NeanderthallBall = {
   recurring: false,
   location: "Stephenson Hall",
   publicStatus: {
-    isPublic: true,
-    hallsInvited: ['all'],
-    openToCampus: true
+    type: "complex", // "any" | "complex" | "halls" | "hall"
+    halls: []
   },
   facilitation: {
     organizationType: "Hall", // hall, ASHC, staff, committee, campus, other
@@ -140,9 +136,8 @@ const WinterFormal = {
   recurring: false,
   location: "Memorial Union",
   publicStatus: {
-    isPublic: true,
-    hallsInvited: ['all'],
-    openToCampus: true
+    type: "complex", // "any" | "complex" | "halls" | "hall"
+    halls: []
   },
   facilitation: {
     organizationType: "committee", // hall, ASHC, staff, committee, campus, other
@@ -165,9 +160,8 @@ const ASHCFullCouncilMeeting = {
   recurring: true,
   location: "Watkins Hall",
   publicStatus: {
-    isPublic: true,
-    hallsInvited: ['all'],
-    openToCampus: false
+    type: "complex", // "any" | "complex" | "halls" | "hall"
+    halls: []
   },
   facilitation: {
     organizationType: "committee", // hall, ASHC, staff, committee, campus, other
@@ -187,9 +181,8 @@ const AminiCoHallMeal = {
   recurring: true,
   location: "Amini Patio",
   publicStatus: {
-    isPublic: false,
-    hallsInvited: ["Maggie", "KK"],
-    openToCampus: false
+    type: "complex", // "any" | "complex" | "halls" | "hall"
+    halls: []
   },
   facilitation: {
     organizationType: "hall", // hall, ASHC, staff, committee, campus, other

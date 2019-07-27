@@ -15,10 +15,10 @@ import NotFound from "./NotFound";
 
 import { giveEventTypesContext } from '../Contexts/EventTypesContext';
 import { giveEventsContext } from "../Contexts/EventsContext";
-// import { giveHallsContext } from '../Contexts/HallsContext';
+import { giveHallsContext } from '../Contexts/HallsContext';
 
 const Events__ = giveEventsContext(giveEventTypesContext(Events));
-const CreateEvent__ = giveEventTypesContext(CreateEvent);
+const CreateEvent__ = giveEventTypesContext(giveHallsContext(CreateEvent));
 const Profile__ = giveEventsContext(giveEventTypesContext(Profile));
 
 const Routes = () => (
