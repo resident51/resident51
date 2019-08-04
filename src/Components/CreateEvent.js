@@ -14,7 +14,8 @@ const CreateEvent = () => (
         <EventCreationFAQ />
       </Col>
       <Col className="HomeCard margin-bottom" sm={12} md={7}>
-        <h2>Create New Event</h2>
+        <h1>Create a New Event</h1>
+        <hr />
         <CreateEventForm />
       </Col>
     </Row>

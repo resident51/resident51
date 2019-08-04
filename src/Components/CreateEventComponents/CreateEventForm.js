@@ -1,200 +1,226 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
-import { EventTypesContext } from "../../Contexts/EventTypesContext";
+import { Link } from "react-router-dom";
+
 import { HallsContext } from "../../Contexts/HallsContext";
 
 import moment from 'moment';
-import { SingleDatePicker } from 'react-dates';
-import 'react-dates/initialize';
 
-import { Formik } from 'formik';
-// import { Formik, Field } from 'formik';
-import * as yup from 'yup';
+import { Formik, Field } from 'formik';
 
-import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-// import Accordion, { useAccordionToggle } from 'react-bootstrap/Accordion';
-// import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
-// import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
-// import R51Card from "./R51Card";
+import EventNameInput from './FormComponents/EventNameInput';
+import EventTypeInput from './FormComponents/EventTypeInput';
+import EventDescriptionInput from './FormComponents/EventDescriptionInput';
+import EventDateInput from './FormComponents/EventDateInput';
+import EventTimeInput from './FormComponents/EventTimeInput';
+import EventRecurringInput from './FormComponents/EventRecurringInput';
 
+import R51Card from "../R51Card";
 
-const validationSchema = yup.object({
-  name: yup.string().min(2).max(50).required(), // =|=|= DONE =|=|=
-  dateTime: yup.date(),
-  description: yup.string().min(20).max(500).required(), // =|=|= DONE =|=|=
-  type: yup.string()
-    .oneOf(["social", "meeting", "meal", "community", "alumni", "campus"])
-    .required(), // =|=|= DONE =|=|=
-  recurring: yup.bool(false),
-  location: yup.object({
-    type: yup.string().oneOf(["scholhalls", "campus", "other"]),
-    place: yup.string().min(6).required()
-  }),
-  publicStatus: {
-    type: yup.string().oneOf(["any", "complex", "halls", "hall"]),
-    halls: yup.array() // only needed with halls | hall
-  },
-  facilitation: yup.object({
-    organizationType: yup.string()
-      .oneOf(["hall", "ASHC", "staff", "committee", "campus", "other"])
-      .required(),
-    organizationName: yup.string().min(6).required(),
-    submittedBy: yup.string().required(),
-    approvedBy: yup.string().required()
-  })
-});
+import validationSchema from './validationSchema';
 
 const CreateEventForm = () => {
 
-  const { eventTypes } = useContext(EventTypesContext);
   const { halls } = useContext(HallsContext);
 
-  const [calendarFocused, setCalendarFocused] = useState(false);
+  const hallsAndCrawford = [...halls, "Crawford Building"];
 
-  // By default, set the date to the Friday two weeks from now.
-  const defaultDateTime = moment().add(14, 'days').date(5)
+  // By default, set the date to today and the time to 7pm
+  const defaultDateTime = moment()
+    .hour(19).minute(0).second(0).millisecond(0);
 
-  // By default, set the time to be 7pm.
-  defaultDateTime.hour(19).minute(0).second(0).millisecond(0)
-
+  const formInitialValues = {
+    name: "",
+    type: "social",
+    location: {
+      type: "scholhalls",
+      place: ""
+    },
+    dateTime: defaultDateTime,
+    faketime: "",
+    publicStatus: {
+      type: "complex", // "any" | "complex" | "halls" | "hall"
+      halls: [] // only needed with halls | hall
+    },
+    recurring: false,
+    description: ""
+  }
 
   return (
     <Formik
       validationSchema={validationSchema}
-      initialValues={{
-        type: "social",
-        locationType: "scholhalls",
-        dateTime: defaultDateTime,
-        publicStatus: {
-          type: "complex", // "any" | "complex" | "halls" | "hall"
-          halls: [] // only needed with halls | hall
-        },
-        recurring: false
-      }}
-      onSubmit={({ values }) => {
-        // e.preventDefault();
+      initialValues={formInitialValues}
+      onSubmit={(values) => {
         alert(JSON.stringify(values, null, 2));
       }}
       render={({ values, handleSubmit, handleChange, touched, isValid, errors }) => (
         <Form noValidate onSubmit={handleSubmit}>
+
+          <h3>1. Name your event</h3>
+
           <Form.Group controlId="eventName">
             <Form.Label>Event Name</Form.Label>
-            <Form.Control
-              name="name"
-              maxLength={50}
-              onChange={handleChange}
-              value={values.name}
-              type="text"
-              placeholder="Enter event name"
-            />
+            <Field name="name" component={EventNameInput} />
             <Form.Text className="text-muted">
-              Limit 50 Characters ({50 - (values.name || 0)} remaining)
+              Limit 50 Characters ({
+                50 - (values.name ? values.name.length : 0)
+              } remaining)
             </Form.Text>
           </Form.Group>
 
-          <fieldset>
-            <Form.Group>
-              <Form.Label as="legend">
-                What type of event is this?
-              </Form.Label>
-              <Row>
-                {Object.keys(eventTypes)
-                  .map(type => ({ type, formal: eventTypes[type].formal }))
-                  .map(({ type, formal }) => (
-                    <Col key={type} sm={6} md={4}>
-                      <Form.Check
-                        custom
-                        type="radio"
-                        label={formal}
-                        name="type"
-                        id={`event-type-${type}`}
-                        onChange={handleChange}
-                        value={type}
-                      />
-                    </Col>
-                  ))}
-              </Row>
-            </Form.Group>
-          </fieldset>
-
-          <fieldset>
-            <Form.Group>
-              <Form.Label as="legend">
-                Where will the event be held?
-            </Form.Label>
-              <Row>
-                <Col sm={4}>
-                  <Form.Check
-                    custom
-                    type="radio"
-                    label="In-complex"
-                    value="scholhalls"
-                    id="location-scholhalls"
-                    name="location.type"
-                    onChange={handleChange}
-                  />
-                </Col>
-                <Col sm={4}>
-                  <Form.Check
-                    custom
-                    type="radio"
-                    value="campus"
-                    label="On campus"
-                    id="location-campus"
-                    name="location.type"
-                    onChange={handleChange}
-                  />
-                </Col>
-                <Col sm={4}>
-                  <Form.Check
-                    custom
-                    type="radio"
-                    value="other"
-                    label="Elsewhere"
-                    id="location-other"
-                    name="location.type"
-                    onChange={handleChange}
-                  />
-                </Col>
-              </Row>
-            </Form.Group>
-          </fieldset>
+          <h3>2. Describe your event</h3>
 
           <Form.Group>
-            <Form.Label>
-              When will you schedule your event?
-            </Form.Label>
-            <Container>
-              <SingleDatePicker
-                name="dateTime"
-                date={values.dateTime}
-                onDateChange={handleChange}
-                focused={calendarFocused}
-                onFocusChange={({ focused }) => setCalendarFocused(focused)}
-                numberOfMonths={2}
-                isOutsideRange={() => false}
-              />
-            </Container>
+            <Form.Label as="legend">What type of event is this?</Form.Label>
+            <Field name="type" component={EventTypeInput} />
           </Form.Group>
 
           <Form.Group controlId="eventDescription">
             <Form.Label>Event description</Form.Label>
-            <Form.Control
-              as="textarea"
-              placeholder={
-                "Describe your event! A few sentences should do the trick."
-              } />
+            <Field name="type" component={EventDescriptionInput} />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+          <h3>3. Schedule your event</h3>
+
+          <Row>
+            <Col lg={12} xl={6}>
+              <Form.Group>
+                <Form.Label>What day will you schedule your event?</Form.Label>
+                <Field
+                  name="dateTime"
+                  component={EventDateInput}
+                />
+              </Form.Group>
+            </Col>
+
+            <Col lg={12} xl={6}>
+              <hr />
+              <Form.Group>
+                <Form.Label>What time will your event take place?</Form.Label>
+                <Field name="faketime" component={EventTimeInput} />
+              </Form.Group>
+              <hr />
+              <Form.Group>
+                <Form.Label>Is this a recurring event?</Form.Label>
+                <Field name="recurring" component={EventRecurringInput} />
+              </Form.Group>
+              <hr />
+            </Col>
+          </Row>
+
+          <h3>4. Choose a location</h3>
+          <Form.Group>
+            <Form.Label as="legend">
+              Where on campus will your event be?
+              </Form.Label>
+            <Row>
+              <Col sm={4}>
+                <Form.Check
+                  id="location-complex"
+                  label="In complex"
+                  custom
+                  type="radio"
+                  name="location.type"
+                  value="scholhalls"
+                  onChange={handleChange}
+                  checked={values.location.type === "scholhalls"}
+                />
+              </Col>
+              <Col sm={4}>
+                <Form.Check
+                  id="location-campus"
+                  custom
+                  type="radio"
+                  name="location.type"
+                  label="On campus"
+                  value="campus"
+                  onChange={handleChange}
+                  checked={values.location.type === "campus"}
+                />
+              </Col>
+              <Col sm={4}>
+                <Form.Check
+                  id="location-elsewhere"
+                  custom
+                  type="radio"
+                  name="location.type"
+                  label="Elsewhere"
+                  value="other"
+                  onChange={handleChange}
+                  checked={values.location.type === "other"}
+                />
+              </Col>
+            </Row>
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label as="legend">
+              What is the location?
+              </Form.Label>
+            {values.location.type === "scholhalls" && <Row className="better-be-flex">
+              {hallsAndCrawford.map(hall => (
+                <Col key={hall} sm={6} md={4}>
+                  <Form.Check
+                    custom
+                    type="radio"
+                    label={hall}
+                    name="location.place"
+                    id={`location-hall-${hall}`}
+                    onChange={handleChange}
+                    value={hall}
+                    checked={values.location.place === hall}
+                  />
+                </Col>
+              ))}
+              <Col key="place-other" sm={6} md={8}>
+                <Form.Control
+                  className="inline-pls"
+                  label="Other in-complex"
+                  name="location.place"
+                  id="location-hall-other"
+                  maxLength={50}
+                  onChange={handleChange}
+                  value={
+                    hallsAndCrawford.some(loc =>
+                      loc === values.location.place) ?
+                      "" : values.location.place
+                  }
+                  type="text"
+                  placeholder="(Other)"
+                />
+              </Col>
+            </Row>}
+          </Form.Group>
+
+          <h3>5. Choose attendees</h3>
+
+          <br />
+          <Row>
+            <Col sm={12} md={6}>
+              <Button block variant="primary" type="submit">
+                Submit
+            </Button>
+            </Col>
+            <Col sm={12} md={6}>
+              <R51Card>
+                <R51Card.Header>
+                  Form feedback.
+                </R51Card.Header>
+                <R51Card.Body>
+                  We're looking for feedback on this form! Tell us what's missing or could be improved:
+                  <Link target="none" to="/feedback">
+                    <Button variant="success" block>Provide Website Feedback</Button>
+                  </Link>
+                </R51Card.Body>
+              </R51Card>
+            </Col>
+          </Row>
         </Form>
       )}
     />

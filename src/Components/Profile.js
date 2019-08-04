@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 
 import { EventsContext } from "../Contexts/EventsContext"
 
-import moment from 'moment';
+// import moment from 'moment';
 
 import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row";

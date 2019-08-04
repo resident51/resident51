@@ -16,6 +16,16 @@
 }
 /* ================================================= */
 
+.better-be-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-flow: wrap;
+}
+
+#location-hall-other {
+    float: right;
+}
 
 /* ================================================= */
 /* ============ Event Card Styling ================= */
