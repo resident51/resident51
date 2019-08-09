@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Home from "./Home";
 import Events from "./Events";
 import CreateEvent from './CreateEvent';
+import EventSubmitted from './EventSubmitted';
 import Halls from "./Halls";
 import Legacy from "./Legacy";
 import Community from "./Community";
@@ -26,6 +27,7 @@ const Routes = () => (
     <Route component={Home}           path="/" exact />
     <Route component={Events__}       path="/events/" exact />
     <Route component={CreateEvent__}  path="/events/create" exact />
+    <Route component={EventSubmitted} path="/events/submitted" exact />
     <Route component={Halls}          path="/halls/" exact />
     <Route component={Legacy}         path="/legacy/" exact />
     <Route component={Community}      path="/community/" exact />

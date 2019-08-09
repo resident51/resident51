@@ -1,230 +1,132 @@
-import React, { useContext } from 'react';
+import React from "react";
 
-import { Link } from "react-router-dom";
-
-import { HallsContext } from "../../Contexts/HallsContext";
-
-import moment from 'moment';
-
-import { Formik, Field } from 'formik';
+import moment from "moment";
+import { Formik, Field } from "formik";
 
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
-import EventNameInput from './FormComponents/EventNameInput';
-import EventTypeInput from './FormComponents/EventTypeInput';
-import EventDescriptionInput from './FormComponents/EventDescriptionInput';
-import EventDateInput from './FormComponents/EventDateInput';
-import EventTimeInput from './FormComponents/EventTimeInput';
-import EventRecurringInput from './FormComponents/EventRecurringInput';
+import EventNameInput from "./FormComponents/EventNameInput";
+import EventTypeInput from "./FormComponents/EventTypeInput";
+import EventDescriptionInput from "./FormComponents/EventDescriptionInput";
+import EventDateInput from "./FormComponents/EventDateInput";
+import EventTimeInput from "./FormComponents/EventTimeInput";
+import EventLocationInput from "./FormComponents/EventLocationInput";
+import EventPublicInput from "./FormComponents/EventPublicInput";
+import EventFacilitationInput from "./FormComponents/EventFacilitationInput";
 
-import R51Card from "../R51Card";
-
-import validationSchema from './validationSchema';
+import validationSchema from "./validationSchema";
 
 const CreateEventForm = () => {
-
-  const { halls } = useContext(HallsContext);
-
-  const hallsAndCrawford = [...halls, "Crawford Building"];
-
   // By default, set the date to today and the time to 7pm
   const defaultDateTime = moment()
-    .hour(19).minute(0).second(0).millisecond(0);
+    .hour(18)
+    .minute(0)
+    .second(0)
+    .millisecond(0);
 
   const formInitialValues = {
     name: "",
     type: "social",
-    location: {
-      type: "scholhalls",
-      place: ""
-    },
-    dateTime: defaultDateTime,
-    faketime: "",
+    description: "",
+    location: "",
+    date: defaultDateTime,
+    time: defaultDateTime.format("kk:mm"),
     publicStatus: {
-      type: "complex", // "any" | "complex" | "halls" | "hall"
+      type: "any", // "any" | "complex" | "halls" | "hall"
       halls: [] // only needed with halls | hall
     },
-    recurring: false,
-    description: ""
-  }
+    facilitation: {
+      organizationType: "",
+      organizationName: ""
+    },
+    recurring: false
+  };
 
   return (
     <Formik
       validationSchema={validationSchema}
       initialValues={formInitialValues}
-      onSubmit={(values) => {
+      onSubmit={values => {
         alert(JSON.stringify(values, null, 2));
       }}
-      render={({ values, handleSubmit, handleChange, touched, isValid, errors }) => (
+    >
+      {({ handleSubmit, errors, touched, isSubmitting }) => (
         <Form noValidate onSubmit={handleSubmit}>
+          <h3>1. Name the event</h3>
+          <Field name="name" component={EventNameInput} />
+          {errors.name && touched.name && (
+            <Alert variant={"danger"}>{errors.name}</Alert>
+          )}
 
-          <h3>1. Name your event</h3>
+          <hr />
+          <h3>2. Describe the event</h3>
+          <Field name="type" component={EventTypeInput} />
+          {errors.type && touched.type && (
+            <Alert variant={"danger"}>{errors.type}</Alert>
+          )}
 
-          <Form.Group controlId="eventName">
-            <Form.Label>Event Name</Form.Label>
-            <Field name="name" component={EventNameInput} />
-            <Form.Text className="text-muted">
-              Limit 50 Characters ({
-                50 - (values.name ? values.name.length : 0)
-              } remaining)
-            </Form.Text>
-          </Form.Group>
+          <Field name="type" component={EventDescriptionInput} />
+          {errors.description && touched.description && (
+            <Alert variant={"danger"}>{errors.description}</Alert>
+          )}
 
-          <h3>2. Describe your event</h3>
-
-          <Form.Group>
-            <Form.Label as="legend">What type of event is this?</Form.Label>
-            <Field name="type" component={EventTypeInput} />
-          </Form.Group>
-
-          <Form.Group controlId="eventDescription">
-            <Form.Label>Event description</Form.Label>
-            <Field name="type" component={EventDescriptionInput} />
-          </Form.Group>
-
-          <h3>3. Schedule your event</h3>
-
+          <hr />
+          <h3>3. Choose a time</h3>
           <Row>
-            <Col lg={12} xl={6}>
-              <Form.Group>
-                <Form.Label>What day will you schedule your event?</Form.Label>
-                <Field
-                  name="dateTime"
-                  component={EventDateInput}
-                />
-              </Form.Group>
+            <Col xs={12} xl={6}>
+              <Field name="date" component={EventDateInput} />
+              {errors.date && touched.date && (
+            <Alert variant={"danger"}>{errors.date}</Alert>
+          )}
             </Col>
-
-            <Col lg={12} xl={6}>
-              <hr />
-              <Form.Group>
-                <Form.Label>What time will your event take place?</Form.Label>
-                <Field name="faketime" component={EventTimeInput} />
-              </Form.Group>
-              <hr />
-              <Form.Group>
-                <Form.Label>Is this a recurring event?</Form.Label>
-                <Field name="recurring" component={EventRecurringInput} />
-              </Form.Group>
-              <hr />
+            <Col xs={12} sm={10} md={8} xl={6}>
+              <Field name="time" component={EventTimeInput} />
+              {errors.time && touched.time && (
+            <Alert variant={"danger"}>{errors.time}</Alert>
+          )}
             </Col>
           </Row>
 
+          <hr />
           <h3>4. Choose a location</h3>
-          <Form.Group>
-            <Form.Label as="legend">
-              Where on campus will your event be?
-              </Form.Label>
-            <Row>
-              <Col sm={4}>
-                <Form.Check
-                  id="location-complex"
-                  label="In complex"
-                  custom
-                  type="radio"
-                  name="location.type"
-                  value="scholhalls"
-                  onChange={handleChange}
-                  checked={values.location.type === "scholhalls"}
-                />
-              </Col>
-              <Col sm={4}>
-                <Form.Check
-                  id="location-campus"
-                  custom
-                  type="radio"
-                  name="location.type"
-                  label="On campus"
-                  value="campus"
-                  onChange={handleChange}
-                  checked={values.location.type === "campus"}
-                />
-              </Col>
-              <Col sm={4}>
-                <Form.Check
-                  id="location-elsewhere"
-                  custom
-                  type="radio"
-                  name="location.type"
-                  label="Elsewhere"
-                  value="other"
-                  onChange={handleChange}
-                  checked={values.location.type === "other"}
-                />
-              </Col>
-            </Row>
-          </Form.Group>
+          <Field name="location" component={EventLocationInput} />
+          {errors.location && touched.location && (
+            <Alert variant={"danger"}>{errors.location}</Alert>
+          )}
 
-          <Form.Group>
-            <Form.Label as="legend">
-              What is the location?
-              </Form.Label>
-            {values.location.type === "scholhalls" && <Row className="better-be-flex">
-              {hallsAndCrawford.map(hall => (
-                <Col key={hall} sm={6} md={4}>
-                  <Form.Check
-                    custom
-                    type="radio"
-                    label={hall}
-                    name="location.place"
-                    id={`location-hall-${hall}`}
-                    onChange={handleChange}
-                    value={hall}
-                    checked={values.location.place === hall}
-                  />
-                </Col>
-              ))}
-              <Col key="place-other" sm={6} md={8}>
-                <Form.Control
-                  className="inline-pls"
-                  label="Other in-complex"
-                  name="location.place"
-                  id="location-hall-other"
-                  maxLength={50}
-                  onChange={handleChange}
-                  value={
-                    hallsAndCrawford.some(loc =>
-                      loc === values.location.place) ?
-                      "" : values.location.place
-                  }
-                  type="text"
-                  placeholder="(Other)"
-                />
-              </Col>
-            </Row>}
-          </Form.Group>
-
+          <hr />
           <h3>5. Choose attendees</h3>
+          <Field name="publicStatus" component={EventPublicInput} />
+          {/* {errors.publicStatus.type && touched.publicStatus.type && (
+            <Alert variant={"danger"}>{errors.publicStatus.type}</Alert>
+          )}
+          {errors.publicStatus.halls && touched.publicStatus.halls && (
+            <Alert variant={"danger"}>{errors.publicStatus.halls}</Alert>
+          )} */}
+
+          <hr />
+          <h3>6. Extra Info</h3>
+          <Field name="faciliation" component={EventFacilitationInput} />
+          {/* {errors.facilitation.organizationType && touched.facilitation.organizationType && (
+            <Alert variant={"danger"}>{errors.facilitation.organizationType}</Alert>
+          )}
+          {errors.facilitation.organizationName && touched.facilitation.organizationName && (
+            <Alert variant={"danger"}>{errors.facilitation.organizationName}</Alert>
+          )} */}
 
           <br />
-          <Row>
-            <Col sm={12} md={6}>
-              <Button block variant="primary" type="submit">
-                Submit
-            </Button>
-            </Col>
-            <Col sm={12} md={6}>
-              <R51Card>
-                <R51Card.Header>
-                  Form feedback.
-                </R51Card.Header>
-                <R51Card.Body>
-                  We're looking for feedback on this form! Tell us what's missing or could be improved:
-                  <Link target="none" to="/feedback">
-                    <Button variant="success" block>Provide Website Feedback</Button>
-                  </Link>
-                </R51Card.Body>
-              </R51Card>
-            </Col>
-          </Row>
+          <Button block variant="primary" type="submit" disabled={isSubmitting}>
+            Submit
+          </Button>
         </Form>
       )}
-    />
-  )
-}
+    </Formik>
+  );
+};
 
 export default CreateEventForm;
