@@ -2,6 +2,8 @@ import React from "react";
 
 import Form from "react-bootstrap/Form";
 
+// Not yet implemented.
+
 const EventRecurringInput = ({ form: { values }, field }) => (
   <Form.Group>
     <Form.Label>Is this a recurring event?</Form.Label>
@@ -14,6 +16,7 @@ const EventRecurringInput = ({ form: { values }, field }) => (
       }
       checked={values.recurring}
       onChange={field.onChange}
+      required
       value={values.recurring}
     />
     {values.recurring && (

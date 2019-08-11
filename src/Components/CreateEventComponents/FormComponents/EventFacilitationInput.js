@@ -1,10 +1,14 @@
 import React, { Fragment } from "react";
 
+import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
-const EventFacilitationInput = ({ form: { values }, field }) => {
+const EventFacilitationInput = ({ 
+  form: { values, errors, touched }, 
+  field 
+}) => {
   const orgs = [
     ["hall", "My Hall"],
     ["ASHC", "ASHC"],
@@ -58,6 +62,15 @@ const EventFacilitationInput = ({ form: { values }, field }) => {
             </Col>
           </Row>
         </Form.Group>
+      )}
+      
+      { errors.facilitation && errors.facilitation.organizationType && 
+        touched.facilitation && touched.facilitation.organizationType && (
+        <Alert variant={"danger"}>{errors.facilitation.organizationType}</Alert>
+      )}
+      { errors.facilitation && errors.facilitation.organizationName && 
+        touched.facilitation && touched.facilitation.organizationName && (
+        <Alert variant={"danger"}>{errors.facilitation.organizationName}</Alert>
       )}
     </Fragment>
   );

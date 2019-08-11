@@ -2,11 +2,15 @@ import React, { useState, useContext, Fragment } from "react";
 
 import { HallsContext } from "../../../Contexts/HallsContext";
 
+import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
-const EventPublicInput = ({ form: { setFieldValue, values }, field }) => {
+const EventPublicInput = ({ 
+  form: { setFieldValue, values, errors, touched }, 
+  field 
+}) => {
   const [selected, setSelected] = useState([]);
 
   const { halls } = useContext(HallsContext);
@@ -24,7 +28,7 @@ const EventPublicInput = ({ form: { setFieldValue, values }, field }) => {
         <Form.Label as="legend">Who will be attending this event?</Form.Label>
         <Row>
           {types.map(([code, formal]) => (
-            <Col key={code} xs={6} lg={3}>
+            <Col key={code} xs={6} xl={3}>
               <Form.Check
                 custom
                 key={code}
@@ -70,6 +74,15 @@ const EventPublicInput = ({ form: { setFieldValue, values }, field }) => {
             ))}
           </Row>
         </Form.Group>
+      )}
+      
+      { errors.publicStatus && errors.publicStatus.type && 
+        touched.publicStatus && touched.publicStatus.type && (
+        <Alert variant={"danger"}>{errors.publicStatus.type}</Alert>
+      )}
+      { errors.publicStatus && errors.publicStatus.halls && 
+        touched.publicStatus && touched.publicStatus.halls && (
+        <Alert variant={"danger"}>{errors.publicStatus.halls}</Alert>
       )}
     </Fragment>
   );
