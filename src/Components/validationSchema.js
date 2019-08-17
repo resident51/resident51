@@ -1,12 +1,17 @@
 import * as yup from 'yup';
 
+import moment from 'moment';
+
 const generateValidationSchema = ({halls, eventTypes}) => yup.object().shape({
   name: yup.string()
     .min(5, "Provide a more descriptive name!")
     .max(50, "Whoa whoa whoa, calm down bud, we said 50 characters or less!")
     .required("Please provide the name of the event."),
   type: yup.string()
-    .oneOf(Object.keys(eventTypes), "Please choose one of the provided event types.")
+    .oneOf(
+      Object.keys(eventTypes), 
+      "Please choose one of the provided event types."
+    )
     .required("Please provide the type of event."),
   description: yup.string()
     .min(20, "Provide some more information! What do attendees need to know?")
@@ -14,7 +19,10 @@ const generateValidationSchema = ({halls, eventTypes}) => yup.object().shape({
     .required("Please provide a description."),
   date: yup.date()
     .required("Please provide the day the event takes place.")
-    .min(new Date(), "Please provide the day the event takes place."),
+    .min(
+      moment().hour(0).minute(1).toDate(),
+      "Please provide the day the event takes place."
+    ),
   time: yup.string()
     .required("Please provide the time the event will take place.")
     .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, "Literally what are you doing."),
@@ -26,7 +34,7 @@ const generateValidationSchema = ({halls, eventTypes}) => yup.object().shape({
       type: yup.string()
         .oneOf(["any", "complex", "halls", "hall"], 
           "Please select who will be attending this event"),
-      halls: yup.array()
+      halls: yup.mixed()
         .when("type", {
           is: "halls",
           then: yup.array()

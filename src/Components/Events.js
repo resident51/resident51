@@ -29,7 +29,7 @@ const Events = () => {
     alumni: [alumni, setAlumni],
     campus: [campus, setCampus]
   }
-  
+
   return (
     <Container fluid={true}>
       <Row className="justify-content-md-center">

@@ -20,12 +20,13 @@ const EventList = ({events, displayTypes}) => {
       {events
         .filter(event => displayTypes ? displayTypes[event.type][0] : true)
         .sort((e1, e2) => e1.dateTime - e2.dateTime)
-        .map(event =>
-          event && <Event
-            key={event.id}
-            event={event}
-            format={eventTypes[event.type]}
-          />)}
+        .map(event => 
+          event && 
+            <Event
+              key={event.id}
+              event={event}
+              format={eventTypes[event.type]}
+            />)}
     </Accordion> : 
     <h5>(No Events to Display)</h5>
 };

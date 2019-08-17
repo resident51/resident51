@@ -29,11 +29,11 @@ const gen = lorem.generateSentences.bind(lorem);
 // }
 
 const bshmeck_0 = {
-  id: 0,
+  id: 7,
   name: "Breakfast Shmeckfast",
-  dateTime: new Date(2019, 8, 20, 19, 30, 0, 0), // 7:00pm, 9/20/2019 // for both date and time (must have both for approval)
-  description: "Three a year! Breakfast!", // display
   type: "social", // social, meeting, campus, meal, community (paws for pups?), other
+  description: "Three a year! Breakfast!", // display
+  dateTime: new Date(2019, 8, 20, 19, 30, 0, 0), // 7:00pm, 9/20/2019 // for both date and time (must have both for approval)
   recurring: false,
   location: "Pearson Hall",
   publicStatus: {
@@ -214,4 +214,4 @@ const AminiCoHallMeal = {
 
 
 
-export default [bshmeck_0, bshmeck_1, bshmeck_2, NeanderthallBall, WinterFormal, ASHCFullCouncilMeeting, AminiCoHallMeal];
+export default [bshmeck_1, bshmeck_0, bshmeck_2, NeanderthallBall, WinterFormal, ASHCFullCouncilMeeting, AminiCoHallMeal];

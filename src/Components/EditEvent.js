@@ -9,20 +9,24 @@ import Col from "react-bootstrap/Col";
 import EventForm from "./EventForm";
 import EventCreationFAQ from "./EventCreationFAQ";
 
-const CreateEvent = ({ history }) => {
-  
-  const { dispatchToEvents } = useContext(EventsContext);
+const EditEvent = ({ match, history }) => {
+  const { events, dispatchToEvents } = useContext(EventsContext);
 
-  const onSubmit = event => {
-    alert(event);
+  const event_id = match.params.id;
+
+  const eventToEdit = events.find(event => event.id === event_id);
+
+  const onSubmit = e => {
+    e.preventDefault(); 
 
     dispatchToEvents({
-      type: "ADD",
-      event
-    });
-    console.log("event!: ", event);
+      type: "EDIT",
+      event: e.target.value,
+      id: event_id
+    })
+
     history.push("/events");
-  };
+  }
 
   return (
     <Container fluid={true}>
@@ -33,11 +37,14 @@ const CreateEvent = ({ history }) => {
         <Col className="HomeCard margin-bottom" sm={12} md={7}>
           <h1>Create New Event</h1>
           <hr />
-          <EventForm onSubmit={onSubmit} />
+          <EventForm 
+            onSubmit={onSubmit}
+            event={{ ...eventToEdit, funding: undefined }} 
+          />
         </Col>
       </Row>
     </Container>
   );
 };
 
-export default CreateEvent;
+export default EditEvent;

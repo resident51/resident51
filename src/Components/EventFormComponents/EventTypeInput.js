@@ -1,6 +1,6 @@
 import React, { useContext, Fragment } from "react";
 
-import { EventTypesContext } from "../../../Contexts/EventTypesContext";
+import { EventTypesContext } from "../../Contexts/EventTypesContext";
 
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";

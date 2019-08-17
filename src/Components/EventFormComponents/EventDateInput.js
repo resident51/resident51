@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 
 import moment from "moment";
-import { DayPickerSingleDateController } from "react-dates";
+import { DayPickerSingleDateController, isInclusivelyBeforeDay } from "react-dates";
 import "react-dates/initialize";
 
 import Alert from "react-bootstrap/Alert";
@@ -15,9 +15,12 @@ const EventDateInput = ({
     <Form.Group>
       <Form.Label>What day will this event take place?</Form.Label>
       <DayPickerSingleDateController
-        date={values.date}
-        onDateChange={value => field.onChange(setFieldValue(field.name, value))}
-        isOutsideRange={date => date < moment()}
+        date={values.date || null}
+        focused={true}
+        onDateChange={value => 
+          field.onChange(setFieldValue(field.name, value))
+        }
+        isOutsideRange={date => isInclusivelyBeforeDay(date, moment())}
         hideKeyboardShortcutsPanel
       />
     </Form.Group>

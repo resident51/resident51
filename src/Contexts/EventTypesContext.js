@@ -38,15 +38,3 @@ export const EventTypesProvider = props => {
     </EventTypesContext.Provider>
   )
 };
-
-export const giveEventTypesContext = Component => props => (
-  <EventTypesProvider>
-    <Component {...props} />
-  </EventTypesProvider>
-)
-
-export const withEventTypesContext = Component => props => (
-  <EventTypesContext.Consumer>
-    {eventTypes => <Component eventTypesContext={eventTypes} {...props} />}
-  </EventTypesContext.Consumer>
-);

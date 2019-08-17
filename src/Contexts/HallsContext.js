@@ -26,15 +26,3 @@ export const HallsProvider = props => {
     </HallsContext.Provider>
   )
 };
-
-export const giveHallsContext = Component => props => (
-  <HallsProvider>
-    <Component {...props} />
-  </HallsProvider>
-)
-
-export const withHallsContext = Component => props => (
-  <HallsContext.Consumer>
-    {halls => <Component hallContext={halls} {...props} />}
-  </HallsContext.Consumer>
-)
