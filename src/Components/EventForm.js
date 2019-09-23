@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 
 import { HallsContext } from "../Contexts/HallsContext";
 import { EventTypesContext } from "../Contexts/EventTypesContext";
@@ -22,7 +22,7 @@ import EventFacilitationInput from "./EventFormComponents/EventFacilitationInput
 
 import validationSchema from "./validationSchema";
 
-const EventForm = ({event = {}, onSubmit}) => {
+const EventForm = ({ event = {}, onSubmit }) => {
 
   const { eventTypes } = useContext(EventTypesContext);
   const { halls } = useContext(HallsContext);
@@ -33,7 +33,7 @@ const EventForm = ({event = {}, onSubmit}) => {
     description: event.description || "",
     location: event.location || "",
     date: moment(event.dateTime) || null,
-    time: moment(event.dateTime).format("kk:mm") || "18:00", // 6:00 PM
+    time: event.dateTime ? moment(event.dateTime).format("kk:mm") : "18:00", // 6:00 PM
     publicStatus: event.publicStatus || {
       type: "",
       halls: ""
@@ -45,7 +45,7 @@ const EventForm = ({event = {}, onSubmit}) => {
     recurring: event.recurring || false
   };
 
-  const formValidationSchema = validationSchema({halls, eventTypes})
+  const formValidationSchema = validationSchema({ halls, eventTypes })
 
   return (
     <Formik
@@ -57,12 +57,12 @@ const EventForm = ({event = {}, onSubmit}) => {
         <Form noValidate onSubmit={handleSubmit}>
           <h3>1. Name the event</h3>
           <Field name="name" component={EventNameInput} />
-          
+
           <hr />
           <h3>2. Describe the event</h3>
           <Field name="type" component={EventTypeInput} />
           <Field name="description" component={EventDescriptionInput} />
-          
+
           <hr />
           <h3>3. Choose a time</h3>
           <Row>

@@ -10,18 +10,13 @@ import EventForm from "./EventForm";
 import EventCreationFAQ from "./EventCreationFAQ";
 
 const CreateEvent = ({ history }) => {
-  
-  const { dispatchToEvents } = useContext(EventsContext);
+
+  const { dispatchToEvents, formatEventDate } = useContext(EventsContext);
 
   const onSubmit = event => {
-    alert(event);
-
-    dispatchToEvents({
-      type: "ADD",
-      event
-    });
-    console.log("event!: ", event);
-    history.push("/events");
+    formatEventDate(event);
+    dispatchToEvents({ type: "ADD", event });
+    history.push("/events", { update: 'Event created!'});
   };
 
   return (

@@ -16,9 +16,7 @@ const Event = ({
       as={Card.Header}
       className="event-header"
       eventKey={id}
-      style={{
-        borderLeft: `10px solid ${format.color}`
-      }}
+      style={{ borderLeft: `10px solid ${format.color}` }}
     >
       <strong>{name}</strong>
       <i className="event-date">

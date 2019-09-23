@@ -9,7 +9,7 @@ import Form from "react-bootstrap/Form";
 
 const EventPublicInput = ({ 
   form: { setFieldValue, values, errors, touched }, 
-  field 
+  field
 }) => {
   const [selected, setSelected] = useState([]);
 

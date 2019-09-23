@@ -6,7 +6,7 @@ const firebaseConfig = {
   authDomain: "resident51-7df51.firebaseapp.com",
   databaseURL: "https://resident51-7df51.firebaseio.com",
   projectId: "resident51-7df51",
-  storageBucket: "",
+  storageBucket: "resident51-7df51.appspot.com",
   messagingSenderId: "627021015998",
   appId: "1:627021015998:web:addfb2db732f443f"
 };
@@ -14,13 +14,8 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-const database = firebase.database();
+const db = firebase.firestore();
+const eventsCollection = db.collection('events');
 
-database.ref("").set({
-  name: "Camel",
-  firstHall: "Watkins",
-  halls: ["Stephenson", "Maggie"],
-  events: ["Neanderthall Ball", "Neanderthall Ball 2"]
-});
-
-database.ref("app").set("Resident 69");
+export default db;
+export { eventsCollection };

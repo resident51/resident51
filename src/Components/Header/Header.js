@@ -11,9 +11,6 @@ const Header = () => (
       <Nav className="mr-auto">
         <HeaderLink to="/" title="Home" />
         <HeaderLink to="/events/">Events</HeaderLink>
-        <HeaderLink to="/halls/">Halls</HeaderLink>
-        <HeaderLink to="/legacy/">Legacy</HeaderLink>
-        <HeaderLink to="/community/">Community</HeaderLink>
         <HeaderLink to="/feedback">Feedback</HeaderLink>
       </Nav>
       <Nav>

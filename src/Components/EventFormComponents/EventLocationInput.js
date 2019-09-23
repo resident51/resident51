@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment } from "react";
+import React, { useState, useEffect, useContext, Fragment } from "react";
 
 import { HallsContext } from "../../Contexts/HallsContext";
 
@@ -7,14 +7,20 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
-const EventLocationInput = ({ 
-  form: { values, errors, touched }, 
-  field 
+const EventLocationInput = ({
+  form: { values, errors, touched },
+  field
 }) => {
   const [button, setButton] = useState("this is so hacky");
   const { halls } = useContext(HallsContext);
 
   const locs = [...halls, "Crawford Building", "Complex-wide"];
+
+  // Allow 'other' box to get location value if editing and it isn't a hall
+  useEffect(() => {
+    if(values.location && !locs.includes(values.location)) 
+      setButton('');
+  }, []);
 
   return (
     <Fragment>

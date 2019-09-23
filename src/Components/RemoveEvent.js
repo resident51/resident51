@@ -2,18 +2,19 @@ import React, { useContext } from "react";
 
 import { EventsContext } from "../Contexts/EventsContext";
 
+import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import EventForm from "./EventForm";
+import EventList from './EventComponents/EventList';
 import EventCreationFAQ from "./EventCreationFAQ";
 
-const EditEvent = ({ match, history }) => {
-  const { events, dispatchToEvents, formatEventDate } = useContext(EventsContext);
+const RemoveEvent = ({ match, history }) => {
+  const { events, dispatchToEvents } = useContext(EventsContext);
 
   // If the first navigation is to the edit form, show "loading event"
-  if(events === null) {
+  if (events === null) {
     return (
       <Container fluid={true}>
         <Row className="justify-content-md-center">
@@ -28,14 +29,12 @@ const EditEvent = ({ match, history }) => {
     );
   }
 
-  const event_id = match.params.id;
-  const eventToEdit = events.find(event => ''+event.id === ''+event_id);
+  const eventId = match.params.id;
+  const eventToRemove = events.find(event => '' + event.id === '' + eventId);
 
-  const onSubmit = event => {
-    event.id = match.params.id;
-    formatEventDate(event);
-    dispatchToEvents({ type: 'MODIFY', event: event });
-    history.push("/events", { update: 'Event updated!'});
+  const handleClick = () => {
+    dispatchToEvents({ type: 'REMOVE', eventId });
+    history.push("/events", { update: 'Event removed.' });
   }
 
   return (
@@ -45,16 +44,13 @@ const EditEvent = ({ match, history }) => {
           <EventCreationFAQ />
         </Col>
         <Col className="HomeCard margin-bottom" sm={12} md={7}>
-          <h1>Edit This Event</h1>
-          <hr />
-          <EventForm
-            onSubmit={onSubmit}
-            event={{ ...eventToEdit, funding: undefined }} 
-          />
+          <h1>Delete this event?</h1>
+          <EventList events={[eventToRemove]} />
+          <Button onClick={handleClick} variant="danger">Delete Event</Button>
         </Col>
       </Row>
     </Container>
   );
 };
 
-export default EditEvent;
+export default RemoveEvent;
