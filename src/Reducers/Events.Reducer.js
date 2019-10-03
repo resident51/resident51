@@ -24,7 +24,7 @@ const eventsReducer = (events, action) => {
       eventsCollection.doc(action.event.id).set(action.event);
       return events;
     case "REMOVE":
-      eventsCollection.doc(action.eventId).delete();
+      eventsCollection.doc(action.id).delete();
       return events;
     default:
       return events;

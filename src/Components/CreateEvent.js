@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import EventForm from "./EventForm";
-import EventCreationFAQ from "./EventCreationFAQ";
+import EventCreationFAQ from "./EventComponents/EventCreationFAQ";
 
 const CreateEvent = ({ history }) => {
 

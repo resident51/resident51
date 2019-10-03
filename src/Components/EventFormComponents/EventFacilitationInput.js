@@ -63,7 +63,7 @@ const EventFacilitationInput = ({
           </Row>
         </Form.Group>
       )}
-      
+
       { errors.facilitation && errors.facilitation.organizationType && 
         touched.facilitation && touched.facilitation.organizationType && (
         <Alert variant={"danger"}>{errors.facilitation.organizationType}</Alert>

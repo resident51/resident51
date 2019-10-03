@@ -18,9 +18,7 @@ const EventDescriptionInput = ({
         required
         as="textarea"
         rows="5"
-        placeholder={
-          "A few sentences should do the trick! What can attendees expect?"
-        }
+        placeholder="A few sentences should do the trick! What can attendees expect?"
       />
     </Form.Group>
     {errors.description && touched.description && (

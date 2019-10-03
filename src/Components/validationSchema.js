@@ -15,7 +15,7 @@ const generateValidationSchema = ({halls, eventTypes}) => yup.object().shape({
     .required("Please provide the type of event."),
   description: yup.string()
     .min(20, "Provide some more information! What do attendees need to know?")
-    .max(1000, "Keep it under 1000 characters - people need ")
+    .max(1000, "Keep it under 1000 characters - no need to write the next KU Common Book.")
     .required("Please provide a description."),
   date: yup.date()
     .required("Please provide the day the event takes place.")

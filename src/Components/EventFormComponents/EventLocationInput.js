@@ -11,16 +11,28 @@ const EventLocationInput = ({
   form: { values, errors, touched },
   field
 }) => {
-  const [button, setButton] = useState("this is so hacky");
-  const { halls } = useContext(HallsContext);
+  const [otherEnabled, setOtherEnabled] = useState(false);
+  const [otherText, setOtherText] = useState('');
 
+  const { halls } = useContext(HallsContext);
   const locs = [...halls, "Crawford Building", "Complex-wide"];
 
-  // Allow 'other' box to get location value if editing and it isn't a hall
+  // On first render, get initial location input
   useEffect(() => {
-    if(values.location && !locs.includes(values.location)) 
-      setButton('');
+    if (values.location && !locs.includes(values.location)) {
+      setOtherEnabled(true);
+      setOtherText(values.location);
+    } else {
+      setOtherEnabled(false);
+      setOtherText('');
+    }
   }, []);
+
+  const otherEnabledNote = otherEnabled &&
+    <p className="mt-1 font-italic font-weight-light small">
+      *Note: if your event is somewhere like "Reiger dining room" or "Crawford fountain",
+      it's better to use the options above. Provide details in your description instead!
+    </p>
 
   return (
     <Fragment>
@@ -37,17 +49,17 @@ const EventLocationInput = ({
                 name="location"
                 id={`location-hall-${hall}`}
                 onChange={e => {
-                  setButton(e.target.value);
                   field.onChange(e);
+                  setOtherEnabled(false);
                 }}
                 value={hall}
-                checked={button === hall}
+                checked={!otherEnabled && values.location === hall}
               />
             </Col>
           ))}
         </Row>
         <Row>
-          <Col sm={2} className="i-need-some-space-man">
+          <Col sm={'auto'} className="mt-2 pr-2">
             <Form.Check
               custom
               type="radio"
@@ -57,25 +69,29 @@ const EventLocationInput = ({
               required
               onChange={e => {
                 field.onChange(e);
-                setButton(e.target.value);
+                setOtherEnabled(true);
               }}
-              value=""
-              checked={button === ""}
+              value={otherText}
+              checked={otherEnabled}
             />
           </Col>
-          <Col xs={12} sm={9} className="i-need-some-space-man">
+          <Col className="pt-1">
             <Form.Control
               required
-              disabled={!(button === "")}
+              disabled={!otherEnabled}
               name="location"
               maxLength={50}
-              onChange={field.onChange}
-              value={button === "" ? values.location : ""}
+              onChange={e => {
+                field.onChange(e);
+                setOtherText(e.target.value);
+              }}
+              value={otherText}
               type="text"
-              placeholder={'Examples: "Memorial Union", "Crawford Fountain"'}
+              placeholder={'Examples: "Strong Hall", "Memorial Stadium"'}
             />
           </Col>
         </Row>
+        {otherEnabledNote}
       </Form.Group>
       {errors.location && touched.location && (
         <Alert variant={"danger"}>{errors.location}</Alert>

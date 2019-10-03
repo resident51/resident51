@@ -1,6 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 
 import { EventsContext } from "../Contexts/EventsContext";
+
+import useEventTypes from '../Hooks/useEventTypes';
 
 import Alert from "react-bootstrap/Alert";
 import Container from 'react-bootstrap/Container';
@@ -15,23 +17,10 @@ const Events = ({ history }) => {
 
   const { events } = useContext(EventsContext);
 
+  // Show updates from history state API when events are mutated
   const update = history.location.state && history.location.state.update;
 
-  const [social, setSocial] = useState(true);
-  const [meal, setMeal] = useState(true);
-  const [community, setCommunity] = useState(true);
-  const [meeting, setMeeting] = useState(true);
-  const [alumni, setAlumni] = useState(true);
-  const [campus, setCampus] = useState(true);
-
-  const displayTypes = {
-    social: [social, setSocial],
-    meal: [meal, setMeal],
-    community: [community, setCommunity],
-    meeting: [meeting, setMeeting],
-    alumni: [alumni, setAlumni],
-    campus: [campus, setCampus]
-  }
+  const displayTypes = useEventTypes();
 
   return (
     <Container fluid={true}>

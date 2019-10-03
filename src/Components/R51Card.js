@@ -3,13 +3,13 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 
 const R51Card = props => (
-  <Card className="R51Card">
+  <Card className="mb-3">
     {props.children}
   </Card>
 )
 
 R51Card.Home = props => (
-    <Card className="R51Card">
+    <Card className="mb-3">
       <Card.Header className="text-center">
         <h2>{props.title}</h2>
       </Card.Header>
