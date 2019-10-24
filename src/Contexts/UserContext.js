@@ -1,19 +1,22 @@
-import React, { useState, useReducer, createContext, useEffect } from 'react';
+import React, { useReducer, createContext, useEffect } from 'react';
 
 import { auth } from '../Firebase/firebase';
 import UserReducer from '../Reducers/User.Reducer';
 
 export const UserContext = createContext();
 
-export const EventsProvider = props => {
+export const UserProvider = props => {
   const [user, userDispatch] = useReducer(UserReducer, null);
 
-  auth.onAuthStateChanged((user) => {
-    console.log('yoooo!')
-    console.log(user);
-    if (user) dispatchToEvents({ type: 'LOGIN', user })
-    else dispatchToEvents({ type: 'LOGIN' })
-  });
+  useEffect(() => auth.onAuthStateChanged((user) => {
+    if(user) {
+      userDispatch({ type: "LOGGED_IN", user })
+    } else {
+      userDispatch({ type: "LOGGED_OUT"})
+    }
+  }), []);
+  
+
 
   return (
     <UserContext.Provider value={{user, userDispatch}}>

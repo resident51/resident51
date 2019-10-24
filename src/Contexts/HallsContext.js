@@ -18,7 +18,7 @@ export const HallsProvider = props => {
     "Watkins"
   ];
 
-  const [halls, setHalls] = useState(defaultHalls)
+  const [halls, setHalls] = useState(defaultHalls);
 
   return (
     <HallsContext.Provider value={{ halls, setHalls }}>

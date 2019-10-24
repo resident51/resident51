@@ -26,7 +26,8 @@ const EventLocationInput = ({
       setOtherEnabled(false);
       setOtherText('');
     }
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locs]);
 
   const otherEnabledNote = otherEnabled &&
     <p className="mt-1 font-italic font-weight-light small">

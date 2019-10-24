@@ -3,19 +3,18 @@ import React, { useState, useReducer, createContext, useEffect } from 'react';
 import { eventsCollection } from '../Firebase/firebase';
 import EventsReducer from '../Reducers/Events.Reducer';
 
-export const EventsContext = createContext();
-
 const initialEventTypes = {
   social: { formal: "Social Event", color: "green" },
-  meal: { formal: "Co-Hall Meal", color: "lightcoral" },
-  community: { formal: "Community Event", color: "plum" },
   meeting: { formal: "Meeting", color: "orange" },
+  community: { formal: "Community Event", color: "plum" },
+  meal: { formal: "Co-Hall Meal", color: "lightcoral" },
   alumni: { formal: "Alumni Event", color: "maroon" },
   campus: { formal: "Campus Event", color: "lightseagreen" }
 };
 
-export const EventsProvider = props => {
+export const EventsContext = createContext();
 
+export const EventsProvider = props => {
   const [eventTypes, setEventTypes] = useState(initialEventTypes);
   const [events, dispatchToEvents] = useReducer(EventsReducer, null);
 

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { EventsContext } from "../Contexts/EventsContext";
 
@@ -10,6 +10,9 @@ import EventForm from "./EventForm";
 import EventCreationFAQ from "./EventComponents/EventCreationFAQ";
 
 const CreateEvent = ({ history }) => {
+  useEffect(() => {
+    document.title = "CreateEvent | Resident 51";
+  });
 
   const { dispatchToEvents, formatEventDate } = useContext(EventsContext);
 
@@ -22,10 +25,10 @@ const CreateEvent = ({ history }) => {
   return (
     <Container fluid={true}>
       <Row className="justify-content-md-center">
-        <Col className="HomeCard margin-bottom" sm={12} md={4}>
+        <Col sm={12} md={4}>
           <EventCreationFAQ />
         </Col>
-        <Col className="HomeCard margin-bottom" sm={12} md={7}>
+        <Col sm={12} md={7}>
           <h1>Create New Event</h1>
           <hr />
           <EventForm onSubmit={onSubmit} />

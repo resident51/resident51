@@ -1,25 +1,51 @@
-.container-fluid {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+#app_container {
+  display: flex;
+	flex-direction: column;
+	height: 100vh;
 }
 
-.HeaderLink {
+.header-link {
   color: azure;
   font-size: 1.25rem;
   margin: auto 0.8rem;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
+#page_footer {
+  flex-shrink: 0;
+	background-color: #134c7d;
+  text-align: center;
+  background-color: #343a40!important;
+  color: #fff;
+}
+
+.footer-link {
+  color: azure;
+  font-size: 1.1rem;
+  margin: auto 0.8rem;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+#everything-else {
+  flex: 1 0 auto;
+}
+
+.event-admin-config * {
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 750;
+}
+
+.type-buttons {
+  display: flex;
+  justify-content: center;
+  flex-flow: wrap;
+}
+
 // #title {
 //   position: relative;
 //   color: white;
 //   z-index: 5;
-// }
-
-// #everything-else {
-//   background-color: #fff;
-//   position: relative;
-//   z-index: 10;
 // }
 
 // #r51 {

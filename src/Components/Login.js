@@ -1,31 +1,64 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 
-import { googleProvider, auth } from '../Firebase/firebase';
+import { UserContext } from "../Contexts/UserContext";
 
-const Login = props => {
-  auth.signInWithPopup(googleProvider).then(function (result) {
-    console.log(result);
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = result.credential.accessToken;
-    // The signed-in user info.
-    var user = result.user;
-    // ...
-  }).catch(function (error) {
-    console.log(error);
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // The email of the user's account used.
-    var email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
-    var credential = error.credential;
-    // ...
-  });
+import { firebase, ui } from '../Firebase/firebase';
+import 'firebaseui/dist/firebaseui.css';
 
-  return (
-    <div>
-      <h1>Login Time</h1>
-    </div>)
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
+const Login = ({ history }) => {
+  const { user, userDispatch } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user && user.uid) {
+      return history.replace('/profile');
+    } else if(user === null) {
+      return;
+    }
+
+    document.title = "Log in | Resident 51";
+
+    const uiConfig = {
+      'callbacks': {
+        signInSuccessWithAuthResult: function (authResult) {
+          if (authResult.additionalUserInfo && authResult.additionalUserInfo.isNewUser) {
+            userDispatch({ type: "NEW_USER" });
+          }
+          history.push('/events');
+          return false;
+        },
+        signInFailure: error => {
+          history.push('/login', { error });
+          return false;
+        }
+      },
+      signInFlow: 'popup',
+      signInOptions: [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      ],
+      tosUrl: () => history.push('/terms-of-service'),
+      privacyPolicyUrl: () => history.push('/privacy-policy'),
+    };
+
+    ui.start('#firebaseui-auth-container', uiConfig);
+  }, [user, history, userDispatch]);
+
+  return user === null ? <div /> :
+    <Container fluid={true}>
+      <Row>
+        <Col className="text-center" xs={12}>
+          <h1>Log in to Resident 51:</h1>
+        </Col>
+        <Col xs={12}>
+          <div id="firebaseui-auth-container"></div>
+        </Col>
+      </Row>
+    </Container>
+    ;
 }
 
 export default Login

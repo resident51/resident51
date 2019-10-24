@@ -6,7 +6,7 @@ import Nav from "react-bootstrap/Nav";
 const HeaderLink = ({ to, title, children }) => (
   <Nav.Link as="span">
     <Nav.Item>
-      <Link className="HeaderLink" to={to}>{children || title}</Link>
+      <Link className="header-link" to={to}>{children || title}</Link>
     </Nav.Item>
   </Nav.Link>
 );

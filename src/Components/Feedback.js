@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react';
 
 import Container  from "react-bootstrap/Container";
 import Row        from "react-bootstrap/Row";
@@ -19,8 +19,13 @@ import OtherForm    from "./FeedbackComponents/OtherForm";
 // import lorem from "../tests/lorem";
 // const gen = lorem.generateSentences.bind(lorem);
 
-const Feedback = () => (
-  <Container className="HomeCard margin-bottom" fluid={true}>
+const Feedback = () => {
+  useEffect(() => {
+    document.title = "Feedback | Resident 51";
+  });
+  
+  return (
+  <Container fluid={true}>
     <Row className="justify-content-md-center">
       <Col sm={12} md={4}>
         <FeedbackFAQ />
@@ -66,6 +71,6 @@ const Feedback = () => (
       </Col>
     </Row>
   </Container>
-);
+)};
 
 export default Feedback;

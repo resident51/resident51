@@ -1,6 +1,6 @@
 import React, { useContext, Fragment } from "react";
 
-import { EventTypesContext } from "../../Contexts/EventTypesContext";
+import { EventsContext } from "../../Contexts/EventsContext";
 
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
 const EventTypeInput = ({ form: { values, touched, errors }, field }) => {
-  const { eventTypes } = useContext(EventTypesContext);
+  const { eventTypes } = useContext(EventsContext);
 
   return (
     <Fragment>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import { EventsContext } from "../Contexts/EventsContext"
 
@@ -17,13 +17,17 @@ const cReady = true;
 
 const Profile = () => {
 
+  useEffect(() => {
+    document.title = "Profile | Resident 51";
+  });
+
   const { events } = useContext(EventsContext);
 
   const { firstName, lastName, hall, status, major } = me.profile;
   // const { hall: hallExec, ashc: ashcExec, staff } = me.positions;
 
   const sortEventList = ids => <EventList
-    events={ids.map(id => events.find(e => e.id === id))}
+    events={events && ids.map(id => events.find(e => e.id === id))}
   />
 
   const created = sortEventList(me.eventsCreated);
@@ -36,7 +40,7 @@ const Profile = () => {
   //   hour >= 12 && hour < 18 ? "Afternoon" : "Evening";
 
   return (
-    <Container className="HomeCard margin-bottom" fluid={true}>
+    <Container fluid={true}>
       <Row>
         <Col xs={12} md={4}>
           <Container>

@@ -4,6 +4,8 @@ import moment from 'moment';
 
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 import { Link } from "react-router-dom";
 
@@ -21,35 +23,56 @@ const Event = ({ event, format }) => {
     <Card>
       <Accordion.Toggle
         as={Card.Header}
-        className="event-header"
         eventKey={id}
         style={{ borderLeft: `10px solid ${format.color}` }}
       >
-        <strong>{name}</strong>
-        <i className="event-date">
-          {moment(dateTime).format("MMMM Do, YYYY")}
-        </i>
+        <Row className="justify-content-between">
+          <Col className="text-truncate">
+            <strong>{name}</strong>
+          </Col>
+          <Col className="d-block" md="auto" xs={12}>
+            <i>{moment(dateTime).format("MMMM Do, YYYY")}</i>
+          </Col>
+        </Row>
       </Accordion.Toggle>
       <Accordion.Collapse eventKey={id}>
         <Card.Body>
-          <Card.Title className="event-flex">
-            <span>Location: {location}</span>
-            <span id="event-admin-config" >
-              <Link to={{ pathname: `/events/edit/${id}`, state: { event }}}
-                    style={{ color: "slategray" }} >
+          <Row className="justify-content-between mb-sm-1 mb-0">
+            <Col className="text-truncate">
+              <h5>
+                <span className="d-sm-inline d-none">Location: </span>
+                {location}
+              </h5>
+            </Col>
+            <Col xs="auto" className="event-admin-config">
+              <Link
+                to={{ pathname: `/events/edit/${id}`, state: { event } }}
+                style={{ color: "slategray" }}
+              >
                 Edit
-              </Link>
+            </Link>
               <span>  &middot;  </span>
-              <Link to={{ pathname: `/events/edit/${id}`, state: { event }}} 
-                    style={{ color: "red" }} >
+              <Link
+                to={{ pathname: `/events/edit/${id}`, state: { event } }}
+                style={{ color: "red" }}
+              >
                 Delete
-              </Link>
-            </span>
-          </Card.Title>
-          <Card.Subtitle className="event-flex" >
-            <span>Time: {moment(dateTime).format("h:mm A")}</span>
-            <span>Event Type: {format.formal}</span>
-          </Card.Subtitle>
+            </Link>
+            </Col>
+          </Row>
+          <Row className="justify-content-between">
+            <Col>
+              <h6 className="mb-0">
+                <span className="d-sm-inline d-none">Time: </span>
+                {moment(dateTime).format("h:mm A")}</h6>
+            </Col>
+            <Col xs="auto">
+              <h6 className="mb-0">
+                <span className="d-sm-inline d-none">Event Type: </span>
+                {format.formal}
+              </h6>
+            </Col>
+          </Row>
           <hr />
           <p>{description}</p>
         </Card.Body>

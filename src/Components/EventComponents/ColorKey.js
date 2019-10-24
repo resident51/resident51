@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
 
-import { EventTypesContext } from "../../Contexts/EventTypesContext";
+import { EventsContext } from "../../Contexts/EventsContext";
 
 import R51Card from '../R51Card';
 import EventTypeButton from './EventTypeButton';
 
 const ColorKey = ({ showState }) => {
 
-  const { eventTypes } = useContext(EventTypesContext);
+  const { eventTypes } = useContext(EventsContext);
 
   return (
     <R51Card>
       <R51Card.Header>
         View By Event Type
       </R51Card.Header>
-      <R51Card.Body className="type-buttons">
+      <R51Card.Body className="type-buttons px-1">
         {Object.keys(eventTypes)
           .map(typeData =>
             <EventTypeButton 

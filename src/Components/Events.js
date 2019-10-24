@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { EventsContext } from "../Contexts/EventsContext";
 
@@ -14,6 +14,9 @@ import ToCreateEvent from './EventComponents/ToCreateEvent';
 import EventList from './EventComponents/EventList';
 
 const Events = ({ history }) => {
+  useEffect(() => {
+    document.title = "Events | Resident 51";
+  });
 
   const { events } = useContext(EventsContext);
 
@@ -24,15 +27,18 @@ const Events = ({ history }) => {
 
   return (
     <Container fluid={true}>
-      <Row className="justify-content-md-center">
-        <Col sm={12} md={3}>
+      <Row className="justify-content-md-end">
+        <Col md={8}>
+          <h1 className="text-center mb-4" >Schol Hall Events</h1>          
+        </Col>
+      </Row>
+      <Row className="justify-content-md-center px-lg-4 px-md-2">
+        <Col sm={12} md={4}>
           <ColorKey showState={displayTypes} />
           <ToCreateEvent />
         </Col>
-
         <Col sm={12} md={8}>
-        <h1 className="text-center mb-4" >Schol Hall Events</h1>
-        {update && <Alert variant="success">{update}</Alert> }
+          {update && <Alert variant="success">{update}</Alert> }
           <EventList events={events} displayTypes={displayTypes} />
         </Col>
       </Row>

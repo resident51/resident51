@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { EventsContext } from "../Contexts/EventsContext";
 
@@ -11,6 +11,10 @@ import EditEventNotFound from './EventComponents/EventNotFound';
 import ConfirmRemoveEvent from './EventComponents/ConfirmRemoveEvent';
 
 const RemoveEvent = ({ match, history }) => {
+  useEffect(() => {
+    document.title = "Remove Event | Resident 51";
+  });
+
   const { events, dispatchToEvents } = useContext(EventsContext);
 
   const id = match.params.id;
@@ -35,10 +39,10 @@ const RemoveEvent = ({ match, history }) => {
   return (
     <Container fluid={true}>
       <Row className="justify-content-md-center">
-        <Col className="HomeCard margin-bottom" sm={12} md={4}>
+        <Col sm={12} md={4}>
           <EventCreationFAQ />
         </Col>
-        <Col className="HomeCard margin-bottom" sm={12} md={7}>
+        <Col sm={12} md={7}>
           {innerComponent}
         </Col>
       </Row>

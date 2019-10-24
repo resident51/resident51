@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 
-import { EventTypesContext } from "../../Contexts/EventTypesContext";
+import { EventsContext } from "../../Contexts/EventsContext";
 
 import Accordion from 'react-bootstrap/Accordion';
 import Event from './Event';
 
 const EventList = ({ events, displayTypes }) => {
 
-  const { eventTypes } = useContext(EventTypesContext);
+  const { eventTypes } = useContext(EventsContext);
 
   if (events === null) {
     return <h5><i>Loading events......</i></h5>

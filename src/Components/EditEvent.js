@@ -15,6 +15,10 @@ import EventCreationFAQ from "./EventComponents/EventCreationFAQ";
 import EventNotFound from './EventComponents/EventNotFound';
 
 const EditEvent = ({ match, history }) => {
+  useEffect(() => {
+    document.title = "Edit Event | Resident 51";
+  });
+  
   const { events, dispatchToEvents, formatEventDate } = useContext(EventsContext);
 
   const id = match.params.id;
@@ -27,6 +31,7 @@ const EditEvent = ({ match, history }) => {
     // If eventToEdit has changed, and it is not equal to its last value, someone updated it
     const eventDidUpdate = !!(initialEvent && !isEqual(eventToEdit, initialEvent));
     setEventUpdated(eventDidUpdate); // true || false
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventToEdit, events]);
 
   const onSubmit = (submittedEvent) => {
@@ -47,10 +52,10 @@ const EditEvent = ({ match, history }) => {
   return (
     <Container fluid={true}>
       <Row className="justify-content-md-center">
-        <Col className="HomeCard margin-bottom" sm={12} md={4}>
+        <Col sm={12} md={4}>
           <EventCreationFAQ />
         </Col>
-        <Col className="HomeCard margin-bottom" sm={12} md={7}>
+        <Col sm={12} md={7}>
           <h1>Edit This Event</h1>
           <hr />
           {eventUpdated}

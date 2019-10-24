@@ -1,7 +1,7 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 
 import { HallsContext } from "../Contexts/HallsContext";
-import { EventTypesContext } from "../Contexts/EventTypesContext";
+import { EventsContext } from "../Contexts/EventsContext";
 
 import moment from "moment";
 import { Formik, Field, FastField } from "formik";
@@ -25,7 +25,7 @@ import validationSchema from "./validationSchema";
 
 const EventForm = ({ event = {}, onSubmit, eventUpdated = false }) => {
 
-  const { eventTypes } = useContext(EventTypesContext);
+  const { eventTypes } = useContext(EventsContext);
   const { halls } = useContext(HallsContext);
 
   const formInitialValues = {
@@ -99,9 +99,18 @@ const EventForm = ({ event = {}, onSubmit, eventUpdated = false }) => {
 
             {eventUpdated && updatedWarning}
 
-            <Button className="mt-5" block variant="primary" type="submit" disabled={isSubmitting}>
-              Submit
-          </Button>
+            <Row className="mt-5">
+              <Col xl={3} lg={3} md={4} sm={4} className="mb-3 pr-sm-0">
+                <Button block variant="secondary" size="lg" type="button" disabled={isSubmitting}>
+                  Save draft
+                </Button>
+              </Col>
+              <Col className="mb-3">
+                <Button block variant="primary" size="lg" type="submit" disabled={isSubmitting}>
+                  Submit
+                </Button>
+              </Col>
+            </Row>
           </Form>
         )
       }}
