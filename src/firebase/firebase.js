@@ -19,21 +19,19 @@ firebase.initializeApp({
 // Database objects
 const store = firebase.firestore();
 const eventsCollection = store.collection('events');
+const usersCollection = store.collection('users');
 
 export default store;
 
 // Authentication objects
-// Initialize the FirebaseUI Widget using Firebase.
 const auth = firebase.auth();
 const ui = new firebaseui.auth.AuthUI(auth);
-// const auth = firebase.auth();
-// const facebookProvider = new firebase.auth.FacebookAuthProvider();
-// const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 export {
   firebase,
   store,
   eventsCollection,
+  usersCollection,
   auth,
   firebaseui,
   ui,

@@ -1,33 +1,32 @@
-import React, { useState, useEffect, useContext, Fragment } from "react";
+// import React, { useState, useEffect, useContext, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 
-import { HallsContext } from "../../Contexts/HallsContext";
+import { halls } from "../../Contexts/EventsContext";
 
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
+const locs = [...halls, "Crawford Building", "Complex-wide"];
+
 const EventLocationInput = ({
   form: { values, errors, touched },
   field
 }) => {
+  // `otherText` is its own variable because we want the input text
+  // to remain populated even if another option is clicked.
   const [otherEnabled, setOtherEnabled] = useState(false);
   const [otherText, setOtherText] = useState('');
 
-  const { halls } = useContext(HallsContext);
-  const locs = [...halls, "Crawford Building", "Complex-wide"];
-
-  // On first render, get initial location input
+  // On first render, get initial location input and set first state
   useEffect(() => {
-    if (values.location && !locs.includes(values.location)) {
-      setOtherEnabled(true);
-      setOtherText(values.location);
-    } else {
-      setOtherEnabled(false);
-      setOtherText('');
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locs]);
+    const otherIsChecked = values.location && !locs.includes(values.location);
+
+    setOtherEnabled(otherIsChecked);
+    setOtherText(otherIsChecked ? values.location : '');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const otherEnabledNote = otherEnabled &&
     <p className="mt-1 font-italic font-weight-light small">
@@ -72,7 +71,7 @@ const EventLocationInput = ({
                 field.onChange(e);
                 setOtherEnabled(true);
               }}
-              value={otherText}
+              value={otherText /* field.onChange is passed otherText when selecting 'other' */ }
               checked={otherEnabled}
             />
           </Col>

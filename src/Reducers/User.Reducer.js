@@ -5,7 +5,7 @@ const userReducer = (user, action) => {
     case "LOGGED_OUT":
       return {};
     case "LOGGED_IN":
-      const nextUser = {
+      return {
         ...user,
         displayName: action.user.displayName,
         email: action.user.email,
@@ -15,9 +15,15 @@ const userReducer = (user, action) => {
         uid: action.user.uid,
         providerData: action.user.providerData,
       };
-      return nextUser;
+    case "USER_FOUND":
+      return {
+        ...user,
+        hall: action.firestoreUser.hall,
+        permissions: action.firestoreUser.permissions,
+      }
     case "NEW_USER":
-      return { ...user, }
+      console.log('new user i guess');
+      return user;
     case "LOGOUT":
       auth.signOut();
       return user;

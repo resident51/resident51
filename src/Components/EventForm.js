@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
-import { HallsContext } from "../Contexts/HallsContext";
-import { EventsContext } from "../Contexts/EventsContext";
+import { EventsContext, halls } from "../Contexts/EventsContext";
+import { UserContext } from "../Contexts/UserContext";
 
 import moment from "moment";
 import { Formik, Field, FastField } from "formik";
@@ -26,7 +26,7 @@ import validationSchema from "./validationSchema";
 const EventForm = ({ event = {}, onSubmit, eventUpdated = false }) => {
 
   const { eventTypes } = useContext(EventsContext);
-  const { halls } = useContext(HallsContext);
+  const { user } = useContext(UserContext);
 
   const formInitialValues = {
     name: event.name || "",
@@ -36,8 +36,9 @@ const EventForm = ({ event = {}, onSubmit, eventUpdated = false }) => {
     date: moment(event.dateTime) || null,
     time: event.dateTime ? moment(event.dateTime).format("kk:mm") : "18:00", // 6:00 PM
     publicStatus: event.publicStatus || {
-      type: "",
-      halls: ""
+      type: "public",
+      // TODO: enforce user exists
+      halls: user ? [user.hall] : []
     },
     facilitation: event.facilitation || {
       organizationType: "",
@@ -46,7 +47,7 @@ const EventForm = ({ event = {}, onSubmit, eventUpdated = false }) => {
     recurring: event.recurring || false
   };
 
-  const formValidationSchema = validationSchema({ halls, eventTypes });
+  const formValidationSchema = validationSchema({ halls, eventTypes, hall: user.hall });
 
   const updatedWarning = (
     <Alert variant="warning"> Someone else just updated this event. If you submit now, those

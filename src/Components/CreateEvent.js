@@ -14,10 +14,10 @@ const CreateEvent = ({ history }) => {
     document.title = "CreateEvent | Resident 51";
   });
 
-  const { dispatchToEvents, formatEventDate } = useContext(EventsContext);
+  const { dispatchToEvents, formatSubmittedEvent } = useContext(EventsContext);
 
   const onSubmit = event => {
-    formatEventDate(event);
+    formatSubmittedEvent(event);
     dispatchToEvents({ type: "ADD", event });
     history.push("/events", { update: 'Event created!'});
   };

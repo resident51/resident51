@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from "react";
+import React, { useContext } from "react";
 
 import { UserContext } from '../../Contexts/UserContext';
 
@@ -12,19 +12,6 @@ const Header = () => {
 
   const { user } = useContext(UserContext);
 
-  let userNav = <div />
-
-  if (user && user.uid) {
-    userNav = (
-      <Fragment>
-        <HeaderLink to="/profile/">Profile</HeaderLink>
-        <HeaderLink to="/logout/">Log Out</HeaderLink>
-      </Fragment>
-    )
-  } else if (user !== null) {
-    userNav = <HeaderLink to="/login/">Log In</HeaderLink>
-  }
-
   return (
     <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" className="mb-3">
       <Container fluid="true" className="my-auto">
@@ -36,7 +23,15 @@ const Header = () => {
             <HeaderLink to="/feedback">Feedback</HeaderLink>
           </Nav>
           <Nav>
-            {userNav}
+            {(() => {
+              if (user && user.uid) {
+                return <HeaderLink to="/profile/">Profile</HeaderLink>
+              } else if (user !== null) {
+                return <HeaderLink to="/login/">Log In</HeaderLink>
+              } else {
+                return <div />
+              }
+            })()}
           </Nav>
         </Navbar.Collapse>
       </Container>

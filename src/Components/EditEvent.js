@@ -19,7 +19,7 @@ const EditEvent = ({ match, history }) => {
     document.title = "Edit Event | Resident 51";
   });
   
-  const { events, dispatchToEvents, formatEventDate } = useContext(EventsContext);
+  const { events, dispatchToEvents, formatSubmittedEvent } = useContext(EventsContext);
 
   const id = match.params.id;
   const eventToEdit = (events || []).find(e => '' + e.id === '' + id);
@@ -36,7 +36,7 @@ const EditEvent = ({ match, history }) => {
 
   const onSubmit = (submittedEvent) => {
     submittedEvent.id = id;
-    formatEventDate(submittedEvent);
+    formatSubmittedEvent(submittedEvent);
     dispatchToEvents({ type: 'MODIFY', event: submittedEvent });
     history.push("/events", { update: 'Event updated!' });
   }

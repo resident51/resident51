@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 
 import { EventsContext } from "../Contexts/EventsContext"
+import { UserContext } from "../Contexts/UserContext"
 
 // import moment from 'moment';
 
@@ -22,6 +23,11 @@ const Profile = () => {
   });
 
   const { events } = useContext(EventsContext);
+  const { user } = useContext(UserContext);
+
+  const display = user ? {} : {
+    name: user
+  }
 
   const { firstName, lastName, hall, status, major } = me.profile;
   // const { hall: hallExec, ashc: ashcExec, staff } = me.positions;
@@ -40,11 +46,12 @@ const Profile = () => {
   //   hour >= 12 && hour < 18 ? "Afternoon" : "Evening";
 
   return (
-    <Container fluid={true}>
+    <Container fluid={!!user}>
+      {user === null ? <h1>Loading event...</h1> :
       <Row>
         <Col xs={12} md={4}>
           <Container>
-            <h1>{`${firstName} ${lastName}`}</h1>
+            <h1>{user.displayName}</h1>
             <h3>{!!hall && `${hall} Hall`}</h3>
             <h3>{status}</h3>
             {major && <h4>{major}</h4>}
@@ -79,7 +86,7 @@ const Profile = () => {
             <R51Card.Body>{created}</R51Card.Body>
           </R51Card>
         </Col>
-      </Row>
+      </Row>}
     </Container>
   )
 }

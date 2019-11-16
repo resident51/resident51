@@ -1,23 +1,24 @@
-import React, { useState, useContext, Fragment } from "react";
+import React, { useState, Fragment, useContext } from "react";
 
-import { HallsContext } from "../../Contexts/HallsContext";
+import { halls } from "../../Contexts/EventsContext";
+import { UserContext } from "../../Contexts/UserContext";
 
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
-const EventPublicInput = ({ 
-  form: { setFieldValue, values, errors, touched }, 
+const EventPublicInput = ({
+  form: { setFieldValue, values, errors, touched },
   field
 }) => {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState(values.publicStatus.halls);
 
-  const { halls } = useContext(HallsContext);
+  const { user } = useContext(UserContext);
+  const userHall = user.hall;
 
   const types = [
-    ["any", "Open to anyone"],
-    ["complex", "All Halls"],
+    ["public", "Open to anyone"],
     ["halls", "Multiple halls"],
     ["hall", "My hall"]
   ];
@@ -31,7 +32,6 @@ const EventPublicInput = ({
             <Col key={code} xs={6} xl={3}>
               <Form.Check
                 custom
-                key={code}
                 type="radio"
                 label={formal}
                 name="publicStatus.type"
@@ -57,30 +57,29 @@ const EventPublicInput = ({
                   name="publicStatus.halls"
                   id={`public-select-hall-${hall}`}
                   onChange={e => {
-                    const i = selected.indexOf(hall)
-                    let toChange = [];
-                    if(i === -1)
-                      toChange = [...selected, e.target.value];
-                    else
-                      toChange = selected.filter(v => v !== hall);
+                    // If this hall is already in selected, remove it, else add it.
+                    const toChange = selected.includes(hall)
+                      ? selected.filter(v => v !== hall)
+                      : [...selected, e.target.value];
 
                     field.onChange(setFieldValue("publicStatus.halls", toChange));
                     setSelected(toChange);
                   }}
                   value={hall}
-                  checked={selected.includes(hall)}
+                  disabled={userHall === hall}
+                  checked={userHall === hall || selected.includes(hall)}
                 />
               </Col>
             ))}
           </Row>
         </Form.Group>
       )}
-      
-      { errors.publicStatus && errors.publicStatus.type && 
+
+      { errors.publicStatus && errors.publicStatus.type &&
         touched.publicStatus && touched.publicStatus.type && (
         <Alert variant={"danger"}>{errors.publicStatus.type}</Alert>
       )}
-      { errors.publicStatus && errors.publicStatus.halls && 
+      { errors.publicStatus && errors.publicStatus.halls &&
         touched.publicStatus && touched.publicStatus.halls && (
         <Alert variant={"danger"}>{errors.publicStatus.halls}</Alert>
       )}

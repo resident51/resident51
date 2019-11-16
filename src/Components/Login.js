@@ -21,7 +21,7 @@ const Login = ({ history }) => {
 
     document.title = "Log in | Resident 51";
 
-    const uiConfig = {
+    ui.start('#firebaseui-auth-container', {
       'callbacks': {
         signInSuccessWithAuthResult: function (authResult) {
           if (authResult.additionalUserInfo && authResult.additionalUserInfo.isNewUser) {
@@ -31,6 +31,7 @@ const Login = ({ history }) => {
           return false;
         },
         signInFailure: error => {
+          // TODO: handle errors gracefully
           history.push('/login', { error });
           return false;
         }
@@ -42,12 +43,10 @@ const Login = ({ history }) => {
       ],
       tosUrl: () => history.push('/terms-of-service'),
       privacyPolicyUrl: () => history.push('/privacy-policy'),
-    };
-
-    ui.start('#firebaseui-auth-container', uiConfig);
+    });
   }, [user, history, userDispatch]);
 
-  return user === null ? <div /> :
+  return (user !== null) &&
     <Container fluid={true}>
       <Row>
         <Col className="text-center" xs={12}>
@@ -58,7 +57,6 @@ const Login = ({ history }) => {
         </Col>
       </Row>
     </Container>
-    ;
 }
 
 export default Login

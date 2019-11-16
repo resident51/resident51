@@ -14,7 +14,6 @@ import "./Styles/App.scss";
 // import "./Styles/R51-Title.scss";
 
 import { EventsProvider } from "./Contexts/EventsContext";
-import { HallsProvider } from "./Contexts/HallsContext";
 import { UserProvider } from "./Contexts/UserContext";
 
 const App = () => {
@@ -23,16 +22,14 @@ const App = () => {
       <div id="app_container">
         <Jumbotron id="r51" className="mb-0">
           <h1 id="title" className="display-1 text-center">
-            Resident 51
-        </h1>
+            R<span className="d-sm-inline d-none">esident </span>51
+          </h1>
         </Jumbotron>
         <div id="everything-else">
           <UserProvider>
             <Header />
             <EventsProvider>
-              <HallsProvider>
-                <Routes />
-              </HallsProvider>
+              <Routes />
             </EventsProvider>
           </UserProvider>
         </div>
