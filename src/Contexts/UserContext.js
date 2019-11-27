@@ -19,18 +19,18 @@ export const UserProvider = props => {
       setUserQuery(usersCollection.doc(user.uid));
     } else {
       userDispatch({ type: "LOGGED_OUT"});
-      setUserQuery(usersCollection.doc(user.uid));
+      // setUserQuery(usersCollection.doc(user.uid));
     }
   }), []);
 
   // When the Firestore user document is found, set extra permissions/info
-  //  on the user context
+  // on the user context.
   useEffect(() => userQuery ?
     userQuery.onSnapshot(snapshot => {
       if (snapshot.exists) {
-        const firestoreUser = snapshot.data();
-        console.log(firestoreUser);
-        userDispatch({ type: "USER_FOUND", firestoreUser });
+        const R51User = snapshot.data();
+        console.log(R51User);
+        userDispatch({ type: "USER_FOUND", R51User });
       } else {
         // Invalid reference to user document.
         if (user.uid) {

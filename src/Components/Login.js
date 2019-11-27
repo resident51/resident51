@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 
 import { UserContext } from "../Contexts/UserContext";
 
-import { firebase, ui } from '../Firebase/firebase';
+import { ui, GoogleAuthProvider, FacebookAuthProvider } from '../Firebase/firebase';
 import 'firebaseui/dist/firebaseui.css';
 
 import Container from "react-bootstrap/Container";
@@ -38,8 +38,8 @@ const Login = ({ history }) => {
       },
       signInFlow: 'popup',
       signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        GoogleAuthProvider,
+        FacebookAuthProvider,
       ],
       tosUrl: () => history.push('/terms-of-service'),
       privacyPolicyUrl: () => history.push('/privacy-policy'),

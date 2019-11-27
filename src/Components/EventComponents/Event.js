@@ -50,7 +50,7 @@ const Event = ({ event, format }) => {
                 style={{ color: "slategray" }}
               >
                 Edit
-            </Link>
+              </Link>
               <span>  &middot;  </span>
               <Link
                 to={{ pathname: `/events/edit/${id}`, state: { event } }}

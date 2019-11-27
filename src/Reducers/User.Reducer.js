@@ -16,11 +16,8 @@ const userReducer = (user, action) => {
         providerData: action.user.providerData,
       };
     case "USER_FOUND":
-      return {
-        ...user,
-        hall: action.firestoreUser.hall,
-        permissions: action.firestoreUser.permissions,
-      }
+      const { hall, permissions } = action.R51User;
+      return { ...user, hall, permissions };
     case "NEW_USER":
       console.log('new user i guess');
       return user;

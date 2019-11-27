@@ -1,9 +1,10 @@
 import * as firebase from "firebase/app";
 
+import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/functions';
 
 import * as firebaseui from 'firebaseui';
-import 'firebase/auth';
 
 // Initialize Firebase with R51 Firebase configuration
 firebase.initializeApp({
@@ -17,22 +18,17 @@ firebase.initializeApp({
 });
 
 // Database objects
-const store = firebase.firestore();
-const eventsCollection = store.collection('events');
-const usersCollection = store.collection('users');
-
-export default store;
+export const store = firebase.firestore();
+export const eventsCollection = store.collection('events');
+export const usersCollection = store.collection('users');
 
 // Authentication objects
-const auth = firebase.auth();
-const ui = new firebaseui.auth.AuthUI(auth);
+export const auth = firebase.auth();
+export const GoogleAuthProvider = firebase.auth.GoogleAuthProvider.PROVIDER_ID;
+export const FacebookAuthProvider = firebase.auth.FacebookAuthProvider.PROVIDER_ID;
+export const ui = new firebaseui.auth.AuthUI(auth);
 
-export {
-  firebase,
-  store,
-  eventsCollection,
-  usersCollection,
-  auth,
-  firebaseui,
-  ui,
-};
+// Function objects
+export const functions = firebase.functions();
+export const requestVerification = functions.httpsCallable('requestVerification');
+

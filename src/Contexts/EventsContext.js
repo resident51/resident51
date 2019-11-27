@@ -5,6 +5,8 @@ import EventsReducer from '../Reducers/Events.Reducer';
 
 import { UserContext } from './UserContext';
 
+export const EventsContext = createContext();
+
 export const eventTypes = {
   social: { formal: "Social Event", color: "green" },
   meeting: { formal: "Meeting", color: "orange" },
@@ -29,18 +31,17 @@ export const halls = [
   "Watkins"
 ];
 
-export const EventsContext = createContext();
-
 export const EventsProvider = props => {
   const [events, dispatchToEvents] = useReducer(EventsReducer, null);
 
   const { user } = useContext(UserContext);
 
+  // Format event queried from Firebase
   const formatRetrievedEvent = event => {
     event.dateTime = event.dateTime.toDate();
 
-    if(event.publicStatus.type === 'private') {
-      if(event.halls.length === 1) {
+    if (event.publicStatus.type === 'private') {
+      if (event.halls.length === 1) {
         event.publicStatus.type = 'hall';
       } else {
         event.publicStatus.type = 'halls';
@@ -57,11 +58,11 @@ export const EventsProvider = props => {
     delete event.date;
     delete event.time;
 
-    if(event.publicStatus.type === 'public') {
+    if (event.publicStatus.type === 'public') {
       event.publicStatus.halls = halls;
-    } else if(event.publicStatus.type === 'halls') {
+    } else if (event.publicStatus.type === 'halls') {
       event.publicStatus.type = 'private';
-    } else if(event.publicStatus.type === 'hall')  {
+    } else if (event.publicStatus.type === 'hall') {
       event.publicStatus.type = 'private';
       event.publicStatus.halls = [user.hall];
     }
@@ -71,30 +72,34 @@ export const EventsProvider = props => {
 
   // Set up database subscription, give unsubscribe function to useEffect
   useEffect(() => {
-    // Prepare an events collection query specific to the user
+    // Prepare an events collection query specific to the user.
     let query;
-    if(user === null) {
-      // Waiting for user data from Firebase, no need to waste reads
-      query = eventsCollection.where("my_fake_field", "==", "some fake string");
-    } else if(!user.permissions) {
-      // The user is not logged in or not verified      
+    if (user === null) {
+      // Waiting for user data from Firebase, no need to waste reads.
+      query = eventsCollection.where("fakeDocProp", "==", 'alsoFake');
+      // return dispatchToEvents({ type: 'EMPTY' });
+    } else if (!user.permissions) {
+      // The user is not logged in or not verified.
       query = eventsCollection.where("publicStatus.type", "==", 'public');
-    } else if(user.permissions === 1) {
-      // The user is logged in, verified, and a resident with default permissions
+      console.log(':D')
+    } else if (user.permissions === 1) {
+      // The user is logged in, verified, and a resident with default permissions.
       query = eventsCollection.where("publicStatus.halls", "array-contains", user.hall);
-    } else if(user.permissions > 1) {
-      // The user is logged in, verified, and a resident with elevated permissions
+    } else if (user.permissions > 1) {
+      // The user is logged in, verified, and a resident with elevated permissions.
       query = eventsCollection;
     }
 
-    // Return the unsubscription function from onSnapshot
+      console.log('>:D')
+
+      // Return the unsubscription function from onSnapshot
     return query.onSnapshot(function (snapshot) {
       if (!snapshot.size) dispatchToEvents({ type: 'EMPTY' });
-  
+
       snapshot.docChanges().forEach(function (change) {
         const event = { ...change.doc.data(), id: change.doc.id };
         formatRetrievedEvent(event);
-        
+
         // Dispatch using the snapshot change type as the action type
         dispatchToEvents({ type: change.type.toUpperCase(), event });
       });
