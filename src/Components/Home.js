@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 
 import Container from "react-bootstrap/Container";
-// import CardColumns from "react-bootstrap/CardColumns";
-// import CardDeck from "react-bootstrap/CardDeck";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import R51Card from "./R51Card";
+
+import R51Card from "./Layout/R51Card";
 
 // Dev
 import lorem from "../tests/lorem";

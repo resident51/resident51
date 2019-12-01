@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { EventsContext } from "../../Contexts/EventsContext";
+import { EventsContext } from "../../Contexts/Events";
 
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -9,11 +9,11 @@ import Form from "react-bootstrap/Form";
 
 import { Formik, FastField } from "formik";
 
-import ResidentName from './FirstLoginFormComponents/ResidentName';
-import ResidentHall from './FirstLoginFormComponents/ResidentHall';
-import ResidentEmail from './FirstLoginFormComponents/ResidentEmail';
+import ResidentName from './FirstLoginForm/ResidentName';
+import ResidentHall from './FirstLoginForm/ResidentHall';
+import ResidentEmail from './FirstLoginForm/ResidentEmail';
 
-import generateResidentValidationSchema from "./FirstLoginFormComponents/residentValidationSchema";
+import generateResidentValidationSchema from "./FirstLoginForm/residentValidationSchema";
 
 const FirstLoginForm = ({ name, onSubmit }) => {
 

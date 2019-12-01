@@ -3,9 +3,9 @@ import React, { useReducer, createContext, useContext, useEffect } from 'react';
 import { currentEvents } from '../Firebase/firebase';
 import EventsReducer from '../Reducers/Events.Reducer';
 
-import { UserContext } from './UserContext';
+import { UserContext } from './User';
 
-import { formatSubmittedEventByHall, formatRetrievedEvent, halls, eventTypes } from './EventsContextProps';
+import { formatSubmittedEventByHall, formatRetrievedEvent, halls, eventTypes } from './EventsProps';
 
 export const EventsContext = createContext();
 

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { UserContext } from '../../Contexts/UserContext';
+import { UserContext } from '../../Contexts/User';
 
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";

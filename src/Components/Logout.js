@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 
-import { UserContext } from "../Contexts/UserContext";
+import { UserContext } from "../Contexts/User";
 
 const Logout = ({ history }) => {
   const { user, userDispatch } = useContext(UserContext);

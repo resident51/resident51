@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { EventsContext } from "../../Contexts/EventsContext";
+import { EventsContext } from "../../Contexts/Events";
 
 import Accordion from 'react-bootstrap/Accordion';
 import Event from './Event';

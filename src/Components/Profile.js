@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 
-import { EventsContext } from "../Contexts/EventsContext"
-import { UserContext } from "../Contexts/UserContext"
+import { EventsContext } from "../Contexts/Events"
+import { UserContext } from "../Contexts/User"
 
 // import moment from 'moment';
 
@@ -9,25 +9,24 @@ import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import EventList from './EventComponents/EventList';
-import R51Card from "./R51Card";
+import EventList from './Events/EventList';
+import R51Card from "./Layout/R51Card";
 
 import me from '../tests/accounts';
 
 const cReady = true;
-const LOADING = 'Loading...';
+// const LOADING = 'Loading...';
 
 const Profile = ({ history }) => {
+  const { user } = useContext(UserContext);
+  const { events } = useContext(EventsContext);
 
   useEffect(() => {
     document.title = "Profile | Resident 51";
     if(user && !user.displayName) {
       history.replace('/login');
     }
-  }, [user]);
-
-  const { events } = useContext(EventsContext);
-  const { user } = useContext(UserContext);
+  }, [user, history]);
 
   // Return empty component while waiting for auth
   if(!user) return;
@@ -70,10 +69,6 @@ const Profile = ({ history }) => {
           <R51Card>
             <R51Card.Header>Favorited Events</R51Card.Header>
             <R51Card.Body>{favs}</R51Card.Body>
-          </R51Card>
-          <R51Card>
-            <R51Card.Header>Events You Created</R51Card.Header>
-            <R51Card.Body>{created}</R51Card.Body>
           </R51Card>
         </Col>
       </Row>}

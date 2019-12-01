@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 
-import { UserContext } from "../Contexts/UserContext";
+import { UserContext } from "../Contexts/User";
 
 import { ui, GoogleAuthProvider, FacebookAuthProvider } from '../Firebase/firebase';
 import 'firebaseui/dist/firebaseui.css';

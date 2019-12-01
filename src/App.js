@@ -3,9 +3,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import Jumbotron from "react-bootstrap/Jumbotron";
 
-import Header from "./Components/Header/Header";
+import Header from "./Components/Layout/Header";
 import Routes from "./Components/Routes";
-import Footer from "./Components/Footer";
+import Footer from "./Components/Layout/Footer";
 
 import "react-dates/lib/css/_datepicker.css";
 import "bootstrap";
@@ -13,8 +13,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Styles/App.scss";
 // import "./Styles/R51-Title.scss";
 
-import { EventsProvider } from "./Contexts/EventsContext";
-import { UserProvider } from "./Contexts/UserContext";
+import { EventsProvider } from "./Contexts/Events";
+import { UserProvider } from "./Contexts/User";
 
 const App = () => {
   return (

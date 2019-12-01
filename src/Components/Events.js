@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import { EventsContext } from "../Contexts/EventsContext";
+import { EventsContext } from "../Contexts/Events";
 
 import useEventTypes from '../Hooks/useEventTypes';
 
@@ -9,9 +9,9 @@ import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import ColorKey from './EventComponents/ColorKey';
-import ToCreateEvent from './EventComponents/ToCreateEvent';
-import EventList from './EventComponents/EventList';
+import ColorKey from './Events/ColorKey';
+import ToCreateEvent from './Events/ToCreateEvent';
+import EventList from './Events/EventList';
 
 const Events = ({ history }) => {
   useEffect(() => {

@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from "react";
 
-import { EventsContext } from "../Contexts/EventsContext";
+import { EventsContext } from "../Contexts/Events";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import EventCreationFAQ from "./EventComponents/EventCreationFAQ";
-import EditEventNotFound from './EventComponents/EventNotFound';
-import ConfirmRemoveEvent from './EventComponents/ConfirmRemoveEvent';
+import EventCreationFAQ from "./Events/EventCreationFAQ";
+import EditEventNotFound from './Events/EventNotFound';
+import ConfirmRemoveEvent from './Events/ConfirmRemoveEvent';
 
 const RemoveEvent = ({ match, history }) => {
   useEffect(() => {

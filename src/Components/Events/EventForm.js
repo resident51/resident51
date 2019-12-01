@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
-import { EventsContext } from "../Contexts/EventsContext";
-import { UserContext } from "../Contexts/UserContext";
+import { EventsContext } from "../../Contexts/Events";
+import { UserContext } from "../../Contexts/User";
 
 import moment from "moment";
 import { Formik, Field, FastField } from "formik";
@@ -12,16 +12,16 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import EventNameInput from "./EventFormComponents/EventNameInput";
-import EventTypeInput from "./EventFormComponents/EventTypeInput";
-import EventDescriptionInput from "./EventFormComponents/EventDescriptionInput";
-import EventDateInput from "./EventFormComponents/EventDateInput";
-import EventTimeInput from "./EventFormComponents/EventTimeInput";
-import EventLocationInput from "./EventFormComponents/EventLocationInput";
-import EventPublicInput from "./EventFormComponents/EventPublicInput";
-import EventFacilitationInput from "./EventFormComponents/EventFacilitationInput";
+import EventNameInput from "./EventForm/Name";
+import EventTypeInput from "./EventForm/Type";
+import EventDescriptionInput from "./EventForm/Description";
+import EventDateInput from "./EventForm/Date";
+import EventTimeInput from "./EventForm/Time";
+import EventLocationInput from "./EventForm/Location";
+import EventPublicInput from "./EventForm/Public";
+import EventFacilitationInput from "./EventForm/Facilitation";
 
-import validationSchema from "./EventFormComponents/eventValidationSchema";
+import validationSchema from "./EventForm/validationSchema";
 
 const EventForm = ({ event = {}, onSubmit, eventUpdated = false }) => {
 

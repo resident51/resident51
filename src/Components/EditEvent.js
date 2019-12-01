@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 
-import { EventsContext } from "../Contexts/EventsContext";
+import { EventsContext } from "../Contexts/Events";
 import usePrevious from '../Hooks/usePrevious';
 
 import isEqual from 'lodash/isEqual';
@@ -10,9 +10,9 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import EventForm from "./EventForm";
-import EventCreationFAQ from "./EventComponents/EventCreationFAQ";
-import EventNotFound from './EventComponents/EventNotFound';
+import EventForm from "./Events/EventForm";
+import EventCreationFAQ from "./Events/EventCreationFAQ";
+import EventNotFound from './Events/EventNotFound';
 
 const EditEvent = ({ match, history }) => {
   useEffect(() => {

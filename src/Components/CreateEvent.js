@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from "react";
 
-import { EventsContext } from "../Contexts/EventsContext";
+import { EventsContext } from "../Contexts/Events";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import EventForm from "./EventForm";
-import EventCreationFAQ from "./EventComponents/EventCreationFAQ";
+import EventForm from "./Events/EventForm";
+import EventCreationFAQ from "./Events/EventCreationFAQ";
 
 const CreateEvent = ({ history }) => {
   useEffect(() => {

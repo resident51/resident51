@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { EventsContext } from "../../../Contexts/EventsContext";
+import { EventsContext } from "../../../Contexts/Events";
 
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
@@ -33,8 +33,8 @@ const ResidentHall = ({ form: { values, touched, errors }, field }) => {
         </Row>
       </Form.Group>
       {errors.hall && touched.hall && (
-      <Alert variant={"danger"}>{errors.hall}</Alert>
-    )}
+        <Alert variant={"danger"}>{errors.hall}</Alert>
+      )}
     </>
   )
 };

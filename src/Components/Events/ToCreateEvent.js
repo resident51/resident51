@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import R51Card from '../R51Card';
+import R51Card from '../Layout/R51Card';
 
 const ToCreateEvent = () => (
   <R51Card>

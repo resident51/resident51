@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 
-import { UserContext } from '../Contexts/UserContext';
+import { UserContext } from '../Contexts/User';
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 
 import { requestVerification } from '../Firebase/firebase';
 
-import FirstLoginForm from './AuthComponents/FirstLoginForm';
+import FirstLoginForm from './Auth/FirstLoginForm';
 
 const FirstLogin = ({ history }) => {
   const { user } = useContext(UserContext);

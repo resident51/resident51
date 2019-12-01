@@ -8,16 +8,12 @@ import Card from "react-bootstrap/Card";
 import Nav  from "react-bootstrap/Nav";
 import Tab  from "react-bootstrap/Tab";
 
-import FeedbackFAQ from './FeedbackComponents/FeedbackFAQ';
+import FeedbackFAQ from './Feedback/FeedbackFAQ';
 
-import WebsiteForm  from "./FeedbackComponents/WebsiteForm";
-import StaffForm    from "./FeedbackComponents/StaffForm";
-import EventForm    from "./FeedbackComponents/EventForm";
-import OtherForm    from "./FeedbackComponents/OtherForm";
-
-// // Dev
-// import lorem from "../tests/lorem";
-// const gen = lorem.generateSentences.bind(lorem);
+import WebsiteForm  from "./Feedback/Website";
+import StaffForm    from "./Feedback/Staff";
+import EventForm    from "./Feedback/Event";
+import OtherForm    from "./Feedback/Other";
 
 const Feedback = () => {
   useEffect(() => {

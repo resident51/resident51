@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useContext } from "react";
 
-import { EventsContext } from "../../Contexts/EventsContext";
-import { UserContext } from "../../Contexts/UserContext";
+import { EventsContext } from "../../../Contexts/Events";
+import { UserContext } from "../../../Contexts/User";
 
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";

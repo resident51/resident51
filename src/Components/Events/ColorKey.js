@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 
-import { EventsContext } from "../../Contexts/EventsContext";
+import { EventsContext } from "../../Contexts/Events";
 
-import R51Card from '../R51Card';
+import R51Card from '../Layout/R51Card';
 import EventTypeButton from './EventTypeButton';
 
 const ColorKey = ({ showState }) => {

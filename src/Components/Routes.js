@@ -10,8 +10,8 @@ import RemoveEvent from './RemoveEvent';
 import Feedback from "./Feedback";
 import LogIn from "./Login";
 import FirstLogin from "./FirstLogin";
-import PrivacyPolicy from './PolicyComponents/PrivacyPolicy'
-import TermsOfService from './PolicyComponents/TermsOfService';
+import PrivacyPolicy from './Policy/PrivacyPolicy'
+import TermsOfService from './Policy/TermsOfService';
 import Profile from './Profile';
 import LogOut from "./Logout";
 import NotFound from "./NotFound";
