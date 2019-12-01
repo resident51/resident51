@@ -15,35 +15,37 @@ import R51Card from "./R51Card";
 import me from '../tests/accounts';
 
 const cReady = true;
+const LOADING = 'Loading...';
 
-const Profile = () => {
+const Profile = ({ history }) => {
 
   useEffect(() => {
     document.title = "Profile | Resident 51";
-  });
+    if(user && !user.displayName) {
+      history.replace('/login');
+    }
+  }, [user]);
 
   const { events } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 
-  const display = user ? {} : {
-    name: user
-  }
+  // Return empty component while waiting for auth
+  if(!user) return;
 
-  const { firstName, lastName, hall, status, major } = me.profile;
+  const status = !user.permissions ? 'Unverified' :
+                  user.permissions === 1 ? 'Resident' :
+                  user.permissions === 2 ? 'Editor' :
+                  user.permissions === 3 ? 'Admin' : 'User';
+
+  const { hall } = me.profile;
   // const { hall: hallExec, ashc: ashcExec, staff } = me.positions;
 
   const sortEventList = ids => <EventList
     events={events && ids.map(id => events.find(e => e.id === id))}
   />
 
-  const created = sortEventList(me.eventsCreated);
   const favs = sortEventList(me.eventsFavorited);
   const drafted = sortEventList(me.eventsDrafted);
-
-  // // Determine greeting
-  // const hour = +(moment().format("HH"));
-  // const greet = hour >= 4 && hour < 12 ? "Morning" :
-  //   hour >= 12 && hour < 18 ? "Afternoon" : "Evening";
 
   return (
     <Container fluid={!!user}>
@@ -52,21 +54,9 @@ const Profile = () => {
         <Col xs={12} md={4}>
           <Container>
             <h1>{user.displayName}</h1>
-            <h3>{!!hall && `${hall} Hall`}</h3>
+            {!!hall && <h3>{`${hall} Hall`}</h3>}
             <h3>{status}</h3>
-            {major && <h4>{major}</h4>}
           </Container>
-          {cReady && <R51Card>
-            <R51Card.Header>Your Textbooks</R51Card.Header>
-            <R51Card.Body>
-              {me.textbooks.map((book) => <div key={book.isbn}>
-                <p>
-                  <strong>{book.class}</strong> - <i>{book.title}</i>
-                </p>
-                <p>(ISBN: {book.isbn})</p>
-              </div>)}
-            </R51Card.Body>
-          </R51Card>}
         </Col>
         <Col xs={12} md={cReady ? 7 : 12}>
           <Container>

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { EventsContext, halls } from "../Contexts/EventsContext";
+import { EventsContext } from "../Contexts/EventsContext";
 import { UserContext } from "../Contexts/UserContext";
 
 import moment from "moment";
@@ -21,11 +21,11 @@ import EventLocationInput from "./EventFormComponents/EventLocationInput";
 import EventPublicInput from "./EventFormComponents/EventPublicInput";
 import EventFacilitationInput from "./EventFormComponents/EventFacilitationInput";
 
-import validationSchema from "./validationSchema";
+import validationSchema from "./EventFormComponents/eventValidationSchema";
 
 const EventForm = ({ event = {}, onSubmit, eventUpdated = false }) => {
 
-  const { eventTypes } = useContext(EventsContext);
+  const { eventTypes, halls } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 
   const formInitialValues = {

@@ -1,31 +1,31 @@
 import { auth } from '../Firebase/firebase';
 
-const userReducer = (user, action) => {
+const userReducer = (currentUser, action) => {
   switch (action.type) {
     case "LOGGED_OUT":
       return {};
     case "LOGGED_IN":
-      return {
-        ...user,
-        displayName: action.user.displayName,
-        email: action.user.email,
-        emailVerified: action.user.emailVerified,
-        photoURL: action.user.photoURL,
-        isAnonymous: action.user.isAnonymous,
-        uid: action.user.uid,
-        providerData: action.user.providerData,
-      };
+      const { authUser } = action;
+      const nextUser = {
+        displayName: authUser.displayName,
+        email: authUser.email,
+        photoURL: authUser.photoURL,
+        isAnonymous: authUser.isAnonymous,
+        uid: authUser.uid,
+        providerData: authUser.providerData,
+      }
+      // Merge in Firebase auth user properties
+      return { ...currentUser, ...nextUser };
     case "USER_FOUND":
-      const { hall, permissions } = action.R51User;
-      return { ...user, hall, permissions };
+      const { hall, permissions, verified } = action.R51User;
+      return { ...currentUser, hall, permissions, verified };
     case "NEW_USER":
-      console.log('new user i guess');
-      return user;
+      return currentUser;
     case "LOGOUT":
       auth.signOut();
-      return user;
+      return currentUser;
     default:
-      return user;
+      return currentUser;
   }
 };
 

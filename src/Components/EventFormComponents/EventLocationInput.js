@@ -1,19 +1,20 @@
 // import React, { useState, useEffect, useContext, Fragment } from "react";
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useContext } from "react";
 
-import { halls } from "../../Contexts/EventsContext";
+import { EventsContext } from "../../Contexts/EventsContext";
 
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
-const locs = [...halls, "Crawford Building", "Complex-wide"];
-
 const EventLocationInput = ({
   form: { values, errors, touched },
   field
 }) => {
+  const { halls } = useContext(EventsContext);
+  const locs = [...halls, "Crawford Building", "Complex-wide"];
+
   // `otherText` is its own variable because we want the input text
   // to remain populated even if another option is clicked.
   const [otherEnabled, setOtherEnabled] = useState(false);

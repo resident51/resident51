@@ -9,6 +9,7 @@ import EditEvent from './EditEvent';
 import RemoveEvent from './RemoveEvent';
 import Feedback from "./Feedback";
 import LogIn from "./Login";
+import FirstLogin from "./FirstLogin";
 import PrivacyPolicy from './PolicyComponents/PrivacyPolicy'
 import TermsOfService from './PolicyComponents/TermsOfService';
 import Profile from './Profile';
@@ -24,6 +25,7 @@ const Routes = () => (
     <Route component={RemoveEvent}    path="/events/delete/:id" exact />
     <Route component={Feedback}       path="/feedback/" exact />
     <Route component={LogIn}          path="/login/" exact />
+    <Route component={FirstLogin}     path="/first-login/" exact />
     <Route component={LogOut}         path="/logout/" exact />
     <Route component={Profile}        path="/profile/" exact />
     <Route component={PrivacyPolicy}  path="/privacy-policy" exact />

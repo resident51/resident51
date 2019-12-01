@@ -1,109 +1,57 @@
 import React, { useReducer, createContext, useContext, useEffect } from 'react';
 
-import { eventsCollection } from '../Firebase/firebase';
+import { currentEvents } from '../Firebase/firebase';
 import EventsReducer from '../Reducers/Events.Reducer';
 
 import { UserContext } from './UserContext';
 
+import { formatSubmittedEventByHall, formatRetrievedEvent, halls, eventTypes } from './EventsContextProps';
+
 export const EventsContext = createContext();
-
-export const eventTypes = {
-  social: { formal: "Social Event", color: "green" },
-  meeting: { formal: "Meeting", color: "orange" },
-  community: { formal: "Community Event", color: "plum" },
-  meal: { formal: "Co-Hall Meal", color: "lightcoral" },
-  alumni: { formal: "Alumni Event", color: "maroon" },
-  campus: { formal: "Campus Event", color: "lightseagreen" }
-};
-
-export const halls = [
-  "Battenfeld",
-  "Douthart",
-  "Grace Pearson",
-  "KK Amini",
-  "Krehbiel",
-  "Margaret Amini",
-  "Miller",
-  "Pearson",
-  "Rieger",
-  "Sellards",
-  "Stephenson",
-  "Watkins"
-];
 
 export const EventsProvider = props => {
   const [events, dispatchToEvents] = useReducer(EventsReducer, null);
 
   const { user } = useContext(UserContext);
 
-  // Format event queried from Firebase
-  const formatRetrievedEvent = event => {
-    event.dateTime = event.dateTime.toDate();
+  const hall = user && user.hall;
+  const formatSubmittedEvent = formatSubmittedEventByHall(hall);
 
-    if (event.publicStatus.type === 'private') {
-      if (event.halls.length === 1) {
-        event.publicStatus.type = 'hall';
-      } else {
-        event.publicStatus.type = 'halls';
-      }
-    } else if (event.publicStatus.type !== 'public') {
-      throw new Error("Cloud Firestore error: poorly formatted event map.");
-    }
-  }
+  /**
+   * Fetch events from Cloud Firestore based on User's permissions.
+   * @param {firebase.firestore.Query} query Events query to Cloud Firestore
+   */
+  const querySnapshot = query => query.onSnapshot(function (snapshot) {
+    if (!snapshot.size) return dispatchToEvents({ type: 'EMPTY' });
 
-  // Format event before sending to Firebase
-  const formatSubmittedEvent = event => {
-    const [hour, minute] = event.time.split(':');
-    event.dateTime = event.date.hour(+hour).minute(+minute).toDate();
-    delete event.date;
-    delete event.time;
+    snapshot.docChanges().forEach(function (change) {
+      // Dispatch using the snapshot change type as the action type
+      // #TODO adding every event one by one the first time is easy but causes a lot
+      // of renders. Let's get all events at once.
+      // #TODO now that we have separate queries for public and private events,
+      // we need to have a condition for when an event changes from public to private
+      const event = { ...change.doc.data(), id: change.doc.id };
+      formatRetrievedEvent(event);
+      dispatchToEvents({ type: change.type.toUpperCase(), event });
+    });
+  });
 
-    if (event.publicStatus.type === 'public') {
-      event.publicStatus.halls = halls;
-    } else if (event.publicStatus.type === 'halls') {
-      event.publicStatus.type = 'private';
-    } else if (event.publicStatus.type === 'hall') {
-      event.publicStatus.type = 'private';
-      event.publicStatus.halls = [user.hall];
-    }
-  }
-
-  console.log(user);
-
-  // Set up database subscription, give unsubscribe function to useEffect
+  // First, query for all public events.
   useEffect(() => {
-    // Prepare an events collection query specific to the user.
-    let query;
-    if (user === null) {
-      // Waiting for user data from Firebase, no need to waste reads.
-      query = eventsCollection.where("fakeDocProp", "==", 'alsoFake');
-      // return dispatchToEvents({ type: 'EMPTY' });
-    } else if (!user.permissions) {
-      // The user is not logged in or not verified.
-      query = eventsCollection.where("publicStatus.type", "==", 'public');
-      console.log(':D')
-    } else if (user.permissions === 1) {
-      // The user is logged in, verified, and a resident with default permissions.
-      query = eventsCollection.where("publicStatus.halls", "array-contains", user.hall);
-    } else if (user.permissions > 1) {
-      // The user is logged in, verified, and a resident with elevated permissions.
-      query = eventsCollection;
+    const query = currentEvents.where("publicStatus.type", "==", 'public');
+    return querySnapshot(query);
+  }, []);
+
+  // Next, query for all private events available to the user.
+  useEffect(() => {
+    if(user && user.permissions) {
+      const query = currentEvents.where("publicStatus.type", "==", "private");
+      if(user.permissions === 1) {
+        return querySnapshot(query.where("publicStatus.halls", "array-contains", user.hall));
+      } else if (user.permissions > 1) {
+        return querySnapshot(query);
+      }
     }
-
-      console.log('>:D')
-
-      // Return the unsubscription function from onSnapshot
-    return query.onSnapshot(function (snapshot) {
-      if (!snapshot.size) dispatchToEvents({ type: 'EMPTY' });
-
-      snapshot.docChanges().forEach(function (change) {
-        const event = { ...change.doc.data(), id: change.doc.id };
-        formatRetrievedEvent(event);
-
-        // Dispatch using the snapshot change type as the action type
-        dispatchToEvents({ type: change.type.toUpperCase(), event });
-      });
-    })
   }, [user]);
 
   return (

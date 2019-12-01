@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useContext } from "react";
 
-import { halls } from "../../Contexts/EventsContext";
+import { EventsContext } from "../../Contexts/EventsContext";
 import { UserContext } from "../../Contexts/UserContext";
 
 import Alert from "react-bootstrap/Alert";
@@ -12,10 +12,11 @@ const EventPublicInput = ({
   form: { setFieldValue, values, errors, touched },
   field
 }) => {
-  const [selected, setSelected] = useState(values.publicStatus.halls);
-
   const { user } = useContext(UserContext);
+  const { halls } = useContext(EventsContext);
+  
   const userHall = user.hall;
+  const [selected, setSelected] = useState(values.publicStatus.halls);
 
   const types = [
     ["public", "Open to anyone"],

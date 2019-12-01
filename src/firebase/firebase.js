@@ -20,6 +20,7 @@ firebase.initializeApp({
 // Database objects
 export const store = firebase.firestore();
 export const eventsCollection = store.collection('events');
+export const currentEvents = eventsCollection.where('dateTime', ">", new Date()).orderBy('dateTime');
 export const usersCollection = store.collection('users');
 
 // Authentication objects
@@ -31,4 +32,3 @@ export const ui = new firebaseui.auth.AuthUI(auth);
 // Function objects
 export const functions = firebase.functions();
 export const requestVerification = functions.httpsCallable('requestVerification');
-
