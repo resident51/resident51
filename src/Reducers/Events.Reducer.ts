@@ -4,8 +4,7 @@ import { EventR51, EventId, EventToCFS } from '../Types/';
 
 export type Event = EventR51;
 export type Events = null | Event[];
-
-export type EventActionType = 
+export type EventActionType =
   | 'EMPTY'
   | 'ADDED'
   | 'MODIFIED'
@@ -13,7 +12,6 @@ export type EventActionType =
   | 'ADD'
   | 'MODIFY'
   | 'REMOVE';
-
 export type EventAction =
   | { type: 'EMPTY' }
   | { type: 'ADDED', event: Event }

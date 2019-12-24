@@ -1,25 +1,27 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
-const EventFacilitationInput = ({ 
-  form: { values, errors, touched }, 
-  field 
-}) => {
-  const orgs = [
-    ["hall", "My Hall"],
-    ["ASHC", "ASHC"],
-    ["staff", "Hall Staff"],
-    ["committee", "Schol-Hall Committee"],
-    ["campus", "The University"],
-    ["other", "Another Organization"]
-  ];
+import { FieldProps } from 'formik';
+import { EventFormValues } from '../EventForm';
+
+const orgs = [
+  ["hall", "My Hall"],
+  ["ASHC", "ASHC"],
+  ["staff", "Hall Staff"],
+  ["committee", "Schol-Hall Committee"],
+  ["campus", "The University"],
+  ["other", "Another Organization"]
+];
+
+const EventFacilitationInput = (props: FieldProps<EventFormValues>) => {
+  const { form: { values, errors, touched }, field } = props;
 
   return (
-    <Fragment>
+    <>
       <Form.Group>
         <Form.Label>Who will be organizing this event?</Form.Label>
         <Row>
@@ -72,7 +74,7 @@ const EventFacilitationInput = ({
         touched.facilitation && touched.facilitation.organizationName && (
         <Alert variant={"danger"}>{errors.facilitation.organizationName}</Alert>
       )}
-    </Fragment>
+    </>
   );
 };
 

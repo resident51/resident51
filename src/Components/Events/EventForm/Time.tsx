@@ -4,9 +4,9 @@ import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 
 import { FieldProps } from "formik";
+import { EventFormValues } from '../EventForm';
 
-type TimeProps = {}
-const EventTimeInput = (props: FieldProps<TimeProps>) => {
+const EventTimeInput = (props: FieldProps<EventFormValues>) => {
   const { form: { values, touched, errors }, field } = props;
 
   return (

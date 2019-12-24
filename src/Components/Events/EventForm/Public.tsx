@@ -1,5 +1,7 @@
 import React, { useState, Fragment, useContext } from "react";
 
+import { Hall } from '../../../Types/';
+
 import { EventsContext } from "../../../Contexts/Events";
 import { UserContext } from "../../../Contexts/User";
 
@@ -8,14 +10,15 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
-const EventPublicInput = ({
-  form: { setFieldValue, values, errors, touched },
-  field
-}) => {
+import { FieldProps } from 'formik';
+import { EventFormValues } from '../EventForm';
+
+const EventPublicInput = (props: FieldProps<EventFormValues>) => {
+  const { form: { setFieldValue, values, errors, touched }, field } = props;
   const { user } = useContext(UserContext);
   const { halls } = useContext(EventsContext);
   
-  const userHall = user.hall;
+  const userHall = user && user.hall;
   const [selected, setSelected] = useState(values.publicStatus.halls);
 
   const types = [
@@ -27,7 +30,7 @@ const EventPublicInput = ({
   return (
     <Fragment>
       <Form.Group>
-        <Form.Label as="legend">Who will be attending this event?</Form.Label>
+        <Form.Label>Who will be attending this event?</Form.Label>
         <Row>
           {types.map(([code, formal]) => (
             <Col key={code} xs={6} xl={3}>
@@ -48,7 +51,7 @@ const EventPublicInput = ({
       </Form.Group>
       {values.publicStatus.type === "halls" && (
         <Form.Group>
-          <Form.Label as="legend">Which halls?</Form.Label>
+          <Form.Label>Which halls?</Form.Label>
           <Row>
             {halls.map(hall => (
               <Col key={hall} sm={6} md={4}>
@@ -57,13 +60,13 @@ const EventPublicInput = ({
                   label={hall}
                   name="publicStatus.halls"
                   id={`public-select-hall-${hall}`}
-                  onChange={e => {
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     // If this hall is already in selected, remove it, else add it.
-                    const toChange = selected.includes(hall)
+                    const toChange: Hall[] = selected.includes(hall)
                       ? selected.filter(v => v !== hall)
-                      : [...selected, e.target.value];
+                      : [...selected, e.target.value as Hall];
 
-                    field.onChange(setFieldValue("publicStatus.halls", toChange));
+                    field.onChange(e);
                     setSelected(toChange);
                   }}
                   value={hall}

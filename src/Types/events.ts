@@ -1,7 +1,7 @@
 import { Moment } from 'moment';
 import { firestore } from 'firebase';
 
-import { Hall, DeepRequired } from './common';
+import { Hall } from './common';
 
 // Common Types
 export type EventId = string;
@@ -37,7 +37,6 @@ export interface EventBase {
     organizationType: OrganizationType,
     organizationName: string,
   },
-  recurring?: boolean,
 }
 
 // The main, site-wide Event interface.
@@ -61,9 +60,9 @@ export interface EventDraft extends Partial<Omit<EventBase, 'publicStatus' | 'fa
 }
 
 // Structure of all event forms
-export interface EventForm extends Omit<EventDraft, 'dateTime'> {
-  date?: Moment,
-  time?: string,
+export interface EventForm extends Omit<EventBase, 'dateTime'> {
+  date: Moment,
+  time: string,
 };
 export interface EventFormValidated extends Required<Omit<EventForm, 'publicStatus' | 'facilitation'>> {
   publicStatus: Required<EventForm['publicStatus']>,

@@ -3,9 +3,7 @@ import { auth } from '../Firebase/firebase';
 import { UserInterface } from '../Types/';
 
 export type User = null | UserInterface;
-
 export type UserActionType = 'LOGGED_OUT' | 'LOGGED_IN'| 'USER_FOUND'| 'NEW_USER'| 'LOGOUT';
-
 export type UserAction = 
   | { type: 'LOGGED_OUT' }
   | { type: 'LOGGED_IN', authUser: firebase.User }

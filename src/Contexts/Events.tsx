@@ -1,6 +1,6 @@
 import React, { useReducer, createContext, useContext, useEffect } from 'react';
 
-import { CFSEvent, EventToCFS, EventFormValidated } from '../Types/';
+import { CFSEvent, EventToCFS, EventFormValidated, Hall, EventTypeFormats } from '../Types/';
 
 import { currentEvents } from '../Firebase/firebase';
 import EventsReducer, { Events, EventAction } from '../Reducers/Events.Reducer';
@@ -12,25 +12,24 @@ import {
   eventTypes
 } from './EventsProps';
 
-export const EventsContext = createContext({
-  events: null as Events,
-  dispatchToEvents: (
-    (action: { type: string, data: object }): void => { }
-  ) as React.Dispatch<EventAction>,
-  // formatSubmittedEvent: (event: EventFormValidated): EventToCFS => ({} as EventToCFS), // (event?: EventFormValidated): EventToCFS | void => ({} as EventToCFS),
-  eventTypes,
-  halls,
-});
+interface EventContextProps {
+  events: Events,
+  dispatchToEvents: React.Dispatch<EventAction>,
+  formatSubmittedEvent: (event: EventFormValidated) => EventToCFS,
+  eventTypes: EventTypeFormats,
+  halls: Hall[],
+}
+export const EventsContext = createContext({} as EventContextProps);
 
 type props = { children: React.ReactNode };
 
 export const EventsProvider = (props: props) => {
-  const [events, dispatchToEvents] = useReducer(EventsReducer, null); // <Event[]>
+  const [events, dispatchToEvents] = useReducer(EventsReducer, null);
 
   const { user } = useContext(UserContext);
 
   const hall = user && user.hall;
-  const formatSubmittedEvent = !!hall ? formatSubmittedEventByHall(hall) : (() => {});
+  const formatSubmittedEvent = formatSubmittedEventByHall(hall || 'Miller'); // #TODO: this is fucking awful
 
   /**
    * Fetch events from Cloud Firestore based on User's permissions.

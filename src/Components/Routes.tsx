@@ -4,8 +4,8 @@ import { Switch, Route } from "react-router-dom";
 
 import Home from "./Home";
 import Events from "./Events";
-import CreateEvent from './CreateEvent'; // TS: event form
-import EditEvent from './EditEvent'; // TS: event form
+import CreateEvent from './CreateEvent';
+import EditEvent from './EditEvent';
 import RemoveEvent from './RemoveEvent';
 import Feedback from "./Feedback";
 import LogIn from "./Login";

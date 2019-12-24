@@ -15,7 +15,7 @@ import Col from "react-bootstrap/Col";
 import EventForm from "./Events/EventForm";
 import EventCreationFAQ from "./Events/EventCreationFAQ";
 import EventNotFound from './Events/EventNotFound';
-import { EventDraftValidated } from "../Types/";
+import { EventFormValidated } from "../Types/";
 
 const EditEvent = () => {
   const history = useHistory();
@@ -39,8 +39,8 @@ const EditEvent = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventToEdit, events]);
 
-  const onSubmit = (submittedEvent: EventDraftValidated) => {
-    submittedEvent.id = id;
+  const onSubmit = (submittedEvent: EventFormValidated) => {
+    submittedEvent.id = id as string;
     const eventToDispatch = formatSubmittedEvent(submittedEvent);
     dispatchToEvents({ type: 'MODIFY', event: eventToDispatch });
     history.push("/events", { update: 'Event updated!' });

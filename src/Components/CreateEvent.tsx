@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 
-import { EventDraftValidated } from '../Types/';
+import { EventFormValidated } from '../Types/';
 
 import { EventsContext } from "../Contexts/Events";
 
@@ -22,7 +22,7 @@ const CreateEvent = () => {
 
   const { dispatchToEvents, formatSubmittedEvent } = useContext(EventsContext);
 
-  const onSubmit = (event: EventDraftValidated) => {
+  const onSubmit = (event: EventFormValidated) => {
     const eventToDispatch = formatSubmittedEvent(event);
     dispatchToEvents({ type: "ADD", event: eventToDispatch });
     history.push("/events", { update: 'Event created!'});

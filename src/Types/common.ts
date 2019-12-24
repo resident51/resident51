@@ -7,14 +7,4 @@ export type DeepPartial<T> = {
       : DeepPartial<T[P]>
 };
 
-// https://github.com/microsoft/TypeScript/issues/15012#issuecomment-365453623
-export type Required<T> =
-  T extends object
-    ? { [P in keyof T]-?: NonNullable<T[P]>; }
-    : T;
-// export type DeepRequired<T, U extends object | undefined = undefined> =
-//   T extends object
-//     ? { [P in keyof T]-?: NonNullable<T[P]> extends NonNullable<U | Function | Class> ? NonNullable<T[P]> : DeepRequired<NonNullable<T[P]>, U>; }
-//     : T;
-
 export type Hall = 'Battenfeld' | 'Douthart' | 'Grace Pearson' | 'KK Amini' | 'Krehbiel' | 'Margaret Amini' | 'Miller' | 'Pearson' | 'Rieger' | 'Sellards' | 'Stephenson' | 'Watkins';

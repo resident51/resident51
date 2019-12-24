@@ -8,10 +8,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
-const EventLocationInput = ({
-  form: { values, errors, touched },
-  field
-}) => {
+import { FieldProps } from 'formik';
+import { EventFormValues } from '../EventForm';
+
+const EventLocationInput = (props: FieldProps<EventFormValues>) => {
+  const { form: { values, errors, touched }, field } = props;
   const { halls } = useContext(EventsContext);
   const locs = [...halls, "Crawford Building", "Complex-wide"];
 
@@ -22,7 +23,7 @@ const EventLocationInput = ({
 
   // On first render, get initial location input and set first state
   useEffect(() => {
-    const otherIsChecked = values.location && !locs.includes(values.location);
+    const otherIsChecked = Boolean(values.location && !locs.includes(values.location));
 
     setOtherEnabled(otherIsChecked);
     setOtherText(otherIsChecked ? values.location : '');
@@ -38,7 +39,7 @@ const EventLocationInput = ({
   return (
     <Fragment>
       <Form.Group>
-        <Form.Label as="legend">Where will this event be located?</Form.Label>
+        <Form.Label>Where will this event be located?</Form.Label>
         <Row>
           {locs.map(hall => (
             <Col key={hall} sm={6} lg={4}>
@@ -49,7 +50,7 @@ const EventLocationInput = ({
                 label={hall}
                 name="location"
                 id={`location-hall-${hall}`}
-                onChange={e => {
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   field.onChange(e);
                   setOtherEnabled(false);
                 }}
@@ -68,7 +69,7 @@ const EventLocationInput = ({
               label="Other: "
               name="location"
               required
-              onChange={e => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 field.onChange(e);
                 setOtherEnabled(true);
               }}
@@ -82,7 +83,7 @@ const EventLocationInput = ({
               disabled={!otherEnabled}
               name="location"
               maxLength={50}
-              onChange={e => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 field.onChange(e);
                 setOtherText(e.target.value);
               }}

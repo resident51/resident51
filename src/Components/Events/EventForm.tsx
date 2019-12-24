@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 
-import { EventR51, EventDraft } from '../../Types/';
+import { EventR51, EventForm, EventFormValidated, Hall } from '../../Types/';
 
 import { EventsContext } from "../../Contexts/Events";
 import { UserContext } from "../../Contexts/User";
 
-import moment from "moment";
+import moment, { Moment } from "moment";
 import { Formik, Field, FastField } from "formik";
 
 import Alert from "react-bootstrap/Alert";
@@ -30,16 +30,35 @@ const updatedWarning = (
     changes would be overwritten. Please save your changes and refresh the page.</Alert>
 );
 
+export type EventFormValues = {
+  name: string,
+  type: string,
+  description: string,
+  location: string,
+  date: Moment,
+  time: string,
+  publicStatus: {
+    type: string,
+    halls: Hall[],
+  },
+  facilitation: {
+    organizationType: string,
+    organizationName: string,
+  },
+};
+
 type EventFormProps = {
-  event: EventR51,
-  onSubmit: (event: EventR51) => void,
-  eventUpdated: boolean };
-const EventForm = (props: EventFormProps) => {
-  const { event = {} as EventR51, onSubmit, eventUpdated = false } = props;
+  event?: EventR51,
+  onSubmit: (event: EventFormValidated) => void,
+  eventUpdated?: boolean
+};
+const EventFormComponent = (props: EventFormProps) => {
+  const { event = ({} as EventR51), onSubmit, eventUpdated = false } = props;
   const { eventTypes, halls } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 
-  const formInitialValues: EventDraft = {
+  const formInitialValues: EventForm = {
+    id: event.id || '',
     name: event.name || "",
     type: event.type || "",
     description: event.description || "",
@@ -49,13 +68,12 @@ const EventForm = (props: EventFormProps) => {
     publicStatus: event.publicStatus || {
       type: "public",
       // TODO: enforce user exists
-      halls: user ? [user.hall] : []
+      halls: user ? [user.hall] : [],
     },
     facilitation: event.facilitation || {
       organizationType: "",
-      organizationName: ""
+      organizationName: "",
     },
-    recurring: event.recurring || false
   };
 
   const formValidationSchema = user ? validationSchema({ halls, eventTypes }) : {};
@@ -125,4 +143,4 @@ const EventForm = (props: EventFormProps) => {
   );
 };
 
-export default EventForm;
+export default EventFormComponent;
