@@ -14,7 +14,7 @@ import { FieldProps } from 'formik';
 import { EventFormValues } from '../EventForm';
 
 const EventPublicInput = (props: FieldProps<EventFormValues>) => {
-  const { form: { setFieldValue, values, errors, touched }, field } = props;
+  const { form: { values, errors, touched }, field } = props;
   const { user } = useContext(UserContext);
   const { halls } = useContext(EventsContext);
   

@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 
 type props = { values: FormikValues, errors: FormikErrors<FormikValues>, touched: FormikTouched<FormikValues> };
 const WebsiteForm = (props: props) => {
-  const { values, errors, touched } = props;
+  const { errors, touched } = props;
   return (
     <Form>
       <h1>Site</h1>

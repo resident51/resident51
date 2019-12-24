@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
 
-import { UserInterface } from '../../Types/';
-
 import { UserContext } from '../../Contexts/User';
 
 import Container from "react-bootstrap/Container";

@@ -1,5 +1,5 @@
-import { Hall, CFSEvent, EventToCFS, EventR51, EventForm, EventTypeFormats, EventFormValidated } from '../Types/';
-import moment, { Moment } from 'moment';
+import { Hall, CFSEvent, EventToCFS, EventR51, EventTypeFormats, EventFormValidated } from '../Types/';
+import moment from 'moment';
 
 export const eventTypes: EventTypeFormats = {
   social: { formal: "Social Event", color: "green" },
