@@ -4,36 +4,31 @@ import { UserInterface } from '../Types/';
 
 export type User = null | UserInterface;
 export type UserActionType = 'LOGGED_OUT' | 'LOGGED_IN'| 'USER_FOUND'| 'NEW_USER'| 'LOGOUT';
-export type UserAction = 
+export type UserAction =
   | { type: 'LOGGED_OUT' }
-  | { type: 'LOGGED_IN', authUser: firebase.User }
-  | { type: 'USER_FOUND', R51User: UserInterface }
+  | { type: 'LOGGED_IN', data: firebase.User }
+  | { type: 'USER_FOUND', data: Pick<UserInterface, 'hall' | 'permissions' | 'verified'> }
   | { type: 'NEW_USER' }
   | { type: 'LOGOUT' };
 
-export const loggedOutUser = {
+export const loggedOutUser: UserInterface = {
   uid: '',
   displayName: null,
   email: null,
-}
+};
 
 const userReducer = (currentUser: User, action: UserAction): User => {
+  console.log(action.type);
   switch (action.type) {
     case "LOGGED_OUT":
       return loggedOutUser;
     case "LOGGED_IN":
-      const { authUser } = action;
-      const nextUser = {
-        displayName: authUser.displayName,
-        uid: authUser.uid,
-        email: authUser.email,
-      }
       // Merge in Firebase auth user properties
-      return nextUser;
+      return action.data;
     case "USER_FOUND":
-      const { hall, permissions, verified } = action.R51User;
-      const mergingUser = currentUser as UserInterface;
-      return { ...mergingUser, hall, permissions, verified };
+      // #TODO this runs even when the user is updated, ie after requesting verification.
+      // We should separate each change to the user into separate actions.
+      return Object.assign(currentUser, action.data);
     case "NEW_USER":
       if(currentUser === null)
         return loggedOutUser;

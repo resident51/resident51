@@ -20,30 +20,50 @@ const FirstLogin = () => {
 
   useEffect(() => {
     document.title = "First Log-in | Resident 51";
-    console.log(user);
 
-    if(user === null) {
-      // Waiting for user info from Firebase Auth - wait.
-      console.log('Okay I mean... okay whatever.')
-      return;
-    } else if(typeof user.permissions !== 'number') {
+    // Waiting for user info from Firebase Auth - wait.
+    if(user === null) return;
+
+    if(typeof user.permissions !== 'number') {
       // No user logged in, direct to /login
-      // console.log('Again - you\'re a rat bastard, but whatever.');
-      return history.replace('/login');
+      history.replace('/login');
     } else if(user.permissions !== 0) {
       // User logged in, but already verified.
-      return history.replace('/profile');
+      history.replace('/profile');
     }
   }, [history, user]);
 
-  const onSubmit = (request: verificationRequest) => {
+  const onSubmit = async (request: verificationRequest) => {
+
+    console.log('ok, we\'re here');
+    console.log(user);
+
     // On success, also updates the user's doc in Firestore.
-    requestVerification({
-      displayName: request.name,
-      kuEmail: request.email,
-      requestedHall: request.hall
-    });
+    if(user && user.getIdToken) {
+      console.log('check that token')
+      // Refresh user token, in case they are requesting verification
+      // immediately after signing in for the first time.
+      await user.getIdToken(true);
+
+      console.log('lets request')
+
+      // request verification
+      requestVerification({
+        displayName: request.name,
+        kuEmail: request.email,
+        requestedHall: request.hall,
+      }).then(result => {
+        if(result.data) {
+          console.log('requested, maybe?');
+          history.push("/events", { update: 'Successfully requested verification probably!'});
+        } else {
+          console.log('failure...');
+        }
+      });
+    }
   }
+
+  const initialName = (user && user.displayName) ? user.displayName : '';
 
   return user === null ? <div /> : (
     <Container>
@@ -60,7 +80,7 @@ const FirstLogin = () => {
           </p>
         </Col>
         <Col xs={12} md={8}>
-          <FirstLoginForm onSubmit={onSubmit} name={'GREG KNOLE'} />
+          <FirstLoginForm onSubmit={onSubmit} name={initialName} />
         </Col>
       </Row>
     </Container>
