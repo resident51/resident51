@@ -32,3 +32,4 @@ export const ui = new firebaseui.auth.AuthUI(auth);
 // Function objects
 export const functions = firebase.functions();
 export const requestVerification = functions.httpsCallable('requestVerification');
+export const verifyUser = functions.httpsCallable('verifyUser');

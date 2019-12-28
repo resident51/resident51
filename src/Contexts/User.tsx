@@ -45,6 +45,7 @@ export const UserProvider = (props: props) => {
       userDispatch({ type: "USER_FOUND", data: { hall, permissions, verified } });
 
       // Set reference query for users requesting verification - will only succeed if user is an admin.
+      // #TODO you know ..... this really should just be a cloud function.....
       const unverifiedUsersQuery = usersCollection
         .where('hall', '==', hall).where('permissions', '==', 0).where('verified', '==', false);
       setVerificationRequests((verified && permissions && permissions >= 3) ? unverifiedUsersQuery : null);
@@ -59,8 +60,6 @@ export const UserProvider = (props: props) => {
   useEffect(() => {
     if (verificationRequests !== null) {
       return verificationRequests.onSnapshot(snapshot => {
-        if (!snapshot.size) return;
-
         snapshot.docChanges().forEach(change => {
           const userRequesting = { ...change.doc.data(), uid: change.doc.id } as UserInterface;
           if (change.type === 'added') {

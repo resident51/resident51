@@ -1,9 +1,12 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react';
 
 import { UserContext } from '../Contexts/User';
 
 import { useHistory, Link } from 'react-router-dom';
 
+import { verifyUser } from '../Firebase/firebase';
+
+import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -39,12 +42,29 @@ const Profile = () => {
       <Row>
         <Col>
           <h1>{displayName}</h1>
-          {!!hall && <h3>{hall}</h3>}
+          <h3>{!!hall ? hall : <i>No hall selected</i>}</h3>
           <h3>{status}</h3>
           {optionalLink}
         </Col>
       </Row>
     </Container>
+  );
+
+  const verificationRequests = !!permissions && permissions >= 3 && (
+    <R51Card>
+      <R51Card.Header>Verification Requests</R51Card.Header>
+      <R51Card.Body>
+        {usersRequestingVerification.length ?
+        <ul>
+          {usersRequestingVerification.map(request => (
+            <li key={request.uid}>
+              <span className="lead">{request.displayName}</span>
+              <Button onClick={() => verifyUser({ email: request.email })}>Verify</Button>
+            </li>
+          ))}
+        </ul> : 'No requests.'}
+      </R51Card.Body>
+    </R51Card>
   );
 
   return (
@@ -58,19 +78,7 @@ const Profile = () => {
             <Container>
               <h1>Your Dashboard</h1>
             </Container>
-
-            {(permissions && permissions >= 3) ? (
-              <R51Card>
-                <R51Card.Header>Verification Requests</R51Card.Header>
-                <R51Card.Body>
-                  <ul>
-                    {usersRequestingVerification.map(request => (
-                      <li key={request.uid}>{request.displayName}</li>
-                    ))}
-                  </ul>
-                </R51Card.Body>
-              </R51Card>
-            ) : null}
+            {verificationRequests}
             <R51Card>
               <R51Card.Header>Event Drafts</R51Card.Header>
               <R51Card.Body>wow</R51Card.Body>
