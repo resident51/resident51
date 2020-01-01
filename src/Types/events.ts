@@ -28,7 +28,7 @@ export interface EventBase {
   type: EventType,
   description: string,
   location: string,
-  dateTime: Moment,
+  dateTime: number,
   publicStatus: {
     type: EventFormPublicType,
     halls: Hall[]
@@ -54,21 +54,13 @@ export interface EventToCFS extends Omit<CFSEvent, 'dateTime' | 'id'> {
 
 // Event draft, not submitted yet
 export interface EventDraft extends Partial<Omit<EventBase, 'publicStatus' | 'facilitation'>> {
-  // Must also specify EventBase's properties' objects are partials (confusing, but simple)
+  // Must also specify EventBase's properties' objects as partials (confusing, but simple ;^D)
   publicStatus: Partial<EventBase['publicStatus']>,
   facilitation: Partial<EventBase['facilitation']>,
 }
 
 // Structure of all event forms
 export interface EventForm extends Omit<EventBase, 'dateTime'> {
-  date: Moment,
+  date: number,
   time: string,
 };
-export interface EventFormValidated extends Required<Omit<EventForm, 'publicStatus' | 'facilitation'>> {
-  publicStatus: Required<EventForm['publicStatus']>,
-  facilitation: Required<EventForm['facilitation']>,
-}
-
-
-
-

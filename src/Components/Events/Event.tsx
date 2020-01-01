@@ -25,6 +25,7 @@ const Event = (props: props) => {
                     : { color: 'black', formal: 'Event formatting error' } as EventFormat;
 
   const { id, name, location, description, dateTime } = event;
+  const dateTimeMoment = moment(dateTime);
 
   return (
     <Card>
@@ -38,7 +39,7 @@ const Event = (props: props) => {
             <strong>{name}</strong>
           </Col>
           <Col className="d-block" md="auto" xs={12}>
-            <i>{moment(dateTime).format("MMMM Do, YYYY")}</i>
+            <i>{dateTimeMoment.format("MMMM Do, YYYY")}</i>
           </Col>
         </Row>
       </Accordion.Toggle>
@@ -71,7 +72,7 @@ const Event = (props: props) => {
             <Col>
               <h6 className="mb-0">
                 <span className="d-sm-inline d-none">Time: </span>
-                {moment(dateTime).format("h:mm A")}</h6>
+                {dateTimeMoment.format("h:mm A")}</h6>
             </Col>
             <Col xs="auto">
               <h6 className="mb-0">

@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 
-import { EventR51, EventForm, EventFormValidated, Hall } from '../../Types/';
+import { EventR51, EventForm as EventFormType, Hall } from '../../Types/';
 
 import { EventsContext } from "../../Contexts/Events";
 import { UserContext } from "../../Contexts/User";
 
-import moment, { Moment } from "moment";
+import moment from "moment";
 import { Formik, Field, FastField } from "formik";
 
 import Alert from "react-bootstrap/Alert";
@@ -35,7 +35,7 @@ export type EventFormValues = {
   type: string,
   description: string,
   location: string,
-  date: Moment,
+  date: number,
   time: string,
   publicStatus: {
     type: string,
@@ -49,7 +49,7 @@ export type EventFormValues = {
 
 type EventFormProps = {
   event?: EventR51,
-  onSubmit: (event: EventFormValidated) => void,
+  onSubmit: (event: EventFormType) => void,
   eventUpdated?: boolean
 };
 const EventFormComponent = (props: EventFormProps) => {
@@ -57,26 +57,30 @@ const EventFormComponent = (props: EventFormProps) => {
   const { eventTypes, halls } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 
-  const formInitialValues: EventForm = {
+  const threeDaysFromNow = Date.now() + 1000 * 60 * 60 * 24 * 3;
+  const dateTimeMoment = useMemo(() => moment(event.dateTime || threeDaysFromNow), [event.dateTime]);
+
+  const formValidationSchema = useMemo(() => validationSchema({ halls, eventTypes }), [halls, eventTypes]);
+
+  if(!user) return <div/>;
+
+  const formInitialValues: EventFormType = {
     id: event.id || '',
     name: event.name || "",
-    type: event.type || "",
+    type: event.type || undefined,
     description: event.description || "",
     location: event.location || "",
-    date: moment(event.dateTime) || null,
-    time: event.dateTime ? moment(event.dateTime).format("kk:mm") : "18:00", // 6:00 PM
+    date: dateTimeMoment.unix(),
+    time: event.dateTime ? dateTimeMoment.format("kk:mm") : "18:00",
     publicStatus: event.publicStatus || {
       type: "public",
-      // TODO: enforce user exists
-      halls: user ? [user.hall] : [],
+      halls: [user.hall],
     },
     facilitation: event.facilitation || {
-      organizationType: "",
+      organizationType: undefined,
       organizationName: "",
     },
   };
-
-  const formValidationSchema = user ? validationSchema({ halls, eventTypes }) : {};
 
   return (
     <Formik

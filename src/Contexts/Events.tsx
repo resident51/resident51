@@ -1,6 +1,6 @@
 import React, { useReducer, createContext, useContext, useEffect } from 'react';
 
-import { CFSEvent, EventToCFS, EventFormValidated, Hall, EventTypeFormats } from '../Types/';
+import { CFSEvent, EventToCFS, EventForm as EventFormType, Hall, EventTypeFormats } from '../Types/';
 
 import { currentEvents } from '../Firebase/firebase';
 import EventsReducer, { Events, EventAction } from '../Reducers/Events.Reducer';
@@ -15,7 +15,7 @@ import {
 interface EventContextProps {
   events: Events,
   dispatchToEvents: React.Dispatch<EventAction>,
-  formatSubmittedEvent: (event: EventFormValidated) => EventToCFS,
+  formatSubmittedEvent: (event: EventFormType) => EventToCFS,
   eventTypes: EventTypeFormats,
   halls: Hall[],
 }

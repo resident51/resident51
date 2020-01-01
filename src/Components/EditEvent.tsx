@@ -6,7 +6,6 @@ import usePrevious from '../Hooks/usePrevious';
 import { useHistory, useParams } from 'react-router-dom';
 
 import isEqual from 'lodash/isEqual';
-// import get from 'lodash/get';
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -15,7 +14,7 @@ import Col from "react-bootstrap/Col";
 import EventForm from "./Events/EventForm";
 import EventCreationFAQ from "./Events/EventCreationFAQ";
 import EventNotFound from './Events/EventNotFound';
-import { EventFormValidated } from "../Types/";
+import { EventForm as EventFormType } from "../Types/";
 
 const EditEvent = () => {
   const history = useHistory();
@@ -39,7 +38,7 @@ const EditEvent = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventToEdit, events]);
 
-  const onSubmit = (submittedEvent: EventFormValidated) => {
+  const onSubmit = (submittedEvent: EventFormType) => {
     submittedEvent.id = id as string;
     const eventToDispatch = formatSubmittedEvent(submittedEvent);
     dispatchToEvents({ type: 'MODIFY', event: eventToDispatch });

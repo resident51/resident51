@@ -1,4 +1,4 @@
-import { Hall, CFSEvent, EventToCFS, EventR51, EventTypeFormats, EventFormValidated } from '../Types/';
+import { Hall, CFSEvent, EventToCFS, EventR51, EventTypeFormats, EventForm as EventFormType } from '../Types/';
 import moment from 'moment';
 
 export const eventTypes: EventTypeFormats = {
@@ -36,7 +36,7 @@ const determineEventType = (publicStatusCFS: CFSEvent['publicStatus']): EventR51
 // Format event queried from Firebase
 export const formatRetrievedEvent = (event: CFSEvent): EventR51 => ({
   ...event,
-  dateTime: moment(event.dateTime.toDate()),
+  dateTime: event.dateTime.toMillis(),
   publicStatus: {
     type: determineEventType(event.publicStatus),
     halls: event.publicStatus.halls,
@@ -51,14 +51,15 @@ const determineCFSEventType = (hall: Hall, publicStatus: EventR51['publicStatus'
 });
 
 // Format event before sending to Firebase
-export const formatSubmittedEventByHall = (hall: Hall) => (event: EventFormValidated): EventToCFS => {
+export const formatSubmittedEventByHall = (hall: Hall) => (event: EventFormType): EventToCFS => {
   // destructure date and time off of event
   const { date, time, ...CFSEvent} = event;
-  const [hour, minute] = time.split(':');
+  const [hour, minute] = time.split(':').map(num => +num);
+  const momentDate = moment(date);
 
   return {
     ...CFSEvent,
-    dateTime: date.hour(+hour).minute(+minute).toDate(),
+    dateTime: momentDate.hour(hour).minute(minute).toDate(),
     publicStatus: determineCFSEventType(hall, event.publicStatus),
   };
 }
