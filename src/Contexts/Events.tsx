@@ -66,7 +66,7 @@ export const EventsProvider = (props: props) => {
         return querySnapshot(query);
       }
     }
-  }, [queryPerms]);
+  }, [user, queryPerms]);
 
   return (
     <EventsContext.Provider value={{

@@ -15,6 +15,7 @@ export const loggedOutUser: UserInterface = {
   uid: '',
   displayName: null,
   email: null,
+  permissions: 0,
   // #TODO logged out user should have email: '', permissions: 0, etc.
   // null should only be used for when we are waiting for data to be fetched.
 };
@@ -25,7 +26,7 @@ const userReducer = (currentUser: User, action: UserAction): User => {
       return loggedOutUser;
     case "LOGGED_IN":
       // Merge in Firebase auth user properties
-      return action.data;
+      return { ...action.data, permissions: 0 };
     case "USER_FOUND":
       // #TODO this runs even when the user is updated, ie after requesting verification.
       // We should separate each change to the user into separate actions.

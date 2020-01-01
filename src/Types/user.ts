@@ -5,9 +5,9 @@ export interface UserInterface {
   uid: string,
   displayName: string | null,
   email: string | null,
+  permissions: 0 | 1 | 2 | 3,
   hall?: Hall | null,
   getIdToken?: (forceRefresh?: boolean | undefined) => Promise<string>;
-  permissions?: 0 | 1 | 2 | 3,
   verified?: boolean,
   verificationRequests?: firestore.Query | null,
 };

@@ -28,6 +28,7 @@ const FirstLogin = () => {
   const history = useHistory();
   const [requestError, setRequestError] = useState(false);
 
+  const userPerms = user && user.permissions
   useEffect(() => {
     document.title = "First Log-in | Resident 51";
 
@@ -41,7 +42,7 @@ const FirstLogin = () => {
       // User logged in, but already verified.
       history.replace('/profile');
     }
-  }, [history, user]);
+  }, [history, user, userPerms]);
 
   const onSubmit = async (request: verificationRequest) => {
     if (user && user.getIdToken) {

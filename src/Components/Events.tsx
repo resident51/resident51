@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 
 import { EventsContext } from "../Contexts/Events";
+import { UserContext } from '../Contexts/User';
 
 import useEventTypes from '../Hooks/useEventTypes';
 
@@ -21,6 +22,7 @@ const Events = () => {
   });
 
   const { events } = useContext(EventsContext);
+  const { user } = useContext(UserContext);
 
   // Show updates from history state API when events are mutated
   const history = useHistory();
@@ -32,13 +34,13 @@ const Events = () => {
     <Container fluid={true}>
       <Row className="justify-content-md-end">
         <Col md={8}>
-          <h1 className="text-center mb-4" >Schol-Hall Events</h1>          
+          <h1 className="text-center mb-4" >Schol-Hall Events</h1>
         </Col>
       </Row>
       <Row className="justify-content-md-center px-lg-4 px-md-2">
         <Col sm={12} md={4}>
           <ColorKey displayTypes={displayTypes} />
-          <ToCreateEvent />
+          {user && user.permissions > 1 && <ToCreateEvent />}
         </Col>
         <Col sm={12} md={8}>
           {update && <Alert variant="success">{update}</Alert> }
