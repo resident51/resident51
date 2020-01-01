@@ -3,7 +3,7 @@ import { auth } from '../Firebase/firebase';
 import { UserInterface } from '../Types/';
 
 export type User = null | UserInterface;
-export type UserActionType = 'LOGGED_OUT' | 'LOGGED_IN'| 'USER_FOUND'| 'NEW_USER'| 'LOGOUT';
+export type UserActionType = 'LOGGED_OUT' | 'LOGGED_IN' | 'USER_FOUND' | 'NEW_USER' | 'LOGOUT';
 export type UserAction =
   | { type: 'LOGGED_OUT' }
   | { type: 'LOGGED_IN', data: firebase.User }
@@ -26,22 +26,22 @@ const userReducer = (currentUser: User, action: UserAction): User => {
       return loggedOutUser;
     case "LOGGED_IN":
       // Merge in Firebase auth user properties
-      return { ...action.data, permissions: 0 };
+      return Object.assign(action.data, { permissions: 0 as UserInterface['permissions'] });
     case "USER_FOUND":
       // #TODO this runs even when the user is updated, ie after requesting verification.
       // We should separate each change to the user into separate actions.
       return Object.assign(currentUser, action.data);
     case "NEW_USER":
-      if(currentUser === null)
+      if (currentUser === null)
         return loggedOutUser;
       return currentUser;
     case "LOGOUT":
       auth.signOut();
-      if(currentUser === null)
+      if (currentUser === null)
         return loggedOutUser;
       return currentUser;
     default:
-      if(currentUser === null)
+      if (currentUser === null)
         return loggedOutUser;
       return currentUser;
   }

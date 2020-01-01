@@ -24,7 +24,7 @@ const ResidentName = (props: FieldProps<FirstLoginFormValues>) => {
         />
         <Form.Text className="text-muted">
           We pulled this from the provider you used to sign in (Google or
-          Facebook), so if "el1te_Un1c0rn_2004" isn't as cool as you thought
+          Facebook), so if "el1te_walu1g1_2005" isn't as cool as you first thought
           it was, you can change it here to something your president will recognize.
         </Form.Text>
       </Form.Group>

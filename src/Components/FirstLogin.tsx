@@ -45,10 +45,15 @@ const FirstLogin = () => {
   }, [history, user, userPerms]);
 
   const onSubmit = async (request: verificationRequest) => {
+    console.log('uhoh')
+    console.log(user)
     if (user && user.getIdToken) {
       // Refresh user token, in case they are requesting verification
       // immediately after signing in for the first time.
+      console.log('hey')
       await user.getIdToken(true);
+
+      console.log('we get here?')
 
       // request verification
       const result = await requestVerification({
@@ -65,6 +70,7 @@ const FirstLogin = () => {
         setRequestError(true);
       }
     }
+    console.log('uhm')
   }
 
   const initialName = (user && user.displayName) ? user.displayName : '';
@@ -72,11 +78,11 @@ const FirstLogin = () => {
   return user === null ? <div /> : (
     <Container>
       <Row className="justify-content-center">
-        <Col xs={12} md={8} className="justify-content-center my-3">
+        <Col xs={11} sm={9} className="justify-content-center my-3">
           <h1 className="text-center">Welcome!</h1>
         </Col>
         {requestError && requestErrorAlert}
-        <Col xs={12} md={8}>
+        <Col xs={11} sm={9}>
           <p className="lead">
             Before you can use the cool parts of Resident 51, you'll need
             to be verified by an executive member of your hall. Fortunately,
@@ -84,7 +90,7 @@ const FirstLogin = () => {
             to go.
           </p>
         </Col>
-        <Col xs={12} md={8}>
+        <Col xs={12} sm={9}>
           <FirstLoginForm onSubmit={onSubmit} name={initialName} />
         </Col>
         {requestError && requestErrorAlert}

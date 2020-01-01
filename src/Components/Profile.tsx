@@ -50,23 +50,6 @@ const Profile = () => {
     </Container>
   );
 
-  const verificationRequests = !!permissions && permissions >= 3 && (
-    <R51Card>
-      <R51Card.Header>Verification Requests</R51Card.Header>
-      <R51Card.Body>
-        {usersRequestingVerification.length ?
-        <ul>
-          {usersRequestingVerification.map(request => (
-            <li key={request.uid}>
-              <span className="lead">{request.displayName}</span>
-              <Button onClick={() => verifyUser({ email: request.email })}>Verify</Button>
-            </li>
-          ))}
-        </ul> : 'No requests.'}
-      </R51Card.Body>
-    </R51Card>
-  );
-
   return (
     <Container fluid={!!user}>
       {user === null ? <h1>Loading...</h1> :
@@ -76,17 +59,40 @@ const Profile = () => {
           </Col>
           <Col xs={12} md={7}>
             <Container>
-              <h1>Your Dashboard</h1>
+              <h1 className="text-center mb-4">
+                {user.permissions > 2 ? 'Admin' : 'Your'} Dashboard
+              </h1>
             </Container>
-            {verificationRequests}
-            <R51Card>
-              <R51Card.Header>Event Drafts</R51Card.Header>
-              <R51Card.Body>wow</R51Card.Body>
-            </R51Card>
-            <R51Card>
-              <R51Card.Header>Favorited Events</R51Card.Header>
-              <R51Card.Body>great</R51Card.Body>
-            </R51Card>
+            {(() => {
+              if (!!permissions && permissions) {
+                return (
+                  <R51Card>
+                    <R51Card.Header>Verification Requests</R51Card.Header>
+                    <R51Card.Body>
+                      {usersRequestingVerification.length ?
+                        <ul>
+                          {usersRequestingVerification.map(request => (
+                            <li key={request.uid}>
+                              <span className="lead">{request.displayName}</span>
+                              <Button onClick={() => verifyUser({ email: request.email })}>Verify</Button>
+                            </li>
+                          ))}
+                        </ul> : 'No requests.'}
+                    </R51Card.Body>
+                  </R51Card>
+                )
+              } else {
+                return (
+                  <Row className="justify-content-center">
+                    <Col className="text-center" xs={12}>
+                      <i className="lead">
+                        We're still working on this part! But uhhh... did we mention you look great today?
+                      </i>
+                    </Col>
+                  </Row>
+                )
+              }
+            })()}
           </Col>
         </Row>}
     </Container>
