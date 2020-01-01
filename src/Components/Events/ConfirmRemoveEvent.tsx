@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { EventR51 } from '../../Types/';
 
@@ -16,7 +16,7 @@ type ConfirmRemoveEventProps = {
 const ConfirmRemoveEvent = (props: ConfirmRemoveEventProps) => {
   const { handleConfirm, handleCancel, event } = props;
   return (
-    <Fragment>
+    <>
       <h1>Delete this event?</h1>
       <EventList events={[event]} />
       <Row className="justify-content-end">
@@ -27,7 +27,7 @@ const ConfirmRemoveEvent = (props: ConfirmRemoveEventProps) => {
           <Button size="lg" onClick={handleConfirm} variant="danger">Delete Event</Button>
         </Col>
       </Row>
-    </Fragment>
+    </>
   )
 };
 

@@ -1,16 +1,16 @@
 import React from "react";
 
-import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 import { FieldProps } from "formik";
 
 import { FirstLoginFormValues } from '../FirstLoginForm';
+import AlertInFormer from '../../Layout/AlertInFormer';
 
 const ResidentName = (props: FieldProps<FirstLoginFormValues>) => {
   const { form: { values, touched, errors }, field } = props;
 
   return (
-    <>
+    <AlertInFormer errors={errors} touched={touched} name="name">
       <Form.Group controlId="residentName">
         <Form.Label>Display name:</Form.Label>
         <Form.Control
@@ -28,10 +28,7 @@ const ResidentName = (props: FieldProps<FirstLoginFormValues>) => {
           it was, you can change it here to something your president will recognize.
         </Form.Text>
       </Form.Group>
-      {errors.name && touched.name && (
-        <Alert variant={"danger"}>{errors.name}</Alert>
-      )}
-    </>
+    </AlertInFormer>
   )
 };
 

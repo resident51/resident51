@@ -1,15 +1,16 @@
-// import React, { useState, useEffect, useContext, Fragment } from "react";
-import React, { useState, useEffect, Fragment, useContext } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 
 import { EventsContext } from "../../../Contexts/Events";
 
-import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
 import { FieldProps } from 'formik';
 import { EventFormValues } from '../EventForm';
+import AlertInFormer from '../../Layout/AlertInFormer';
+
+// DV: I fucking hate this component if anyone finds a better way to do it please tell me
 
 const EventLocationInput = (props: FieldProps<EventFormValues>) => {
   const { form: { values, errors, touched }, field } = props;
@@ -30,14 +31,14 @@ const EventLocationInput = (props: FieldProps<EventFormValues>) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const otherEnabledNote = otherEnabled &&
+  const otherEnabledNote = useMemo(() => otherEnabled &&
     <p className="mt-1 font-italic font-weight-light small">
       *Note: if your event is somewhere like "Reiger dining room" or "Crawford fountain",
       it's better to use the options above. Provide details in your description instead!
-    </p>
+    </p>, [otherEnabled])
 
   return (
-    <Fragment>
+    <AlertInFormer errors={errors} touched={touched} name="location">
       <Form.Group>
         <Form.Label>Where will this event be located?</Form.Label>
         <Row>
@@ -95,10 +96,7 @@ const EventLocationInput = (props: FieldProps<EventFormValues>) => {
         </Row>
         {otherEnabledNote}
       </Form.Group>
-      {errors.location && touched.location && (
-        <Alert variant={"danger"}>{errors.location}</Alert>
-      )}
-    </Fragment>
+    </AlertInFormer>
   );
 };
 

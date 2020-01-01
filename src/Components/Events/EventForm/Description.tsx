@@ -1,16 +1,16 @@
-import React, { Fragment } from "react";
+import React from "react";
 
-import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 
 import { FieldProps } from 'formik';
 import { EventFormValues } from '../EventForm';
+import AlertInFormer from '../../Layout/AlertInFormer';
 
 const EventDescriptionInput = (props: FieldProps<EventFormValues>) => {
   const { form: { values, touched, errors }, field } = props;
 
   return (
-    <Fragment>
+    <AlertInFormer errors={errors} touched={touched} name="description">
       <Form.Group controlId="eventDescription">
         <Form.Label>Event Description:</Form.Label>
         <Form.Control
@@ -24,10 +24,7 @@ const EventDescriptionInput = (props: FieldProps<EventFormValues>) => {
           placeholder="A few sentences should do the trick! What can attendees expect?"
         />
       </Form.Group>
-      {errors.description && touched.description && (
-        <Alert variant={"danger"}>{errors.description}</Alert>
-      )}
-    </Fragment>
+    </AlertInFormer>
   )
 };
 

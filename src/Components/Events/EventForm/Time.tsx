@@ -1,16 +1,16 @@
-import React, { Fragment } from "react";
+import React from "react";
 
-import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 
 import { FieldProps } from "formik";
 import { EventFormValues } from '../EventForm';
+import AlertInFormer from '../../Layout/AlertInFormer';
 
 const EventTimeInput = (props: FieldProps<EventFormValues>) => {
   const { form: { values, touched, errors }, field } = props;
 
   return (
-    <Fragment>
+    <AlertInFormer errors={errors} touched={touched} name="time">
       <Form.Group>
         <Form.Label>What time will this event take place?</Form.Label>
         <Form.Control
@@ -21,10 +21,7 @@ const EventTimeInput = (props: FieldProps<EventFormValues>) => {
           type="time"
         />
       </Form.Group>
-      {errors.time && touched.time && (
-        <Alert variant={"danger"}>{errors.time}</Alert>
-      )}
-    </Fragment>
+    </AlertInFormer>
   );
 };
 

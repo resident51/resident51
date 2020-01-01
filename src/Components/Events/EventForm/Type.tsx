@@ -1,23 +1,23 @@
-import React, { useContext, Fragment } from "react";
+import React, { useContext } from "react";
 
 import { EventType } from '../../../Types/';
 
 import { EventsContext } from "../../../Contexts/Events";
 
-import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
 import { FieldProps } from 'formik';
 import { EventFormValues } from '../EventForm';
+import AlertInFormer from '../../Layout/AlertInFormer';
 
 const EventTypeInput = (props: FieldProps<EventFormValues>) => {
   const { form: { values, touched, errors }, field } = props;
   const { eventTypes } = useContext(EventsContext);
 
   return (
-    <Fragment>
+    <AlertInFormer errors={errors} touched={touched} name="type">
       <Form.Group>
         <Form.Label>What type of event is this?</Form.Label>
         <Row>
@@ -42,10 +42,7 @@ const EventTypeInput = (props: FieldProps<EventFormValues>) => {
             })}
         </Row>
       </Form.Group>
-      {errors.type && touched.type && (
-        <Alert variant={"danger"}>{errors.type}</Alert>
-      )}
-    </Fragment>
+    </AlertInFormer>
   );
 };
 

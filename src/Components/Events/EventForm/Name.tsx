@@ -1,16 +1,16 @@
-import React, { Fragment } from "react";
+import React from "react";
 
-import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 
 import { FieldProps } from 'formik';
 import { EventFormValues } from '../EventForm';
+import AlertInFormer from '../../Layout/AlertInFormer';
 
 const EventNameInput = (props: FieldProps<EventFormValues>) => {
   const { form: { values, touched, errors }, field } = props;
 
   return (
-    <Fragment>
+    <AlertInFormer errors={errors} touched={touched} name="name">
       <Form.Group controlId="eventName">
         <Form.Label>Event Name</Form.Label>
         <Form.Control
@@ -23,14 +23,10 @@ const EventNameInput = (props: FieldProps<EventFormValues>) => {
           placeholder="Enter event name"
         />
         <Form.Text className="text-muted">
-          Limit 50 Characters ({50 - (values.name ? values.name.length : 0)}{" "}
-          remaining)
-      </Form.Text>
+          Limit 50 Characters ({50 - (values.name ? values.name.length : 0)} remaining)
+        </Form.Text>
       </Form.Group>
-      {errors.name && touched.name && (
-        <Alert variant={"danger"}>{errors.name}</Alert>
-      )}
-    </Fragment>
+    </AlertInFormer>
   )
 };
 

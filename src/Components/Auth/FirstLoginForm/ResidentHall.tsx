@@ -2,22 +2,21 @@ import React, { useContext } from "react";
 
 import { EventsContext } from "../../../Contexts/Events";
 
-import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { FieldProps } from "formik";
 
 import { FirstLoginFormValues } from '../FirstLoginForm';
+import AlertInFormer from '../../Layout/AlertInFormer';
 
 const ResidentHall = (props: FieldProps<FirstLoginFormValues>) => {
   const { form: { values, touched, errors }, field } = props;
   const { halls } = useContext(EventsContext);
   
   return (
-    <>
+    <AlertInFormer errors={errors} touched={touched} name="hall">
       <Form.Group>
-        {/*as="legend" was used here */}
         <Form.Label>Choose your hall:</Form.Label>
         <Row>
           {halls.map(hall => (
@@ -37,10 +36,7 @@ const ResidentHall = (props: FieldProps<FirstLoginFormValues>) => {
           ))}
         </Row>
       </Form.Group>
-      {errors.hall && touched.hall && (
-        <Alert variant={"danger"}>{errors.hall}</Alert>
-      )}
-    </>
+    </AlertInFormer>
   )
 };
 
