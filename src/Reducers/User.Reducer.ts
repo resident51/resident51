@@ -20,7 +20,6 @@ export const loggedOutUser: UserInterface = {
 };
 
 const userReducer = (currentUser: User, action: UserAction): User => {
-  console.log(action.type);
   switch (action.type) {
     case "LOGGED_OUT":
       return loggedOutUser;

@@ -31,7 +31,7 @@ const EventList = (props: EventListProps) => {
         .map(event =>
           event &&
           <Event
-            key={event.id}
+            key={`${event.id}_${event.publicStatus.type}`}
             event={event}
             format={eventTypes[event.type]}
           />)}

@@ -18,9 +18,9 @@ const generateValidationSchema = (
     .min(20, "Provide some more information! What do attendees need to know?")
     .max(1000, "Keep it under 1000 characters - no need to write the next KU Common Book.")
     .required("Please provide a description."),
-  date: yup.date()
+  date: yup.number()
     .required("Please provide the day the event takes place.")
-    .min(moment().hour(0).minute(1).toDate(), "Please provide the day the event takes place."),
+    .min(moment().hour(0).minute(1).unix(), "Please provide the day the event takes place."),
   time: yup.string()
     .required("Please provide the time the event will take place.")
     .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, "Literally what are you doing."),

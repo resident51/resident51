@@ -25,6 +25,7 @@ import EventFacilitationInput from "./EventForm/Facilitation";
 
 import validationSchema from "./EventForm/validationSchema";
 
+const threeDaysFromNow = Date.now() + 1000 * 60 * 60 * 24 * 3;
 const updatedWarning = (
   <Alert variant="warning"> Someone else just updated this event. If you submit now, those
     changes would be overwritten. Please save your changes and refresh the page.</Alert>
@@ -57,8 +58,7 @@ const EventFormComponent = (props: EventFormProps) => {
   const { eventTypes, halls } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 
-  const threeDaysFromNow = Date.now() + 1000 * 60 * 60 * 24 * 3;
-  const dateTimeMoment = useMemo(() => moment(event.dateTime || threeDaysFromNow), [event.dateTime]);
+  const dateTimeMoment = moment(event.dateTime || threeDaysFromNow);
 
   const formValidationSchema = useMemo(() => validationSchema({ halls, eventTypes }), [halls, eventTypes]);
 

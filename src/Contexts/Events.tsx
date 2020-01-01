@@ -24,12 +24,12 @@ export const EventsContext = createContext({} as EventContextProps);
 type props = { children: React.ReactNode };
 
 export const EventsProvider = (props: props) => {
-  const [events, dispatchToEvents] = useReducer(EventsReducer, null);
-
   const { user } = useContext(UserContext);
+  const [events, dispatchToEvents] = useReducer(EventsReducer, null);
 
   const hall = user && user.hall;
   const formatSubmittedEvent = formatSubmittedEventByHall(hall || 'Miller'); // #TODO: this is fucking awful
+  const queryPerms = user ? user.permissions : -1;
 
   /**
    * Fetch events from Cloud Firestore based on User's permissions.
@@ -66,7 +66,7 @@ export const EventsProvider = (props: props) => {
         return querySnapshot(query);
       }
     }
-  }, [user]);
+  }, [queryPerms]);
 
   return (
     <EventsContext.Provider value={{

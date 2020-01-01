@@ -55,7 +55,7 @@ export const formatSubmittedEventByHall = (hall: Hall) => (event: EventFormType)
   // destructure date and time off of event
   const { date, time, ...CFSEvent} = event;
   const [hour, minute] = time.split(':').map(num => +num);
-  const momentDate = moment(date);
+  const momentDate = moment.unix(date);
 
   return {
     ...CFSEvent,
