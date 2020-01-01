@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { Events } from '../../Reducers/Events.Reducer';
 
-import { EventTypeFilterState } from '../../Hooks/useEventTypes';
-
 import { EventsContext } from "../../Contexts/Events";
+import { UserContext } from '../../Contexts/User';
+
+import { EventTypeFilterState } from '../../Hooks/useEventTypes';
 
 import Accordion from 'react-bootstrap/Accordion';
 import Event from './Event';
@@ -12,10 +13,13 @@ type EventListProps = { events: Events, displayTypes?: EventTypeFilterState };
 const EventList = (props: EventListProps) => {
   const { events, displayTypes } = props;
   const { eventTypes } = useContext(EventsContext);
+  const { user } = useContext(UserContext);
 
   if (events === null) {
     return <h5><i>Loading events......</i></h5>
   }
+
+  const showModify = !!user && user.permissions > 1;
 
   // Check if any types are being displayed and an event is of that type
   const anyToShow = displayTypes
@@ -31,6 +35,7 @@ const EventList = (props: EventListProps) => {
         .map(event =>
           event &&
           <Event
+            showModify={showModify}
             key={`${event.id}_${event.publicStatus.type}`}
             event={event}
             format={eventTypes[event.type]}

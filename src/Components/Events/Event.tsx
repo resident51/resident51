@@ -12,6 +12,7 @@ import Row from 'react-bootstrap/Row'
 import { Link } from "react-router-dom";
 
 type props = { 
+  showModify: boolean
   event: EventR51,
   format: EventFormat,
 }
@@ -26,6 +27,8 @@ const Event = (props: props) => {
 
   const { id, name, location, description, dateTime } = event;
   const dateTimeMoment = moment(dateTime);
+
+  const { showModify } = props;
 
   return (
     <Card>
@@ -52,21 +55,23 @@ const Event = (props: props) => {
                 {location}
               </h5>
             </Col>
-            <Col xs="auto" className="event-admin-config">
-              <Link
-                to={{ pathname: `/events/edit/${id}`, state: { event } }}
-                style={{ color: "slategray" }}
-              >
-                Edit
-              </Link>
-              <span>  &middot;  </span>
-              <Link
-                to={{ pathname: `/events/edit/${id}`, state: { event } }}
-                style={{ color: "red" }}
-              >
-                Delete
-            </Link>
-            </Col>
+            {showModify &&
+              <Col xs="auto" className="event-admin-config">
+                <Link
+                  to={{ pathname: `/events/edit/${id}`, state: { event } }}
+                  style={{ color: "slategray" }}
+                >
+                  Edit
+                </Link>
+                <span>  &middot;  </span>
+                <Link
+                  to={{ pathname: `/events/edit/${id}`, state: { event } }}
+                  style={{ color: "red" }}
+                >
+                  Delete
+                </Link>
+              </Col>
+            }
           </Row>
           <Row className="justify-content-between">
             <Col>
