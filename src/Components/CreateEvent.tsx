@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import { EventForm as EventFormType } from '../Types/';
 
@@ -15,10 +15,6 @@ import EventCreationFAQ from "./Events/EventCreationFAQ";
 
 const CreateEvent = () => {
   const history = useHistory();
-
-  useEffect(() => {
-    document.title = "CreateEvent | Resident 51";
-  });
 
   const { dispatchToEvents, formatSubmittedEvent } = useContext(EventsContext);
 

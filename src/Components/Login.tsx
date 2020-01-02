@@ -22,8 +22,6 @@ const Login = () => {
       return;
     }
 
-    document.title = "Log in | Resident 51";
-
     ui.start('#firebaseui-auth-container', {
       callbacks: {
         signInSuccessWithAuthResult: function (authResult) {
@@ -38,6 +36,7 @@ const Login = () => {
         // Not sure why this isn't successful? 
         // signInFailure: error => {
         //   // TODO: handle errors gracefully
+        //   // Actually do I even need that? I think it fails gracefully enough.
         //   history.push('/login', { error });
         //   return false;
         // }

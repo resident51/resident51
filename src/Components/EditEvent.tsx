@@ -19,10 +19,6 @@ import { EventForm as EventFormType } from "../Types/";
 const EditEvent = () => {
   const history = useHistory();
 
-  useEffect(() => {
-    document.title = "Edit Event | Resident 51";
-  });
-  
   const { events, dispatchToEvents, formatSubmittedEvent } = useContext(EventsContext);
   
   const { id } = useParams();

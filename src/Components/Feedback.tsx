@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Container  from "react-bootstrap/Container";
 import Row        from "react-bootstrap/Row";
@@ -15,12 +15,7 @@ import StaffForm    from "./Feedback/Staff";
 import EventForm    from "./Feedback/Event";
 import OtherForm    from "./Feedback/Other";
 
-const Feedback = () => {
-  useEffect(() => {
-    document.title = "Feedback | Resident 51";
-  });
-
-  return (
+const Feedback = () => (
   <Container fluid={true}>
     <Row className="justify-content-md-center">
       <Col sm={12} md={4}>
@@ -67,6 +62,6 @@ const Feedback = () => {
       </Col>
     </Row>
   </Container>
-)};
+);
 
 export default Feedback;

@@ -18,7 +18,6 @@ const Profile = () => {
   const history = useHistory();
 
   useEffect(() => {
-    document.title = "Profile | Resident 51";
     if (user && !user.displayName) {
       history.replace('/login');
     }

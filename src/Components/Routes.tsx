@@ -12,7 +12,7 @@ import LogIn from "./Login";
 import FirstLogin from "./FirstLogin";
 import PrivacyPolicy from './Policy/PrivacyPolicy'
 import TermsOfService from './Policy/TermsOfService';
-import Profile from './Profile'; // TS: a lot
+import Profile from './Profile';
 import LogOut from "./Logout";
 import NotFound from "./NotFound";
 

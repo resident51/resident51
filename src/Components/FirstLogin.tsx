@@ -30,8 +30,6 @@ const FirstLogin = () => {
 
   const userPerms = user && user.permissions
   useEffect(() => {
-    document.title = "First Log-in | Resident 51";
-
     // Waiting for user info from Firebase Auth - wait.
     if (user === null) return;
 
@@ -45,15 +43,12 @@ const FirstLogin = () => {
   }, [history, user, userPerms]);
 
   const onSubmit = async (request: verificationRequest) => {
-    console.log('uhoh')
-    console.log(user)
     if (user && user.getIdToken) {
       // Refresh user token, in case they are requesting verification
       // immediately after signing in for the first time.
-      console.log('hey')
+      // #TODO okay turns out I need to get the login token earlier. 
+      // can probably just be done in a useEffect call on mount.
       await user.getIdToken(true);
-
-      console.log('we get here?')
 
       // request verification
       const result = await requestVerification({
@@ -70,7 +65,6 @@ const FirstLogin = () => {
         setRequestError(true);
       }
     }
-    console.log('uhm')
   }
 
   const initialName = (user && user.displayName) ? user.displayName : '';

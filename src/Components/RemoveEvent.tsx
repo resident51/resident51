@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import { EventsContext } from "../Contexts/Events";
 
@@ -13,9 +13,6 @@ import EditEventNotFound from './Events/EventNotFound';
 import ConfirmRemoveEvent from './Events/ConfirmRemoveEvent';
 
 const RemoveEvent = () => {
-  useEffect(() => {
-    document.title = "Remove Event | Resident 51";
-  });
 
   const history = useHistory();
 
