@@ -11,6 +11,11 @@ import HeaderLink from "./HeaderLink";
 const Header = () => {
 
   const { user } = useContext(UserContext);
+  const action = user === null
+    ? <div/>
+    : user && user.uid
+      ? <HeaderLink to="/profile/">Profile</HeaderLink>
+      : <HeaderLink to="/login/">Log In</HeaderLink>
 
   return (
     <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" className="mb-3">
@@ -23,15 +28,7 @@ const Header = () => {
             <HeaderLink to="/feedback">Feedback</HeaderLink>
           </Nav>
           <Nav>
-            {(() => {
-              if(user === null) {
-                return <div />
-              } else if (user && user.uid) {
-                return <HeaderLink to="/profile/">Profile</HeaderLink>
-              } else {
-                return <HeaderLink to="/login/">Log In</HeaderLink>
-              }
-            })()}
+            {action}
           </Nav>
         </Navbar.Collapse>
       </Container>

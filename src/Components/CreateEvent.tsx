@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 
 import { EventForm as EventFormType } from '../Types/';
 
@@ -18,11 +18,15 @@ const CreateEvent = () => {
 
   const { dispatchToEvents, formatSubmittedEvent } = useContext(EventsContext);
 
-  const onSubmit = (event: EventFormType) => {
+  // After event is validated, dispatch the event to firebase and redirect to
+  // the events page.
+  const onSubmit = useCallback((event: EventFormType) => {
     const eventToDispatch = formatSubmittedEvent(event);
+    // (jfc this works but it's horrendous practice)
+    // #TODO use a useFirebase hook, then wait for success from firebase before redirect
     dispatchToEvents({ type: "ADD", event: eventToDispatch });
     history.push("/events", { update: 'Event created!'});
-  };
+  }, [formatSubmittedEvent, dispatchToEvents, history]);
 
   return (
     <Container fluid={true}>

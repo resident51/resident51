@@ -34,27 +34,22 @@ const Profile = () => {
         permissions === 3 ? 'Admin' : 'User';
 
   const verifyLink = <p><i>If you haven't already, <Link to="/first-login">request verification</Link>.</i></p>
-  const optionalLink = !permissions ? verifyLink : <span />;
-
-  const sideHeader = (
-    <Container>
-      <Row>
-        <Col>
-          <h1>{displayName}</h1>
-          <h3>{!!hall ? hall : <i>No hall selected</i>}</h3>
-          <h3>{status}</h3>
-          {optionalLink}
-        </Col>
-      </Row>
-    </Container>
-  );
 
   return (
     <Container fluid={!!user}>
       {user === null ? <h1>Loading...</h1> :
         <Row>
           <Col xs={12} md={4}>
-            {sideHeader}
+            <Container>
+              <Row>
+                <Col>
+                  <h1>{displayName}</h1>
+                  <h3>{!!hall ? hall : <i>No hall selected</i>}</h3>
+                  <h3>{status}</h3>
+                  {!!permissions && verifyLink}
+                </Col>
+              </Row>
+            </Container>
           </Col>
           <Col xs={12} md={7}>
             <Container>

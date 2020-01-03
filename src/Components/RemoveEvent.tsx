@@ -31,11 +31,11 @@ const RemoveEvent = () => {
   }
 
   const innerComponent = (events === null)
-  ? <h1>Loading event...</h1>
-  : eventToRemove ? <ConfirmRemoveEvent handleConfirm={handleConfirm}
-                                        handleCancel={handleCancel}
-                                        event={eventToRemove}/>
-                  : <EditEventNotFound /> ;
+    ? <h1>Loading event...</h1>
+    : eventToRemove ? <ConfirmRemoveEvent handleConfirm={handleConfirm}
+                                          handleCancel={handleCancel}
+                                          event={eventToRemove}/>
+                    : <EditEventNotFound /> ;
 
   return (
     <Container fluid={true}>
