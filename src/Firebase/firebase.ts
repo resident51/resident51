@@ -22,6 +22,7 @@ export const store = firebase.firestore();
 export const usersCollection = store.collection('users');
 export const eventsCollection = store.collection('events');
 export const currentEvents = eventsCollection.where('dateTime', ">", new Date()).orderBy('dateTime');
+export const feedbackCollection = store.collection('feedback');
 
 // Authentication objects
 export const auth = firebase.auth();

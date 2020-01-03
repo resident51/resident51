@@ -1,41 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { withFormik, Form, Field, FormikValues, FormikErrors, FormikTouched } from "formik";
-import * as Yup from 'yup';
+import { useHistory } from 'react-router-dom';
 
-type props = { values: FormikValues, errors: FormikErrors<FormikValues>, touched: FormikTouched<FormikValues> };
-const WebsiteForm = (props: props) => {
-  const { errors, touched } = props;
+import { firestore } from 'firebase';
+
+import { Formik, FastField } from "formik";
+import Alert from 'react-bootstrap/Alert';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+import Subject from './FeedbackInputs/Subject';
+import Message from './FeedbackInputs/Message';
+import validationSchema from './feedbackValidationSchema';
+
+export type WebsiteFeedbackFormValues = { subject: string, message: string };
+
+const formInitialValues = { subject: '', message: '' };
+const firebaseErrorAlert = (
+  <Alert variant="warning">
+    Bad news bears: Your feedback didn't go through! Don't worry, just submit some feedback about it and we-... oh right.
+  </Alert>
+);
+
+type WebsiteFormProps = { feedbackCollection: firestore.CollectionReference }
+const WebsiteForm = (props: WebsiteFormProps) => {
+  const [firebaseError, setFirebaseError] = useState(false);
+  const history = useHistory();
+
+  const onSubmit = (feedback: WebsiteFeedbackFormValues) => {
+    props.feedbackCollection.add(feedback).then(() => {
+      history.push('/events', { update: 'Feedback submitted! Thanks pal!' });
+    }).catch(() => {
+      setFirebaseError(true);
+    });
+  }
+
   return (
-    <Form>
-      <h1>Site</h1>
-      <div>
-        {touched.subject && errors.subject && <p>{errors.subject}</p>}
-        <Field type="text" name="subject" placeholder="Subject" />
-      </div>
-      <div>
-        {touched.feedback && errors.feedback && <p>{errors.feedback}</p>}
-        <Field type="textarea" name="feedback" placeholder="Your submission..." />
-      </div>
-      <button type="submit">Submit</button>
-    </Form>
-  )
+    <Formik
+      initialValues={formInitialValues}
+      onSubmit={onSubmit}
+      validationSchema={validationSchema}
+    >
+      {({ handleSubmit, isSubmitting }) => (
+        <>
+          {firebaseError && firebaseErrorAlert}
+          <Form noValidate onSubmit={handleSubmit}>
+            {/* <h3 className="mt-3 mb-2 text-center">Subject</h3> */}
+            <FastField name="subject" component={Subject} />
+
+            {/* <h3 className="my-2 text-center">Message</h3> */}
+            <FastField name="message" component={Message} />
+
+            <Row className="justify-content-center my-5">
+              <Col xs={8}>
+                <Button block variant="primary" size="lg" type="submit" disabled={isSubmitting}>
+                  Submit Feedback
+              </Button>
+              </Col>
+            </Row>
+          </Form>
+        </>
+      )}
+    </Formik>
+  );
 };
 
-const WebsiteForm_Formik = withFormik({
-  mapPropsToValues() {
-    return {
-      subject: "",
-      feedback: ""
-    };
-  },
-  validationSchema: Yup.object().shape({
-    subject: Yup.string().required(),
-    feedback: Yup.string().required()
-  }),
-  handleSubmit(values) {
-    console.log(values);
-  },
-})(WebsiteForm);
-
-export default WebsiteForm_Formik;
+export default WebsiteForm;
