@@ -4,6 +4,9 @@ import { EventR51, EventFormat } from '../../Types/';
 
 import moment from 'moment';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGlobeAmericas, faLock } from '@fortawesome/free-solid-svg-icons'
+
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
@@ -17,18 +20,21 @@ type props = {
   format: EventFormat,
 }
 const Event = (props: props) => {
-  const event = (props.event && props.event.name) 
-                  ? props.event
-                  : { name: 'Event data error' } as EventR51;
+  const event = (props.event && props.event.name)
+    ? props.event
+    : { name: 'Event data error' } as EventR51;
 
   const format = (props.format && props.format.color)
-                    ? props.format
-                    : { color: 'black', formal: 'Event formatting error' } as EventFormat;
+    ? props.format
+    : { color: 'black', formal: 'Event formatting error' } as EventFormat;
 
   const { id, name, location, description, dateTime } = event;
   const dateTimeMoment = moment(dateTime);
 
   const { showModify } = props;
+
+  const icon = event.publicStatus.type === 'public' ? faGlobeAmericas : faLock;
+  const publicIcon = <FontAwesomeIcon size="sm" icon={icon} />;
 
   return (
     <Card>
@@ -42,7 +48,14 @@ const Event = (props: props) => {
             <strong>{name}</strong>
           </Col>
           <Col className="d-block" md="auto" xs={12}>
-            <i>{dateTimeMoment.format("MMMM Do, YYYY")}</i>
+            <Row className="justify-content-between">
+              <Col xs="auto" className="pr-0">
+                <i>{dateTimeMoment.format("MMMM Do, YYYY")}</i>
+              </Col>
+              <Col xs="auto">
+                {publicIcon}
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Accordion.Toggle>
