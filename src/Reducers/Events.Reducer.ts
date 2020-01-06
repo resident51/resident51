@@ -1,9 +1,7 @@
 import { eventsCollection } from '../Firebase/firebase';
 
-import { EventR51, EventId, EventToCFS } from '../Types/';
+import { EventR51, EventId, EventToCFS, Events } from '../Types/';
 
-export type Event = EventR51;
-export type Events = null | Event[];
 export type EventActionType =
   | 'EMPTY'
   | 'ADDED'
@@ -14,9 +12,9 @@ export type EventActionType =
   | 'REMOVE';
 export type EventAction =
   | { type: 'EMPTY' }
-  | { type: 'ADDED', event: Event }
-  | { type: 'MODIFIED', event: Event }
-  | { type: 'REMOVED', event: Event }
+  | { type: 'ADDED', event: EventR51 }
+  | { type: 'MODIFIED', event: EventR51 }
+  | { type: 'REMOVED', event: EventR51 }
   | { type: 'ADD', event: EventToCFS }
   | { type: 'MODIFY', event: EventToCFS }
   | { type: 'REMOVE', id: EventId };

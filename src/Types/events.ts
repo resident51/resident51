@@ -1,4 +1,3 @@
-import { Moment } from 'moment';
 import { firestore } from 'firebase';
 
 import { Hall } from './common';
@@ -41,6 +40,7 @@ export interface EventBase {
 
 // The main, site-wide Event interface.
 export interface EventR51 extends EventBase {};
+export type Events = null | EventR51[];
 
 // Cloud Firestore event types
 export interface CFSEvent extends Omit<EventBase, 'dateTime' | 'publicStatus'> {

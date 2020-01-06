@@ -11,7 +11,7 @@ import Row from 'react-bootstrap/Row'
 
 import { Link } from "react-router-dom";
 
-type props = { 
+type props = {
   showModify: boolean
   event: EventR51,
   format: EventFormat,

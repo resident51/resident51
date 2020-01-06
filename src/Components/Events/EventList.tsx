@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Events } from '../../Reducers/Events.Reducer';
+import { Events } from '../../Types';
 
 import { EventsContext } from "../../Contexts/Events";
 import { UserContext } from '../../Contexts/User';
