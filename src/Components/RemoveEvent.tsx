@@ -9,34 +9,24 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import EventCreationFAQ from "./Events/EventCreationFAQ";
-import EditEventNotFound from './Events/EventNotFound';
+import EventNotFound from './Events/EventNotFound';
 import ConfirmRemoveEvent from './Events/ConfirmRemoveEvent';
 
 const RemoveEvent = () => {
-
-  const history = useHistory();
-
   const { events, dispatchToEvents } = useContext(EventsContext);
 
+  const history = useHistory();
   const { id = '' } = useParams();
-  const eventToRemove = (events || []).find(e => '' + e.id === '' + id);
 
+  if (events === null) return <h1>Loading event...</h1>;
+
+  const eventToRemove = (events || []).find(e => '' + e.id === '' + id);
   const handleConfirm = () => {
     dispatchToEvents({ type: 'REMOVE', id });
     history.push("/events", { update: 'Event removed.' });
   }
 
-  const handleCancel = () => {
-    history.push("/events");
-  }
-
-  const innerComponent = (events === null)
-    ? <h1>Loading event...</h1>
-    : eventToRemove ? <ConfirmRemoveEvent handleConfirm={handleConfirm}
-                                          handleCancel={handleCancel}
-                                          event={eventToRemove}/>
-                    : <EditEventNotFound /> ;
-
+  // #TODO change EventCreationFAQ to something less, uh, creation-y
   return (
     <Container fluid={true}>
       <Row className="justify-content-md-center">
@@ -44,7 +34,14 @@ const RemoveEvent = () => {
           <EventCreationFAQ />
         </Col>
         <Col sm={12} md={7}>
-          {innerComponent}
+          {eventToRemove
+            ? <ConfirmRemoveEvent
+                handleConfirm={handleConfirm}
+                handleCancel={() => history.push("/events")}
+                event={eventToRemove}
+              />
+            : <EventNotFound />
+          }
         </Col>
       </Row>
     </Container>

@@ -65,7 +65,7 @@ const Event = (props: props) => {
                 </Link>
                 <span>  &middot;  </span>
                 <Link
-                  to={{ pathname: `/events/edit/${id}`, state: { event } }}
+                  to={{ pathname: `/events/delete/${id}`, state: { event } }}
                   style={{ color: "red" }}
                 >
                   Delete

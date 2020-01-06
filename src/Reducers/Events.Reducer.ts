@@ -45,7 +45,7 @@ const eventsReducer = (events: Events | null, action: EventAction): Events => {
       eventsCollection.doc(action.event.id).set(action.event);
       return eventsLast;
     case "REMOVE":
-      eventsCollection.doc(action.id).delete();
+      eventsCollection.doc(action.id).update('publicStatus.type', 'unpublished');
       return eventsLast;
     default:
       return eventsLast;
