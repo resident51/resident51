@@ -46,7 +46,7 @@ const Profile = () => {
                   <h1>{displayName}</h1>
                   <h3>{!!hall ? hall : <i>No hall selected</i>}</h3>
                   <h3>{status}</h3>
-                  {!!permissions && verifyLink}
+                  {permissions === 0 && verifyLink}
                 </Col>
               </Row>
             </Container>
