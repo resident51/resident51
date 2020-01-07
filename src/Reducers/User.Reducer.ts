@@ -16,6 +16,7 @@ export const loggedOutUser: UserInterface = {
   displayName: null,
   email: null,
   permissions: 0,
+  getIdToken: (forceRefresh?: boolean) => new Promise(r => r('')),
   // #TODO logged out user should have email: '', permissions: 0, etc.
   // null should only be used for when we are waiting for data to be fetched.
 };

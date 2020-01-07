@@ -1,13 +1,12 @@
-import { firestore } from 'firebase'
+import { firestore, User as FirebaseUser } from 'firebase'
 import { Hall } from './common';
 
-export interface UserInterface {
+export interface UserInterface extends Pick<FirebaseUser, 'getIdToken'> {
   uid: string,
   displayName: string | null,
   email: string | null,
   permissions: 0 | 1 | 2 | 3,
   hall?: Hall | null,
-  getIdToken?: (forceRefresh?: boolean | undefined) => Promise<string>;
   verified?: boolean,
   verificationRequests?: firestore.Query | null,
 };

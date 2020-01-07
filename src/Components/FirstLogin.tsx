@@ -27,8 +27,10 @@ const FirstLogin = () => {
   const { user } = useContext(UserContext);
   const history = useHistory();
   const [requestError, setRequestError] = useState(false);
+  const [tokenIsRefreshed, setTokenIsRefreshed] = useState(false);
 
-  const userPerms = user && user.permissions
+  const userPermissions = user && user.permissions;
+  const userTokenCallback = user && user.getIdToken;
   useEffect(() => {
     // Waiting for user info from Firebase Auth - wait.
     if (user === null) return;
@@ -39,11 +41,13 @@ const FirstLogin = () => {
     } else if (user.permissions !== 0) {
       // User logged in, but already verified.
       history.replace('/profile');
+    } else {
+      user.getIdToken(true).then(() => setTokenIsRefreshed(true));
     }
-  }, [history, user, userPerms]);
+  }, [history, user, userPermissions, userTokenCallback]);
 
   const onSubmit = async (request: verificationRequest) => {
-    if (user && user.getIdToken) {
+    if (user) {
       // Refresh user token, in case they are requesting verification
       // immediately after signing in for the first time.
       // #TODO okay turns out I need to get the login token earlier. 
@@ -85,7 +89,7 @@ const FirstLogin = () => {
           </p>
         </Col>
         <Col xs={12} sm={9}>
-          <FirstLoginForm onSubmit={onSubmit} name={initialName} />
+          {tokenIsRefreshed && <FirstLoginForm onSubmit={onSubmit} name={initialName} />}
         </Col>
         {requestError && requestErrorAlert}
       </Row>
