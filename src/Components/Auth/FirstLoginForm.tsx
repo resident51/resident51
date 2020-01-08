@@ -9,20 +9,27 @@ import Form from "react-bootstrap/Form";
 
 import { Formik, FastField } from "formik";
 
-import ResidentName from './FirstLoginForm/ResidentName';
-import ResidentHall from './FirstLoginForm/ResidentHall';
-import ResidentEmail from './FirstLoginForm/ResidentEmail';
+import ResidentName from "./FirstLoginForm/ResidentName";
+import ResidentHall from "./FirstLoginForm/ResidentHall";
+import ResidentEmail from "./FirstLoginForm/ResidentEmail";
 
 import generateResidentValidationSchema from "./FirstLoginForm/residentValidationSchema";
 
-export type FirstLoginFormValues = { email: string, hall: string, name: string };
+export type FirstLoginFormValues = {
+  email: string;
+  hall: string;
+  name: string;
+};
 
-type props = { name: string, onSubmit: (form: FirstLoginFormValues) => void };
-const FirstLoginForm = (props: props) => {
+type FormProps = {
+  name: string;
+  onSubmit: (form: FirstLoginFormValues) => void;
+};
+const FirstLoginForm: React.FunctionComponent<FormProps> = props => {
   const { name, onSubmit } = props;
   const { halls } = useContext(EventsContext);
 
-  const formInitialValues = { name, hall: '', email: '' };
+  const formInitialValues = { name, hall: "", email: "" };
 
   const validationSchema = generateResidentValidationSchema(halls);
 
@@ -32,7 +39,7 @@ const FirstLoginForm = (props: props) => {
       onSubmit={onSubmit}
       validationSchema={validationSchema}
     >
-      {({ handleSubmit, isSubmitting }) => (
+      {({ handleSubmit, isSubmitting }): React.ReactElement => (
         <Form noValidate onSubmit={handleSubmit}>
           <h3 className="mt-5 mb-4 text-center">Did we get your name right?</h3>
           <FastField name="name" component={ResidentName} />

@@ -9,7 +9,8 @@ const me = {
     status: "Alumnus", // update at semester
     major: "Computer Engineering"
   },
-  positions: { // update at semester
+  positions: {
+    // update at semester
     hall: [],
     ashc: [],
     staff: []
@@ -21,8 +22,8 @@ const me = {
   classesThisSemester: [], // update at semester
   textbooks: [
     { title: "big biology", isbn: "2893ruihfsjkalgd", class: "BIO 101" },
-    { title: "super math", isbn: "02uoiafjkn-03kls", class: "MATH 290"},
+    { title: "super math", isbn: "02uoiafjkn-03kls", class: "MATH 290" }
   ]
-}
+};
 
 export default me;

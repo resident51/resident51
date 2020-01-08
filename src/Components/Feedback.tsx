@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import FeedbackFAQ from './Feedback/FeedbackFAQ';
+import FeedbackFAQ from "./Feedback/FeedbackFAQ";
 import WebsiteForm from "./Feedback/Website";
 
-import { feedbackCollection } from '../Firebase/firebase';
+import { feedbackCollection } from "../Firebase/firebase";
 
-const Feedback = () => {
+const Feedback: React.FC = () => {
   return (
     <Container fluid={true}>
       <Row className="justify-content-md-center">

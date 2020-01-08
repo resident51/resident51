@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 // import { EventType } from '../Types/'; // tried coercing type below to EventType...
 
 export type Statuple = [boolean, (next: boolean) => void];
 export interface EventTypeFilterState {
-  [type: string]: Statuple,
+  [type: string]: Statuple;
 }
 /**
  * State for storing the list of filtered/un-filtered event types
  */
-const useEventTypes = () => {
+const useEventTypes = (): EventTypeFilterState => {
   const [social, setSocial] = useState(true);
   const [meal, setMeal] = useState(true);
   const [community, setCommunity] = useState(true);
@@ -24,9 +24,9 @@ const useEventTypes = () => {
     meeting: [meeting, setMeeting],
     alumni: [alumni, setAlumni],
     campus: [campus, setCampus]
-  }
+  };
 
   return displayTypes;
-}
+};
 
 export default useEventTypes;

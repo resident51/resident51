@@ -1,22 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 
 import { EventsContext } from "../Contexts/Events";
-import { UserContext } from '../Contexts/User';
+import { UserContext } from "../Contexts/User";
 
-import useEventTypes from '../Hooks/useEventTypes';
+import useEventTypes from "../Hooks/useEventTypes";
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 import Alert from "react-bootstrap/Alert";
-import Container from 'react-bootstrap/Container';
+import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import ColorKey from './Events/ColorKey';
-import ToCreateEvent from './Events/ToCreateEvent';
-import EventList from './Events/EventList';
+import ColorKey from "./Events/ColorKey";
+import ToCreateEvent from "./Events/ToCreateEvent";
+import EventList from "./Events/EventList";
 
-const Events = () => {
+const Events: React.FC = () => {
   const { events } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 
@@ -30,7 +30,7 @@ const Events = () => {
     <Container fluid={true}>
       <Row className="justify-content-md-end">
         <Col md={8}>
-          <h1 className="text-center mb-4" >Schol-Hall Events</h1>
+          <h1 className="text-center mb-4">Schol-Hall Events</h1>
         </Col>
       </Row>
       <Row className="justify-content-md-center px-lg-4 px-md-2">
@@ -39,12 +39,12 @@ const Events = () => {
           {user && user.permissions > 1 && <ToCreateEvent />}
         </Col>
         <Col sm={12} md={8}>
-          {update && <Alert variant="success">{update}</Alert> }
+          {update && <Alert variant="success">{update}</Alert>}
           <EventList events={events} displayTypes={displayTypes} />
         </Col>
       </Row>
     </Container>
-  )
+  );
 };
 
 export default Events;

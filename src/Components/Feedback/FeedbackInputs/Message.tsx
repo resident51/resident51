@@ -3,11 +3,14 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import { FieldProps } from "formik";
 
-import { WebsiteFeedbackFormValues } from '../Website';
-import AlertInFormer from '../../Layout/AlertInFormer';
+import { WebsiteFeedbackFormValues } from "../Website";
+import AlertInFormer from "../../Layout/AlertInFormer";
 
-const Message = (props: FieldProps<WebsiteFeedbackFormValues>) => {
-  const { form: { values, touched, errors }, field } = props;
+const Message: React.FC<FieldProps<WebsiteFeedbackFormValues>> = props => {
+  const {
+    form: { values, touched, errors },
+    field
+  } = props;
 
   return (
     <AlertInFormer errors={errors} touched={touched} name="message">
@@ -25,7 +28,7 @@ const Message = (props: FieldProps<WebsiteFeedbackFormValues>) => {
         />
       </Form.Group>
     </AlertInFormer>
-  )
+  );
 };
 
 export default Message;

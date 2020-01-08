@@ -16,13 +16,13 @@ import "./Styles/App.scss";
 import { EventsProvider } from "./Contexts/Events";
 import { UserProvider } from "./Contexts/User";
 
-const App = () => (
+const App: React.FC = () => (
   <Router>
     <div id="app_container">
       <Jumbotron id="r51" className="mb-0">
         <h1 id="title" className="display-1 text-center">
           R<span className="d-sm-inline d-none">esident </span>51
-          </h1>
+        </h1>
       </Jumbotron>
       <div id="everything-else">
         <UserProvider>

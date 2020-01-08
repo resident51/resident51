@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from "react";
 
-import { EventR51, EventForm as EventFormType, Hall } from '../../Types/';
+import { EventR51, EventForm as EventFormType, Hall } from "../../Types/";
 
 import { EventsContext } from "../../Contexts/Events";
 import { UserContext } from "../../Contexts/User";
@@ -27,45 +27,51 @@ import validationSchema from "./EventForm/validationSchema";
 
 const threeDaysFromNow = Date.now() + 1000 * 60 * 60 * 24 * 3;
 const updatedWarning = (
-  <Alert variant="warning"> Someone else just updated this event. If you submit now, those
-    changes would be overwritten. Please save your changes and refresh the page.</Alert>
+  <Alert variant="warning">
+    {" "}
+    Someone else just updated this event. If you submit now, those changes would be overwritten.
+    Please save your changes and refresh the page.
+  </Alert>
 );
 
 export type EventFormValues = {
-  name: string,
-  type: string,
-  description: string,
-  location: string,
-  date: number,
-  time: string,
+  name: string;
+  type: string;
+  description: string;
+  location: string;
+  date: number;
+  time: string;
   publicStatus: {
-    type: string,
-    halls: Hall[],
-  },
+    type: string;
+    halls: Hall[];
+  };
   facilitation: {
-    organizationType: string,
-    organizationName: string,
-  },
+    organizationType: string;
+    organizationName: string;
+  };
 };
 
 type EventFormProps = {
-  event?: EventR51,
-  onSubmit: (event: EventFormType) => void,
-  eventUpdated?: boolean
+  event?: EventR51;
+  onSubmit: (event: EventFormType) => void;
+  eventUpdated?: boolean;
 };
-const EventFormComponent = (props: EventFormProps) => {
-  const { event = ({} as EventR51), onSubmit, eventUpdated = false } = props;
+const EventFormComponent: React.FC<EventFormProps> = props => {
+  const { event = {} as EventR51, onSubmit, eventUpdated = false } = props;
   const { eventTypes, halls } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 
   const dateTimeMoment = moment(event.dateTime || threeDaysFromNow);
 
-  const formValidationSchema = useMemo(() => validationSchema({ halls, eventTypes }), [halls, eventTypes]);
+  const formValidationSchema = useMemo(() => validationSchema({ halls, eventTypes }), [
+    halls,
+    eventTypes
+  ]);
 
-  if(!user) return <div/>;
+  if (!user) return <div />;
 
   const formInitialValues: EventFormType = {
-    id: event.id || '',
+    id: event.id || "",
     name: event.name || "",
     type: event.type || undefined,
     description: event.description || "",
@@ -74,12 +80,12 @@ const EventFormComponent = (props: EventFormProps) => {
     time: event.dateTime ? dateTimeMoment.format("kk:mm") : "18:00",
     publicStatus: event.publicStatus || {
       type: "public",
-      halls: [user.hall],
+      halls: [user.hall]
     },
     facilitation: event.facilitation || {
       organizationType: undefined,
-      organizationName: "",
-    },
+      organizationName: ""
+    }
   };
 
   return (
@@ -88,11 +94,9 @@ const EventFormComponent = (props: EventFormProps) => {
       onSubmit={onSubmit}
       validationSchema={formValidationSchema}
     >
-      {({ handleSubmit, isSubmitting }) => {
-
+      {({ handleSubmit, isSubmitting }): React.ReactElement => {
         return (
           <Form noValidate onSubmit={handleSubmit}>
-
             {eventUpdated && updatedWarning}
 
             <h3>1. Name the event</h3>
@@ -141,7 +145,7 @@ const EventFormComponent = (props: EventFormProps) => {
               </Col>
             </Row>
           </Form>
-        )
+        );
       }}
     </Formik>
   );

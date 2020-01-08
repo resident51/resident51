@@ -1,14 +1,17 @@
-import React from 'react';
-import { EventTypeProperties } from '../../Types/';
+import React from "react";
+import { EventTypeProperties } from "../../Types/";
 
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 
 type EventTypeButtonProps = {
-  typeState: [boolean, (k: boolean) => void],
-  typeData: EventTypeProperties,
+  typeState: [boolean, (k: boolean) => void];
+  typeData: EventTypeProperties;
 };
-const EventTypeButton = (props: EventTypeButtonProps) => {
-  const { typeState: [picked, setPicked], typeData } = props;
+const EventTypeButton: React.FC<EventTypeButtonProps> = props => {
+  const {
+    typeState: [picked, setPicked],
+    typeData
+  } = props;
 
   return (
     <Button
@@ -18,8 +21,10 @@ const EventTypeButton = (props: EventTypeButtonProps) => {
         border: "2px solid " + (picked ? "white" : typeData.color),
         margin: "3px"
       }}
-      onClick={() => setPicked(!picked)}
-    >{typeData.formal}</Button>
+      onClick={(): void => setPicked(!picked)}
+    >
+      {typeData.formal}
+    </Button>
   );
 };
 

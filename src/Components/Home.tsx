@@ -1,25 +1,33 @@
-import React from 'react';
+import React from "react";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
-import R51Card from "./Layout/R51Card";
+import Card from "react-bootstrap/Card";
 
 // Dev
 import lorem from "../tests/lorem";
 const gen = lorem.generateSentences.bind(lorem);
 
-const Home = () => (
+const HomeCard: React.FC<{ title: string }> = props => (
+  <Card className="mb-3">
+    <Card.Header className="text-center">
+      <h2>{props.title}</h2>
+    </Card.Header>
+    <Card.Body>{props.children}</Card.Body>
+  </Card>
+);
+
+const Home: React.FC = () => (
   <Container fluid={true}>
     <Row className="justify-content-md-center">
       <Col md={10} lg={6}>
-        <R51Card.Home title="Events">{gen(11)}</R51Card.Home>
-        <R51Card.Home title="Resources">{gen(7)}</R51Card.Home>
+        <HomeCard title="Events">{gen(11)}</HomeCard>
+        <HomeCard title="Resources">{gen(7)}</HomeCard>
       </Col>
       <Col md={10} lg={6}>
-        <R51Card.Home title="Legacy">{gen(12)}</R51Card.Home>
-        <R51Card.Home title="Feedback">{gen(2)}</R51Card.Home>
+        <HomeCard title="Legacy">{gen(12)}</HomeCard>
+        <HomeCard title="Feedback">{gen(2)}</HomeCard>
       </Col>
     </Row>
   </Container>

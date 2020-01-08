@@ -1,39 +1,39 @@
-import React from 'react';
+import React from "react";
 
-import { EventR51, EventFormat } from '../../Types/';
+import { EventR51, EventFormat } from "../../Types/";
 
-import moment from 'moment';
+import moment from "moment";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGlobeAmericas, faLock } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGlobeAmericas, faLock } from "@fortawesome/free-solid-svg-icons";
 
-import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
+import Accordion from "react-bootstrap/Accordion";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import { Link } from "react-router-dom";
 
-type props = {
-  showModify: boolean
-  event: EventR51,
-  format: EventFormat,
-}
-const Event = (props: props) => {
-  const event = (props.event && props.event.name)
-    ? props.event
-    : { name: 'Event data error' } as EventR51;
+type EventProps = {
+  showModify: boolean;
+  event: EventR51;
+  format: EventFormat;
+};
+const Event: React.FC<EventProps> = props => {
+  const event =
+    props.event && props.event.name ? props.event : ({ name: "Event data error" } as EventR51);
 
-  const format = (props.format && props.format.color)
-    ? props.format
-    : { color: 'black', formal: 'Event formatting error' } as EventFormat;
+  const format =
+    props.format && props.format.color
+      ? props.format
+      : ({ color: "black", formal: "Event formatting error" } as EventFormat);
 
   const { id, name, location, description, dateTime } = event;
   const dateTimeMoment = moment(dateTime);
 
   const { showModify } = props;
 
-  const icon = event.publicStatus.type === 'public' ? faGlobeAmericas : faLock;
+  const icon = event.publicStatus.type === "public" ? faGlobeAmericas : faLock;
   const publicIcon = <FontAwesomeIcon size="sm" icon={icon} />;
 
   return (
@@ -52,9 +52,7 @@ const Event = (props: props) => {
               <Col xs="auto" className="pr-0">
                 <i>{dateTimeMoment.format("MMMM Do, YYYY")}</i>
               </Col>
-              <Col xs="auto">
-                {publicIcon}
-              </Col>
+              <Col xs="auto">{publicIcon}</Col>
             </Row>
           </Col>
         </Row>
@@ -68,7 +66,7 @@ const Event = (props: props) => {
                 {location}
               </h5>
             </Col>
-            {showModify &&
+            {showModify && (
               <Col xs="auto" className="event-admin-config">
                 <Link
                   to={{ pathname: `/events/edit/${id}`, state: { event } }}
@@ -76,7 +74,7 @@ const Event = (props: props) => {
                 >
                   Edit
                 </Link>
-                <span>  &middot;  </span>
+                <span> &middot; </span>
                 <Link
                   to={{ pathname: `/events/delete/${id}`, state: { event } }}
                   style={{ color: "red" }}
@@ -84,13 +82,14 @@ const Event = (props: props) => {
                   Delete
                 </Link>
               </Col>
-            }
+            )}
           </Row>
           <Row className="justify-content-between">
             <Col>
               <h6 className="mb-0">
                 <span className="d-sm-inline d-none">Time: </span>
-                {dateTimeMoment.format("h:mm A")}</h6>
+                {dateTimeMoment.format("h:mm A")}
+              </h6>
             </Col>
             <Col xs="auto">
               <h6 className="mb-0">
@@ -104,7 +103,7 @@ const Event = (props: props) => {
         </Card.Body>
       </Accordion.Collapse>
     </Card>
-  )
+  );
 };
 
 export default Event;

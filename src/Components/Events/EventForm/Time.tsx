@@ -3,11 +3,14 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 
 import { FieldProps } from "formik";
-import { EventFormValues } from '../EventForm';
-import AlertInFormer from '../../Layout/AlertInFormer';
+import { EventFormValues } from "../EventForm";
+import AlertInFormer from "../../Layout/AlertInFormer";
 
-const EventTimeInput = (props: FieldProps<EventFormValues>) => {
-  const { form: { values, touched, errors }, field } = props;
+const EventTimeInput: React.FC<FieldProps<EventFormValues>> = props => {
+  const {
+    form: { values, touched, errors },
+    field
+  } = props;
 
   return (
     <AlertInFormer errors={errors} touched={touched} name="time">

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 
-import { Hall } from '../../../Types/';
+import { Hall } from "../../../Types/";
 
 import { EventsContext } from "../../../Contexts/Events";
 import { UserContext } from "../../../Contexts/User";
@@ -9,12 +9,15 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
-import { FieldProps } from 'formik';
-import { EventFormValues } from '../EventForm';
-import AlertInFormer from '../../Layout/AlertInFormer';
+import { FieldProps } from "formik";
+import { EventFormValues } from "../EventForm";
+import AlertInFormer from "../../Layout/AlertInFormer";
 
-const EventPublicInput = (props: FieldProps<EventFormValues>) => {
-  const { form: { values, errors, touched }, field } = props;
+const EventPublicInput: React.FC<FieldProps<EventFormValues>> = props => {
+  const {
+    form: { values, errors, touched },
+    field
+  } = props;
   const { user } = useContext(UserContext);
   const { halls } = useContext(EventsContext);
 
@@ -28,8 +31,8 @@ const EventPublicInput = (props: FieldProps<EventFormValues>) => {
   ];
 
   return (
-    <AlertInFormer errors={errors} touched={touched} name={['publicStatus', 'type']}>
-      <AlertInFormer errors={errors} touched={touched} name={['publicStatus', 'halls']}>
+    <AlertInFormer errors={errors} touched={touched} name={["publicStatus", "type"]}>
+      <AlertInFormer errors={errors} touched={touched} name={["publicStatus", "halls"]}>
         <Form.Group>
           <Form.Label>Who will be attending this event?</Form.Label>
           <Row>
@@ -61,7 +64,7 @@ const EventPublicInput = (props: FieldProps<EventFormValues>) => {
                     label={hall}
                     name="publicStatus.halls"
                     id={`public-select-hall-${hall}`}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
                       // If this hall is already in selected, remove it, else add it.
                       const toChange: Hall[] = selected.includes(hall)
                         ? selected.filter(v => v !== hall)

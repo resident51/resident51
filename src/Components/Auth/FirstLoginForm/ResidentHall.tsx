@@ -7,13 +7,16 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { FieldProps } from "formik";
 
-import { FirstLoginFormValues } from '../FirstLoginForm';
-import AlertInFormer from '../../Layout/AlertInFormer';
+import { FirstLoginFormValues } from "../FirstLoginForm";
+import AlertInFormer from "../../Layout/AlertInFormer";
 
-const ResidentHall = (props: FieldProps<FirstLoginFormValues>) => {
-  const { form: { values, touched, errors }, field } = props;
+const ResidentHall: React.FC<FieldProps<FirstLoginFormValues>> = props => {
+  const {
+    form: { values, touched, errors },
+    field
+  } = props;
   const { halls } = useContext(EventsContext);
-  
+
   return (
     <AlertInFormer errors={errors} touched={touched} name="hall">
       <Form.Group>
@@ -37,7 +40,7 @@ const ResidentHall = (props: FieldProps<FirstLoginFormValues>) => {
         </Row>
       </Form.Group>
     </AlertInFormer>
-  )
+  );
 };
 
 export default ResidentHall;

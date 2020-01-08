@@ -3,11 +3,14 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import { FieldProps } from "formik";
 
-import { FirstLoginFormValues } from '../FirstLoginForm';
-import AlertInFormer from '../../Layout/AlertInFormer';
+import { FirstLoginFormValues } from "../FirstLoginForm";
+import AlertInFormer from "../../Layout/AlertInFormer";
 
-const ResidentName = (props: FieldProps<FirstLoginFormValues>) => {
-  const { form: { values, touched, errors }, field } = props;
+const ResidentName: React.FC<FieldProps<FirstLoginFormValues>> = props => {
+  const {
+    form: { values, touched, errors },
+    field
+  } = props;
 
   return (
     <AlertInFormer errors={errors} touched={touched} name="name">
@@ -23,13 +26,13 @@ const ResidentName = (props: FieldProps<FirstLoginFormValues>) => {
           placeholder="Display name"
         />
         <Form.Text className="text-muted">
-          We pulled this from the provider you used to sign in (Google or
-          Facebook), so if "el1te_walu1g1_2005" isn't as cool as you first thought
-          it was, you can change it here to something your president will recognize.
+          We pulled this from the provider you used to sign in (Google or Facebook), so if
+          "el1te_walu1g1_2005" isn't as cool as you first thought it was, you can change it here to
+          something your president will recognize.
         </Form.Text>
       </Form.Group>
     </AlertInFormer>
-  )
+  );
 };
 
 export default ResidentName;
