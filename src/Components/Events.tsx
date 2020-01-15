@@ -25,7 +25,7 @@ const Events: React.FC = () => {
   const update =
     history.location.state &&
     typeof history.location.state.t === "number" &&
-    history.location.state.t - Date.now() < 1000 * 60 &&
+    Date.now() - history.location.state.t < 1000 * 60 &&
     history.location.state.update;
 
   const displayTypes = useEventTypes();
