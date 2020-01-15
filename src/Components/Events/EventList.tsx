@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Events, EventR51 } from "../../Types";
+import { Events, EventR51, Hall, EventFormPublicType } from "../../Types";
 
 import { EventsContext } from "../../Contexts/Events";
 import { UserContext } from "../../Contexts/User";
@@ -23,7 +23,17 @@ const EventList: React.FC<EventListProps> = props => {
     );
   }
 
-  const showModify = !!user && user.permissions > 1;
+  const canUpdate = ({ type, halls }: { type: EventFormPublicType; halls: Hall[] }): boolean => {
+    if (!user || !user.permissions || user.permissions < 2 || !user.hall) {
+      return false;
+    } else if (type === "public" && user.permissions === 3) {
+      return true;
+      // #TODO Provide support for user roles, eg. ASHC, Community service committee, etc.
+    } else if ((type === "hall" || type === "halls") && halls.includes(user.hall)) {
+      return true;
+    }
+    return false;
+  };
 
   // Check if any types are being displayed and an event is of that type
   const anyToShow = displayTypes
@@ -40,7 +50,7 @@ const EventList: React.FC<EventListProps> = props => {
           event =>
             event && (
               <Event
-                showModify={showModify}
+                canUpdate={canUpdate}
                 key={`${event.id}_${event.publicStatus.type}`}
                 event={event}
                 format={eventTypes[event.type]}
