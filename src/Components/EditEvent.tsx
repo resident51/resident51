@@ -1,15 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
 
 import { EventsContext } from "../Contexts/Events";
+import { UserContext } from "../Contexts/User";
 import usePrevious from "../Hooks/usePrevious";
 
 import { useHistory, useParams } from "react-router-dom";
 
 import isEqual from "lodash/isEqual";
 
+import { FormikHelpers } from "formik";
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
+import { eventsCollection } from "../Firebase/firebase";
 
 import EventForm from "./Events/EventForm";
 import EventCreationFAQ from "./Events/EventCreationFAQ";
@@ -19,26 +24,50 @@ import { EventForm as EventFormType } from "../Types/";
 const EditEvent: React.FC = () => {
   const history = useHistory();
 
-  const { events, dispatchToEvents, formatSubmittedEvent } = useContext(EventsContext);
+  const { events, formatSubmittedEvent } = useContext(EventsContext);
+  const { user } = useContext(UserContext);
+
+  const [eventUpdated, setEventUpdated] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { id } = useParams();
   const eventToEdit = (events || []).find(e => "" + e.id === "" + id);
 
   // Inform the user if someone else just updated the same event.
   const initialEvent = usePrevious(eventToEdit);
-  const [eventUpdated, setEventUpdated] = useState(false);
   useEffect(() => {
     // If eventToEdit has changed, and it is not equal to its last value, someone updated it
     const eventDidUpdate = !!(initialEvent && !isEqual(eventToEdit, initialEvent));
-    setEventUpdated(eventDidUpdate); // true || false
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [eventToEdit, events]);
+    setEventUpdated(eventDidUpdate && !isSubmitting);
+  }, [eventToEdit, initialEvent, events, isSubmitting]);
 
-  const onSubmit = (submittedEvent: EventFormType): void => {
+  useEffect(() => {
+    const dontShow = user && (!user.permissions || user.permissions < 2);
+    if (dontShow) history.push("/events");
+  }, [history, user]);
+
+  const canEdit = user && user.permissions >= 2;
+  if (!canEdit) return <div />;
+
+  const onSubmit = (submittedEvent: EventFormType, actions: FormikHelpers<EventFormType>): void => {
+    if (!eventToEdit) return;
     submittedEvent.id = id as string;
-    const eventToDispatch = formatSubmittedEvent(submittedEvent);
-    dispatchToEvents({ type: "MODIFY", event: eventToDispatch });
-    history.push("/events", { update: "Event updated!" });
+    const formattedEvent = formatSubmittedEvent(submittedEvent, {
+      ...eventToEdit.submission,
+      dateTime: new Date(eventToEdit.submission.dateTime)
+    });
+
+    setIsSubmitting(true);
+
+    eventsCollection
+      .doc(formattedEvent.id)
+      .set(formattedEvent)
+      .then(() => history.push("/events", { update: "Event updated!", t: Date.now() }))
+      .catch(e => {
+        setIsSubmitting(false);
+        actions.setSubmitting(false);
+        console.error(e);
+      });
   };
 
   // Cases: 1) Waiting for firebase, 2) the event was found, 3) invalid event location
@@ -60,7 +89,6 @@ const EditEvent: React.FC = () => {
         <Col sm={12} md={7}>
           <h1>Edit This Event</h1>
           <hr />
-          {eventUpdated}
           {innerComponent}
         </Col>
       </Row>

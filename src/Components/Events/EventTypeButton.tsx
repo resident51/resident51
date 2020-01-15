@@ -1,11 +1,11 @@
 import React from "react";
-import { EventTypeProperties } from "../../Types/";
+import { EventTypeFormat } from "../../Types/";
 
 import Button from "react-bootstrap/Button";
 
 type EventTypeButtonProps = {
   typeState: [boolean, (k: boolean) => void];
-  typeData: EventTypeProperties;
+  typeData: EventTypeFormat;
 };
 const EventTypeButton: React.FC<EventTypeButtonProps> = props => {
   const {

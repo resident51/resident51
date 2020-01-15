@@ -1,12 +1,15 @@
 import {
   Hall,
   CFSEvent,
+  EventToCFSSubmission,
   EventToCFS,
   EventR51,
   EventTypeFormats,
   Events,
   EventForm as EventFormType
 } from "../Types/";
+
+import { firestore } from "firebase/app";
 import moment from "moment";
 
 export const eventTypes: EventTypeFormats = {
@@ -50,6 +53,11 @@ export const formatRetrievedEvent = (event: CFSEvent): EventR51 => ({
   publicStatus: {
     type: determineEventType(event.publicStatus),
     halls: event.publicStatus.halls
+  },
+  lastEdit: event.lastEdit.toMillis(),
+  submission: {
+    ...event.submission,
+    dateTime: event.submission.dateTime.toMillis()
   }
 });
 
@@ -67,7 +75,10 @@ const determineCFSEventType = (
 });
 
 // Format event before sending to Firebase
-export const formatSubmittedEventByHall = (hall: Hall) => (event: EventFormType): EventToCFS => {
+export const formatSubmittedEventByHall = (hall: Hall) => (
+  event: EventFormType,
+  submission: EventToCFSSubmission
+): EventToCFS => {
   // destructure date and time off of event
   const { date, time, ...CFSEvent } = event;
   const [hour, minute] = time.split(":").map(num => +num);
@@ -79,12 +90,13 @@ export const formatSubmittedEventByHall = (hall: Hall) => (event: EventFormType)
       .hour(hour)
       .minute(minute)
       .toDate(),
-    publicStatus: determineCFSEventType(hall, event.publicStatus)
+    publicStatus: determineCFSEventType(hall, event.publicStatus),
+    lastEdit: firestore.FieldValue.serverTimestamp(),
+    submission
   };
 };
 
-type maybeEvent = Events | null;
-export const concatEvents = (publicEvents: maybeEvent, privateEvents: maybeEvent): maybeEvent => {
+export const concatEvents = (publicEvents: Events, privateEvents: Events): Events => {
   if (publicEvents === null) {
     return privateEvents;
   } else if (privateEvents === null) {

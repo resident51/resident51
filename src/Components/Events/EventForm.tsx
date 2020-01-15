@@ -6,7 +6,7 @@ import { EventsContext } from "../../Contexts/Events";
 import { UserContext } from "../../Contexts/User";
 
 import moment from "moment";
-import { Formik, Field, FastField } from "formik";
+import { Formik, Field, FastField, FormikHelpers } from "formik";
 
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
@@ -28,7 +28,6 @@ import validationSchema from "./EventForm/validationSchema";
 const threeDaysFromNow = Date.now() + 1000 * 60 * 60 * 24 * 3;
 const updatedWarning = (
   <Alert variant="warning">
-    {" "}
     Someone else just updated this event. If you submit now, those changes would be overwritten.
     Please save your changes and refresh the page.
   </Alert>
@@ -53,7 +52,7 @@ export type EventFormValues = {
 
 type EventFormProps = {
   event?: EventR51;
-  onSubmit: (event: EventFormType) => void;
+  onSubmit: (event: EventFormType, actions: FormikHelpers<EventFormType>) => void;
   eventUpdated?: boolean;
 };
 const EventFormComponent: React.FC<EventFormProps> = props => {

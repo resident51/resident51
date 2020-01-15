@@ -66,7 +66,8 @@ const FirstLogin: React.FC = () => {
         // Refresh user id token bc it's fucking free hell yeah.
         await user.getIdToken(true);
         history.push("/events", {
-          update: "Successfully requested verification!"
+          update: "Successfully requested verification!",
+          t: Date.now()
         });
       } else {
         setRequestError(true);

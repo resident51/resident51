@@ -11,7 +11,7 @@ const Logout: React.FC = () => {
   useEffect(() => {
     if (user && user.uid) {
       userDispatch({ type: "LOGOUT" });
-      history.push("/events", { update: "Logged out successfully." });
+      history.push("/events", { update: "Logged out successfully.", t: Date.now() });
     } else if (user !== null) {
       history.replace("/login");
     }

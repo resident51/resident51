@@ -1,4 +1,4 @@
-import { firestore, User as FirebaseUser } from "firebase";
+import { firestore, User as FirebaseUser } from "firebase/app";
 import { Hall } from "./common";
 
 export interface UserInterface extends Pick<FirebaseUser, "getIdToken"> {

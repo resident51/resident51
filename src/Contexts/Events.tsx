@@ -3,6 +3,7 @@ import React, { useReducer, createContext, useContext, useEffect } from "react";
 import {
   CFSEvent,
   EventToCFS,
+  EventToCFSSubmission,
   EventForm as EventFormType,
   Events,
   Hall,
@@ -23,7 +24,7 @@ import {
 interface EventContextProps {
   events: Events;
   dispatchToEvents: React.Dispatch<EventAction>;
-  formatSubmittedEvent: (event: EventFormType) => EventToCFS;
+  formatSubmittedEvent: (event: EventFormType, submission: EventToCFSSubmission) => EventToCFS;
   eventTypes: EventTypeFormats;
   halls: Hall[];
 }
@@ -81,7 +82,10 @@ export const EventsProvider: React.FC<EventsProps> = props => {
         // #TODO now that we have separate queries for public and private events,
         // we need to have a condition for when an event changes from public to private
         const type = change.type.toUpperCase() as "ADDED" | "MODIFIED" | "REMOVED";
-        const event = { ...change.doc.data(), id: change.doc.id } as CFSEvent;
+        const event = {
+          ...change.doc.data({ serverTimestamps: "estimate" }),
+          id: change.doc.id
+        } as CFSEvent;
         const eventFormatted = formatRetrievedEvent(event);
         dispatch({ type, event: eventFormatted });
       });

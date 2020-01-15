@@ -1,11 +1,8 @@
 import React from "react";
 
-import { EventR51, EventFormat } from "../../Types/";
+import { EventR51, EventTypeFormat } from "../../Types/";
 
 import moment from "moment";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGlobeAmericas, faLock } from "@fortawesome/free-solid-svg-icons";
 
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
@@ -17,7 +14,7 @@ import { Link } from "react-router-dom";
 type EventProps = {
   showModify: boolean;
   event: EventR51;
-  format: EventFormat;
+  format: EventTypeFormat;
 };
 const Event: React.FC<EventProps> = props => {
   const event =
@@ -26,15 +23,12 @@ const Event: React.FC<EventProps> = props => {
   const format =
     props.format && props.format.color
       ? props.format
-      : ({ color: "black", formal: "Event formatting error" } as EventFormat);
+      : ({ color: "black", formal: "Event formatting error" } as EventTypeFormat);
 
   const { id, name, location, description, dateTime } = event;
   const dateTimeMoment = moment(dateTime);
 
   const { showModify } = props;
-
-  const icon = event.publicStatus.type === "public" ? faGlobeAmericas : faLock;
-  const publicIcon = <FontAwesomeIcon size="sm" icon={icon} />;
 
   return (
     <Card>
@@ -52,7 +46,6 @@ const Event: React.FC<EventProps> = props => {
               <Col xs="auto" className="pr-0">
                 <i>{dateTimeMoment.format("MMMM Do, YYYY")}</i>
               </Col>
-              <Col xs="auto">{publicIcon}</Col>
             </Row>
           </Col>
         </Row>
@@ -99,7 +92,17 @@ const Event: React.FC<EventProps> = props => {
             </Col>
           </Row>
           <hr />
-          <p>{description}</p>
+          <p className="mb-1">{description}</p>
+          <Row className="justify-content-between mb-0 pb-0">
+            <Col xs="auto">
+              <small className="text-muted">
+                {event.publicStatus.type === "public" ? "Public" : "Private"} event
+              </small>
+            </Col>
+            <Col xs="auto">
+              <small className="text-muted">Modified {moment(event.lastEdit).fromNow()}</small>
+            </Col>
+          </Row>
         </Card.Body>
       </Accordion.Collapse>
     </Card>

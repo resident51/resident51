@@ -14,7 +14,7 @@ const Message: React.FC<FieldProps<WebsiteFeedbackFormValues>> = props => {
 
   return (
     <AlertInFormer errors={errors} touched={touched} name="message">
-      <Form.Group controlId="residentName">
+      <Form.Group controlId="message">
         <Form.Label>Message:</Form.Label>
         <Form.Control
           name="message"

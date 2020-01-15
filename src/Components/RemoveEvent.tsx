@@ -8,12 +8,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+import { eventsCollection } from "../Firebase/firebase";
+
 import EventCreationFAQ from "./Events/EventCreationFAQ";
 import EventNotFound from "./Events/EventNotFound";
 import ConfirmRemoveEvent from "./Events/ConfirmRemoveEvent";
 
 const RemoveEvent: React.FC = () => {
-  const { events, dispatchToEvents } = useContext(EventsContext);
+  const { events } = useContext(EventsContext);
 
   const history = useHistory();
   const { id = "" } = useParams();
@@ -22,8 +24,10 @@ const RemoveEvent: React.FC = () => {
 
   const eventToRemove = (events || []).find(e => "" + e.id === "" + id);
   const handleConfirm = (): void => {
-    dispatchToEvents({ type: "REMOVE", id });
-    history.push("/events", { update: "Event removed." });
+    eventsCollection
+      .doc(id)
+      .update("publicStatus.type", "unpublished")
+      .then(() => history.push("/events", { update: "Event removed.", t: Date.now() }));
   };
 
   // #TODO change EventCreationFAQ to something less, uh, creation-y

@@ -22,7 +22,11 @@ const Events: React.FC = () => {
 
   // Show updates from history state API when events are mutated
   const history = useHistory();
-  const update = history.location.state && history.location.state.update;
+  const update =
+    history.location.state &&
+    typeof history.location.state.t === "number" &&
+    history.location.state.t - Date.now() < 1000 * 60 &&
+    history.location.state.update;
 
   const displayTypes = useEventTypes();
 

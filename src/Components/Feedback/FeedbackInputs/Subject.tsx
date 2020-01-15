@@ -14,7 +14,7 @@ const Subject: React.FC<FieldProps<WebsiteFeedbackFormValues>> = props => {
 
   return (
     <AlertInFormer errors={errors} touched={touched} name="subject">
-      <Form.Group controlId="residentName">
+      <Form.Group controlId="subject">
         <Form.Label>Subject:</Form.Label>
         <Form.Control
           name="subject"

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 
-import { firestore } from "firebase";
+import { firestore } from "firebase/app";
 
 import { Formik, FastField } from "formik";
 import Alert from "react-bootstrap/Alert";
@@ -34,7 +34,7 @@ const WebsiteForm: React.FC<WebsiteFormProps> = props => {
     props.feedbackCollection
       .add(feedback)
       .then(() => {
-        history.push("/events", { update: "Feedback submitted! Thanks pal!" });
+        history.push("/events", { update: "Feedback submitted! Thanks pal!", t: Date.now() });
       })
       .catch(() => {
         setFirebaseError(true);
