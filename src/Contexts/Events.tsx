@@ -23,16 +23,13 @@ import {
 
 interface EventContextProps {
   events: Events;
-  dispatchToEvents: React.Dispatch<EventAction>;
   formatSubmittedEvent: (event: EventFormType, submission: EventToCFSSubmission) => EventToCFS;
   eventTypes: EventTypeFormats;
   halls: Hall[];
 }
 export const EventsContext = createContext({} as EventContextProps);
 
-type EventsProps = { children: React.ReactNode };
-
-export const EventsProvider: React.FC<EventsProps> = props => {
+export const EventsProvider: React.FC = props => {
   const { user } = useContext(UserContext);
   const [publicEvents, dispatchPublicEvents] = useReducer(EventsReducer, null);
   const [privateEvents, dispatchPrivateEvents] = useReducer(EventsReducer, null);
@@ -41,29 +38,6 @@ export const EventsProvider: React.FC<EventsProps> = props => {
   const hall = user && user.hall;
   const formatSubmittedEvent = formatSubmittedEventByHall(hall || "Miller"); // #TODO: this is fucking awful
   const queryPerms = user ? user.permissions : -1;
-
-  // #TODO make this even remotely readable.
-  const dispatchToEvents: React.Dispatch<EventAction> = (action: EventAction) => {
-    if (action.type === "ADD") {
-      if (action.event.publicStatus.type === "public") {
-        dispatchPublicEvents(action);
-      } else {
-        dispatchPrivateEvents(action);
-      }
-    } else if (action.type === "MODIFY") {
-      if (publicEvents && publicEvents.filter(e => e.id === action.event.id).length > 0) {
-        dispatchPublicEvents(action);
-      } else if (privateEvents && privateEvents.filter(e => e.id === action.event.id).length > 0) {
-        dispatchPrivateEvents(action);
-      }
-    } else if (action.type === "REMOVE") {
-      if (publicEvents && publicEvents.filter(e => e.id === action.id).length > 0) {
-        dispatchPublicEvents(action);
-      } else if (privateEvents && privateEvents.filter(e => e.id === action.id).length > 0) {
-        dispatchPrivateEvents(action);
-      }
-    }
-  };
 
   /**
    * Fetch events from Cloud Firestore based on User's permissions.
@@ -114,7 +88,6 @@ export const EventsProvider: React.FC<EventsProps> = props => {
     <EventsContext.Provider
       value={{
         events,
-        dispatchToEvents,
         formatSubmittedEvent,
         eventTypes,
         halls

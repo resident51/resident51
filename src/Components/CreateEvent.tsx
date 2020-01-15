@@ -36,8 +36,7 @@ const CreateEvent: React.FC = () => {
       hall: user.hall,
       dateTime: firestore.FieldValue.serverTimestamp()
     });
-    // (jfc this works but it's horrendous practice)
-    // #TODO use a useFirebase hook, then wait for success from firebase before redirect
+
     eventsCollection
       .add(formattedEvent)
       .then(() => history.push("/events", { update: "Event created!", t: Date.now() }))

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import { EventsContext } from "../Contexts/Events";
 
@@ -16,6 +16,7 @@ import ConfirmRemoveEvent from "./Events/ConfirmRemoveEvent";
 
 const RemoveEvent: React.FC = () => {
   const { events } = useContext(EventsContext);
+  const [deleting, setDeleting] = useState(false);
 
   const history = useHistory();
   const { id = "" } = useParams();
@@ -24,11 +25,18 @@ const RemoveEvent: React.FC = () => {
 
   const eventToRemove = (events || []).find(e => "" + e.id === "" + id);
   const handleConfirm = (): void => {
+    setDeleting(true);
     eventsCollection
       .doc(id)
       .update("publicStatus.type", "unpublished")
-      .then(() => history.push("/events", { update: "Event removed.", t: Date.now() }));
+      .then(() => history.push("/events", { update: "Event removed.", t: Date.now() }))
+      .catch(e => {
+        console.error(e);
+        setDeleting(false);
+      });
   };
+
+  const showNotFound = !eventToRemove && !deleting;
 
   // #TODO change EventCreationFAQ to something less, uh, creation-y
   return (
@@ -38,14 +46,16 @@ const RemoveEvent: React.FC = () => {
           <EventCreationFAQ />
         </Col>
         <Col sm={12} md={7}>
-          {eventToRemove ? (
-            <ConfirmRemoveEvent
-              handleConfirm={handleConfirm}
-              handleCancel={(): void => history.push("/events")}
-              event={eventToRemove}
-            />
-          ) : (
+          {showNotFound ? (
             <EventNotFound />
+          ) : (
+            eventToRemove && (
+              <ConfirmRemoveEvent
+                handleConfirm={handleConfirm}
+                handleCancel={(): void => history.push("/events")}
+                event={eventToRemove}
+              />
+            )
           )}
         </Col>
       </Row>
