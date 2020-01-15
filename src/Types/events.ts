@@ -19,6 +19,7 @@ export type OrganizationType = "hall" | "ASHC" | "staff" | "committee" | "campus
 export interface EventMetadata {
   userId: string;
   displayName: string;
+  hall: Hall;
 }
 export type EventSubmission = Omit<EventMetadata, "dateTime"> & {
   dateTime: number;

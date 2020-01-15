@@ -43,7 +43,7 @@ const Event: React.FC<EventProps> = props => {
           </Col>
           <Col className="d-block" md="auto" xs={12}>
             <Row className="justify-content-between">
-              <Col xs="auto" className="pr-0">
+              <Col xs="auto">
                 <i>{dateTimeMoment.format("MMMM Do, YYYY")}</i>
               </Col>
             </Row>
@@ -52,7 +52,7 @@ const Event: React.FC<EventProps> = props => {
       </Accordion.Toggle>
       <Accordion.Collapse eventKey={id}>
         <Card.Body>
-          <Row className="justify-content-between mb-sm-1 mb-0">
+          <Row className="justify-content-between">
             <Col className="text-truncate">
               <h5>
                 <span className="d-sm-inline d-none">Location: </span>

@@ -28,11 +28,12 @@ const CreateEvent: React.FC = () => {
 
   // After event is validated, dispatch the event to firebase and redirect to the events page.
   const onSubmit = (event: EventFormType, actions: FormikHelpers<EventFormType>): void => {
-    if (!user || !user.displayName || user.permissions < 2) return;
+    if (!user || !user.displayName || !user.hall || user.permissions < 2) return;
 
     const formattedEvent = formatSubmittedEvent(event, {
       userId: user.uid,
       displayName: user.displayName,
+      hall: user.hall,
       dateTime: firestore.FieldValue.serverTimestamp()
     });
     // (jfc this works but it's horrendous practice)
