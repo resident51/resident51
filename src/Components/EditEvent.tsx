@@ -22,14 +22,15 @@ import EventNotFound from "./Events/EventNotFound";
 import { EventForm as EventFormType } from "../Types/";
 
 const EditEvent: React.FC = () => {
-  const history = useHistory();
-
+  useEffect(() => {
+    document.title = "Resident 51 | Edit Event";
+  }, []);
+  const [eventUpdated, setEventUpdated] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { events, formatSubmittedEvent } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 
-  const [eventUpdated, setEventUpdated] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const history = useHistory();
   const { id } = useParams();
   const eventToEdit = (events || []).find(e => "" + e.id === "" + id);
 

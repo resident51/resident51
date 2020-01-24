@@ -25,10 +25,14 @@ const requestErrorAlert = (
 );
 
 const FirstLogin: React.FC = () => {
-  const { user } = useContext(UserContext);
-  const history = useHistory();
+  useEffect(() => {
+    document.title = "Resident 51 | First Login";
+  }, []);
   const [requestError, setRequestError] = useState(false);
   const [tokenIsRefreshed, setTokenIsRefreshed] = useState(false);
+  const { user } = useContext(UserContext);
+
+  const history = useHistory();
 
   const userPermissions = user && user.permissions;
   const userTokenCallback = user && user.getIdToken;

@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 import Nav from "react-bootstrap/Nav";
 
-type props = { to: string; title?: string };
-const HeaderLink: React.FC<props> = ({ to, title, children }) => (
+type props = { to: string };
+const HeaderLink: React.FC<props> = ({ to, children }) => (
   <Nav.Link as="span">
     <Nav.Item>
       <Link className="header-link" to={to}>
-        {children || title}
+        {children}
       </Link>
     </Nav.Item>
   </Nav.Link>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { EventForm as EventFormType } from "../Types/";
 
@@ -21,10 +21,13 @@ import EventForm from "./Events/EventForm";
 import EventCreationFAQ from "./Events/EventCreationFAQ";
 
 const CreateEvent: React.FC = () => {
-  const history = useHistory();
-
+  useEffect(() => {
+    document.title = "Resident 51 | Create Event";
+  }, []);
   const { formatSubmittedEvent } = useContext(EventsContext);
   const { user } = useContext(UserContext);
+
+  const history = useHistory();
 
   // After event is validated, dispatch the event to firebase and redirect to the events page.
   const onSubmit = (event: EventFormType, actions: FormikHelpers<EventFormType>): void => {

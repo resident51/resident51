@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { EventsContext } from "../Contexts/Events";
 import { UserContext } from "../Contexts/User";
@@ -17,6 +17,9 @@ import ToCreateEvent from "./Events/ToCreateEvent";
 import EventList from "./Events/EventList";
 
 const Events: React.FC = () => {
+  useEffect(() => {
+    document.title = "Resident 51 | Events";
+  }, []);
   const { events } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 

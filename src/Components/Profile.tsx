@@ -13,9 +13,12 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 
 const Profile: React.FC = () => {
+  useEffect(() => {
+    document.title = "Resident 51 | Profile";
+  }, []);
   const { user, usersRequestingVerification } = useContext(UserContext);
-  const history = useHistory();
 
+  const history = useHistory();
   useEffect(() => {
     if (user && !user.displayName) {
       history.replace("/login");

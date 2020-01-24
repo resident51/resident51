@@ -12,7 +12,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 const Login: React.FC = () => {
+  useEffect(() => {
+    document.title = "Resident 51 | Log In";
+  }, []);
   const { user, userDispatch } = useContext(UserContext);
+
   const history = useHistory();
 
   useEffect(() => {

@@ -25,7 +25,6 @@ const Header: React.FC = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <HeaderLink to="/" title="Home" />
             <HeaderLink to="/events/">Events</HeaderLink>
             <HeaderLink to="/feedback">Feedback</HeaderLink>
           </Nav>

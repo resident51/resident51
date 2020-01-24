@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -10,6 +10,10 @@ import WebsiteForm from "./Feedback/Website";
 import { feedbackCollection } from "../Firebase/firebase";
 
 const Feedback: React.FC = () => {
+  useEffect(() => {
+    document.title = "Resident 51 | Feedback";
+  }, []);
+
   return (
     <Container fluid={true}>
       <Row className="justify-content-md-center">

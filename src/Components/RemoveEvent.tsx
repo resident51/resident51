@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 import { EventsContext } from "../Contexts/Events";
 
@@ -15,6 +15,9 @@ import EventNotFound from "./Events/EventNotFound";
 import ConfirmRemoveEvent from "./Events/ConfirmRemoveEvent";
 
 const RemoveEvent: React.FC = () => {
+  useEffect(() => {
+    document.title = "Resident 51 | Remove Event";
+  }, []);
   const { events } = useContext(EventsContext);
   const [deleting, setDeleting] = useState(false);
 
