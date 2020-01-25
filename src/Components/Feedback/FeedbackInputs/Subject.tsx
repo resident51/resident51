@@ -3,10 +3,10 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import { FieldProps } from "formik";
 
-import { WebsiteFeedbackFormValues } from "../Website";
+import { WebsiteFeedback } from "../Website";
 import AlertInFormer from "../../Layout/AlertInFormer";
 
-const Subject: React.FC<FieldProps<WebsiteFeedbackFormValues>> = props => {
+const Subject: React.FC<FieldProps<WebsiteFeedback>> = props => {
   const {
     form: { values, touched, errors },
     field
