@@ -20,47 +20,43 @@ const PrivacyPolicy: React.FC = () => {
         >
           <h2>Privacy Policy</h2>
           <p>
-            Scholarship Hall Alumni built the Resident 51 app as a Free app. This SERVICE is
-            provided by Scholarship Hall Alumni at no cost and is intended for use as is.
+            The Resident 51 web application ("Resident 51" or the "site") was built as a Free app.
+            This SERVICE is provided by Scholarship Hall alumni at no cost to all past and present
+            undergraduate residents of the Scholarship Halls and is intended for use as is.
           </p>
           <p>
-            This page is used to inform visitors regarding my policies with the collection, use, and
-            disclosure of Personal Information if anyone decided to use my Service.
+            This page is used to inform visitors regarding the site's policies toward the
+            collection, use, and disclosure of Personal Information if anyone decided to use my
+            Service.
           </p>
           <p>
-            If you choose to use my Service, then you agree to the collection and use of information
-            in relation to this policy. The Personal Information that I collect is used for
-            providing and improving the Service. I will not use or share your information with
+            If you choose to use Resident 51, then you agree to the collection and use of
+            information in relation to this policy. The Personal Information that I collect is used
+            for providing and improving the Service. I will not use or share your information with
             anyone except as described in this Privacy Policy.
           </p>
           <p>
             The terms used in this Privacy Policy have the same meanings as in our Terms and
-            Conditions, which is accessible at Resident 51 unless otherwise defined in this Privacy
-            Policy.
+            Conditions, which is also accessible at the site.
           </p>
 
           <p>
             <strong>Information Collection and Use</strong>
           </p>
           <p>
-            For a better experience, while using our Service, I may require you to provide us with
-            certain personally identifiable information. The information that I request will be
-            retained on your device and is not collected by me in any way.
+            For the best experience, Resident 51 asks you to provide with certain personally
+            identifiable information, which includes the email and display name that is provided by
+            the federated provider you use to sign in to Resident 51 (Google, Facebook, and so
+            forth). Resident 51 also requests a user to provide information about the Scholarship
+            Hall that they identify with. This information could of course be used to guess where a
+            user resides during the academic year of their institution. Any other personally
+            identifiable information about you that is provided by your sign-in method will be
+            retained on your device, and is not collected by Resident 51 in any way.
           </p>
           <p>
             The app does use third party services that may collect information used to identify you.
-          </p>
-
-          <p>
-            <strong>Log Data</strong>
-          </p>
-          <p>
-            I want to inform you that whenever you use my Service, in a case of an error in the app
-            I collect data and information (through third party products) on your phone called Log
-            Data. This Log Data may include information such as your device Internet Protocol (“IP”)
-            address, device name, operating system version, the configuration of the app when
-            utilizing my Service, the time and date of your use of the Service, and other
-            statistics.
+            But hoenstly, that's just every site. Seriously, the internet is a nightmare for privacy
+            anyway.
           </p>
 
           <p>
@@ -72,28 +68,12 @@ const PrivacyPolicy: React.FC = () => {
             stored on your device's internal memory.
           </p>
           <p>
-            This Service does not use these “cookies” explicitly. However, the app may use third
-            party code and libraries that use “cookies” to collect information and improve their
-            services. You have the option to either accept or refuse these cookies and know when a
-            cookie is being sent to your device. If you choose to refuse our cookies, you may not be
-            able to use some portions of this Service.
-          </p>
-
-          <p>
-            <strong>Service Providers</strong>
-          </p>
-          <p>I may employ third-party companies and individuals due to the following reasons:</p>
-          <ul>
-            <li>To facilitate our Service;</li>
-            <li>To provide the Service on our behalf;</li>
-            <li>To perform Service-related services; or</li>
-            <li>To assist us in analyzing how our Service is used.</li>
-          </ul>
-          <p>
-            I want to inform users of this Service that these third parties have access to your
-            Personal Information. The reason is to perform the tasks assigned to them on our behalf.
-            However, they are obligated not to disclose or use the information for any other
-            purpose.
+            This Service does not use these “cookies” explicitly. However, the app uses a
+            third-party Software Development Kit ("SDK") created by Google to integrate with
+            Firebase, an application management platform created by Google. This SDK uses “cookies”
+            to collect information and improve their services. I honestly don't know what all they
+            do, but it is literally Google so you can imagine it's not like they aren't somehow
+            getting all that information anyway.
           </p>
 
           <p>
@@ -101,9 +81,10 @@ const PrivacyPolicy: React.FC = () => {
           </p>
           <p>
             I value your trust in providing us your Personal Information, thus we are striving to
-            use commercially acceptable means of protecting it. But remember that no method of
-            transmission over the internet, or method of electronic storage is 100% secure and
-            reliable, and I cannot guarantee its absolute security.
+            use commercially acceptable means of protecting it. This is one reason why Resident 51
+            uses federated providers like Google and Facebook to help authenticate you as a user.
+            But remember that no method of transmission over the internet, or method of electronic
+            storage is 100% secure and reliable, and I cannot guarantee its absolute security.
           </p>
 
           <p>
@@ -159,7 +140,9 @@ const PrivacyPolicy: React.FC = () => {
             >
               App Privacy Policy Generator
             </a>
-            .
+            . It was then of course edited by me to make it even remotely useful, and I am solely
+            responsible for the contents of this document and its policies - unless I can legally
+            put that on the guy who made this, which would rule.
           </p>
         </Col>
       </Row>

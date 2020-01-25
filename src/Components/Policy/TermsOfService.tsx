@@ -20,13 +20,42 @@ const TermsOfService: React.FC = () => {
         >
           <h2>Terms &amp; Conditions</h2>
           <p>
-            By downloading or using the app, these terms will automatically apply to you – you
-            should make sure therefore that you read them carefully before using the app. You’re not
-            allowed to copy, or modify the app, any part of the app, or our trademarks in any way.
-            You’re not allowed to attempt to extract the source code of the app, and you also
-            shouldn’t try to translate the app into other languages, or make derivative versions.
-            The app itself, and all the trade marks, copyright, database rights and other
-            intellectual property rights related to it, still belong to Scholarship Hall Alumni.
+            The intended users of this application ("Resident 51", the "site", or the "app") is,
+            exclusively, any and all past and present undergraduate residents of the Scholarship
+            Halls of the University of Kansas. Users that meet this definition but served on ASHC
+            are okay I guess. And undergraduate staff: you're on thin fucking ice.
+          </p>
+          <p>Anyway, the terms and conditions reserved for intended users are as follows:</p>
+          <p>
+            Literally do whatever you want, but please do not break the law! That's the gist of it,
+            really.
+          </p>
+          <p>
+            Note that this application is a work in progress! We will periodically add additional
+            features and making appearance updates.
+          </p>
+          <p>
+            If there is a feature or appearance update you would like to request, please provide
+            your feedback in the associated section of the site!
+          </p>
+          <p>
+            The source code for this application will eventually be made available publicly, but can
+            also be provided upon request. Intended users interested in contributing to the
+            application's functionality are encouraged reach out to express interest.
+          </p>
+          <p>This ends the terms and conditions for intended users.</p>
+          <p>
+            The rest of this document is intended for all users who do not meet the definition of an
+            intended user.
+          </p>
+          <p>
+            By downloading or using this application, these terms will automatically apply to you –
+            you should make sure therefore that you read them carefully before using the app. You
+            are not allowed to copy, or modify the app, any part of the app. You’re not allowed to
+            attempt to extract the source code of the app, and you also shouldn’t try to translate
+            the app into other languages, or make derivative versions. The app itself, and all the
+            trade marks, copyright, database rights and other intellectual property rights related
+            to it, still belong to Scholarship Hall Alumni.
           </p>
           <p>
             Scholarship Hall Alumni is committed to ensuring that the app is as useful and efficient
@@ -37,12 +66,9 @@ const TermsOfService: React.FC = () => {
           </p>
           <p>
             The Resident 51 app stores and processes personal data that you have provided to us, in
-            order to provide my Service. It’s your responsibility to keep your phone and access to
+            order to provide my Service. It’s your responsibility to keep your device and access to
             the app secure. We therefore recommend that you do not jailbreak or root your phone,
-            which is the process of removing software restrictions and limitations imposed by the
-            official operating system of your device. It could make your phone vulnerable to
-            malware/viruses/malicious programs, compromise your phone’s security features and it
-            could mean that the Resident 51 app won’t work properly or at all.
+            even though it is extremely cool to do so.
           </p>
           <p>
             You should be aware that there are certain things that Scholarship Hall Alumni will not
@@ -64,41 +90,23 @@ const TermsOfService: React.FC = () => {
             payer for using the app.
           </p>
           <p>
-            Along the same lines, Scholarship Hall Alumni cannot always take responsibility for the
-            way you use the app i.e. You need to make sure that your device stays charged – if it
-            runs out of battery and you can’t turn it on to avail the Service, Scholarship Hall
-            Alumni cannot accept responsibility.
-          </p>
-          <p>
-            With respect to Scholarship Hall Alumni’s responsibility for your use of the app, when
-            you’re using the app, it’s important to bear in mind that although we endeavour to
-            ensure that it is updated and correct at all times, we do rely on third parties to
-            provide information to us so that we can make it available to you. Scholarship Hall
-            Alumni accepts no liability for any loss, direct or indirect, you experience as a result
-            of relying wholly on this functionality of the app.
-          </p>
-          <p>
-            At some point, we may wish to update the app. The app is currently available on Android
-            &amp; iOS – the requirements for both systems (and for any additional systems we decide
-            to extend the availability of the app to) may change, and you’ll need to download the
-            updates if you want to keep using the app. Scholarship Hall Alumni does not promise that
-            it will always update the app so that it is relevant to you and/or works with the
-            Android &amp; iOS version that you have installed on your device. However, you promise
-            to always accept updates to the application when offered to you, We may also wish to
-            stop providing the app, and may terminate use of it at any time without giving notice of
-            termination to you. Unless we tell you otherwise, upon any termination, (a) the rights
-            and licenses granted to you in these terms will end; (b) you must stop using the app,
-            and (if needed) delete it from your device.
+            With respect to our responsibility for your use of the app, when you’re using the app,
+            it’s important to bear in mind that although we endeavour to ensure that it is updated
+            and correct at all times, we do rely on third parties to provide information to us so
+            that we can make it available to you. Scholarship Hall Alumni accepts no liability for
+            any loss, direct or indirect, you experience as a result of relying wholly on this
+            functionality of the app.
           </p>
 
           <p>
             <strong>Changes to This Terms and Conditions</strong>
           </p>
           <p>
-            I may update our Terms and Conditions from time to time. Thus, you are advised to review
-            this page periodically for any changes. I will notify you of any changes by posting the
-            new Terms and Conditions on this page. These changes are effective immediately after
-            they are posted on this page.
+            I may update our Terms and Conditions from time to time. Thus, unintended users are
+            advised to review this page every 24 hours for changes. I will notify you of any changes
+            by posting the new Terms and Conditions on this page, which of course means I will not
+            notify and it's on you, dude. These changes are effective immediately after they are
+            posted on this page.
           </p>
 
           <p>
@@ -118,7 +126,9 @@ const TermsOfService: React.FC = () => {
             >
               App Privacy Policy Generator
             </a>
-            .
+            . It was then of course edited by me to make it even remotely useful, and I am solely
+            responsible for the contents of this document and its policies - unless I can legally
+            put that on the guy who made this, which would rule.
           </p>
         </Col>
       </Row>
