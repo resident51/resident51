@@ -1,13 +1,14 @@
 import React from "react";
 
+import { VerificationRequest } from "../../../Types";
+
 import { FieldProps } from "formik";
 
 import Form from "react-bootstrap/Form";
 
-import { FirstLoginFormValues } from "../FirstLoginForm";
 import AlertInFormer from "../../Layout/AlertInFormer";
 
-const ResidentEmail: React.FC<FieldProps<FirstLoginFormValues>> = props => {
+const ResidentEmail: React.FC<FieldProps<VerificationRequest>> = props => {
   const {
     form: { values, touched, errors },
     field

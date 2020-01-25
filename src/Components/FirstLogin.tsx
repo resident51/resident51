@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { verificationRequest } from "../Types/";
+import { VerificationRequest } from "../Types/";
 
 import { UserContext } from "../Contexts/User";
 
 import { useHistory } from "react-router-dom";
+
+import { FormikHelpers } from "formik";
 
 import Alert from "react-bootstrap/Alert";
 import Container from "react-bootstrap/Container";
@@ -51,32 +53,32 @@ const FirstLogin: React.FC = () => {
     }
   }, [history, user, userPermissions, userTokenCallback]);
 
-  const onSubmit = async (request: verificationRequest): Promise<void> => {
+  const onSubmit = async (
+    request: VerificationRequest,
+    actions: FormikHelpers<VerificationRequest>
+  ): Promise<void> => {
     if (user) {
-      // Refresh user token, in case they are requesting verification
-      // immediately after signing in for the first time.
-      // #TODO okay turns out I need to get the login token earlier.
-      // can probably just be done in a useEffect call on mount.
-      await user.getIdToken(true);
-
-      // request verification
-      const result = await requestVerification({
+      // Request verification
+      const requestData = {
         displayName: request.name,
         kuEmail: request.email,
         requestedHall: request.hall
-      });
+      };
+
+      const result = await requestVerification(requestData);
 
       if (result.data) {
-        // Refresh user id token bc it's fucking free hell yeah.
         await user.getIdToken(true);
         history.push("/events", {
           update: "Successfully requested verification!",
           t: Date.now()
         });
+        return;
       } else {
         setRequestError(true);
       }
     }
+    actions.setSubmitting(false);
   };
 
   const initialName = user && user.displayName ? user.displayName : "";

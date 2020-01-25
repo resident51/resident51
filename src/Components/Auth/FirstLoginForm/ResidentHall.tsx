@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 
+import { VerificationRequest } from "../../../Types";
+
 import { EventsContext } from "../../../Contexts/Events";
 
 import Row from "react-bootstrap/Row";
@@ -7,10 +9,9 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { FieldProps } from "formik";
 
-import { FirstLoginFormValues } from "../FirstLoginForm";
 import AlertInFormer from "../../Layout/AlertInFormer";
 
-const ResidentHall: React.FC<FieldProps<FirstLoginFormValues>> = props => {
+const ResidentHall: React.FC<FieldProps<VerificationRequest>> = props => {
   const {
     form: { values, touched, errors },
     field

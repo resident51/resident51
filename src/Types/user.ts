@@ -11,7 +11,7 @@ export interface UserInterface extends Pick<FirebaseUser, "getIdToken"> {
   verificationRequests?: firestore.Query | null;
 }
 
-export type verificationRequest = {
+export type VerificationRequest = {
   name: string;
   email: string;
   hall: string;

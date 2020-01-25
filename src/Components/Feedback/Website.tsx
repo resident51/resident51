@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { firestore } from "firebase/app";
 
-import { Formik, FastField } from "formik";
+import { Formik, FastField, FormikHelpers } from "formik";
 import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -20,8 +20,8 @@ export type WebsiteFeedbackFormValues = { subject: string; message: string };
 const formInitialValues = { subject: "", message: "" };
 const firebaseErrorAlert = (
   <Alert variant="warning">
-    Bad news bears: Your feedback didn't go through! Don't worry, just submit some feedback about it
-    and we-... oh right.
+    Wuh woh, your feedback didn't go through! Don't worry, just submit some feedback about it and
+    we-... oh right.
   </Alert>
 );
 
@@ -30,33 +30,34 @@ const WebsiteForm: React.FC<WebsiteFormProps> = props => {
   const [firebaseError, setFirebaseError] = useState(false);
   const history = useHistory();
 
-  const onSubmit = (feedback: WebsiteFeedbackFormValues): void => {
+  const onSubmit = (
+    feedback: WebsiteFeedbackFormValues,
+    actions: FormikHelpers<WebsiteFeedbackFormValues>
+  ): void => {
     props.feedbackCollection
       .add(feedback)
       .then(() => {
         history.push("/events", { update: "Feedback submitted! Thanks pal!", t: Date.now() });
       })
-      .catch(() => {
+      .catch(error => {
+        actions.setSubmitting(false);
         setFirebaseError(true);
+        console.error(error);
       });
   };
 
   return (
-    <Formik
-      initialValues={formInitialValues}
-      onSubmit={onSubmit}
-      validationSchema={validationSchema}
-    >
-      {({ handleSubmit, isSubmitting }): React.ReactElement => (
-        <>
-          {firebaseError && firebaseErrorAlert}
+    <>
+      {firebaseError && firebaseErrorAlert}
+      <Formik
+        initialValues={formInitialValues}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+      >
+        {({ handleSubmit, isSubmitting }): React.ReactElement => (
           <Form noValidate onSubmit={handleSubmit}>
-            {/* <h3 className="mt-3 mb-2 text-center">Subject</h3> */}
             <FastField name="subject" component={Subject} />
-
-            {/* <h3 className="my-2 text-center">Message</h3> */}
             <FastField name="message" component={Message} />
-
             <Row className="justify-content-center my-5">
               <Col xs={8}>
                 <Button block variant="primary" size="lg" type="submit" disabled={isSubmitting}>
@@ -65,9 +66,9 @@ const WebsiteForm: React.FC<WebsiteFormProps> = props => {
               </Col>
             </Row>
           </Form>
-        </>
-      )}
-    </Formik>
+        )}
+      </Formik>
+    </>
   );
 };
 

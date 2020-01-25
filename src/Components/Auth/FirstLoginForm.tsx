@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 
+import { VerificationRequest } from "../../Types";
+
 import { EventsContext } from "../../Contexts/Events";
 
 import Row from "react-bootstrap/Row";
@@ -7,7 +9,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import { Formik, FastField } from "formik";
+import { Formik, FastField, FormikHelpers } from "formik";
 
 import ResidentName from "./FirstLoginForm/ResidentName";
 import ResidentHall from "./FirstLoginForm/ResidentHall";
@@ -15,15 +17,9 @@ import ResidentEmail from "./FirstLoginForm/ResidentEmail";
 
 import generateResidentValidationSchema from "./FirstLoginForm/residentValidationSchema";
 
-export type FirstLoginFormValues = {
-  email: string;
-  hall: string;
-  name: string;
-};
-
 type FormProps = {
   name: string;
-  onSubmit: (form: FirstLoginFormValues) => void;
+  onSubmit: (form: VerificationRequest, actions: FormikHelpers<VerificationRequest>) => void;
 };
 const FirstLoginForm: React.FunctionComponent<FormProps> = props => {
   const { name, onSubmit } = props;
