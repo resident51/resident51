@@ -5,9 +5,12 @@ import { Prompt } from "react-router-dom";
 
 const PromptIfDirty: React.FC = () => {
   const formik = useFormikContext();
+  const { dirty, submitCount, errors } = formik;
+  const hasErrors = Object.keys(errors).length > 0;
+  const hasNotSubmitted = submitCount === 0;
   return (
     <Prompt
-      when={formik.dirty || formik.submitCount > 0}
+      when={dirty && (hasNotSubmitted || hasErrors)}
       message="Are you sure you want to leave? You have unsaved changes."
     />
   );

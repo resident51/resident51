@@ -58,6 +58,9 @@ const FirstLogin: React.FC = () => {
     actions: FormikHelpers<VerificationRequest>
   ): Promise<void> => {
     if (user) {
+      // Refresh token to ensure custom claims are set.
+      await user.getIdToken(true);
+
       // Request verification
       const requestData = {
         displayName: request.name,
