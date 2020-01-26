@@ -44,7 +44,9 @@ const EditEvent: React.FC = () => {
 
   useEffect(() => {
     const dontShow = user && (!user.permissions || user.permissions < 2);
-    if (dontShow) history.push("/events");
+    if (dontShow) {
+      history.push("/events");
+    }
   }, [history, user]);
 
   const canEdit = user && user.permissions >= 2;
@@ -63,7 +65,9 @@ const EditEvent: React.FC = () => {
     eventsCollection
       .doc(formattedEvent.id)
       .set(formattedEvent)
-      .then(() => history.push("/events", { update: "Event updated!", t: Date.now() }))
+      .then(() => {
+        history.push("/events", { update: "Event updated!", t: Date.now() });
+      })
       .catch(e => {
         setIsSubmitting(false);
         actions.setSubmitting(false);

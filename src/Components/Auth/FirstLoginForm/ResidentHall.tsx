@@ -9,7 +9,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { FieldProps } from "formik";
 
-import AlertInFormer from "../../Layout/AlertInFormer";
+import AlertInFormer from "../../Common/AlertInFormer";
 
 const ResidentHall: React.FC<FieldProps<VerificationRequest>> = props => {
   const {

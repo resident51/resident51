@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import { FieldProps } from "formik";
 
 import { WebsiteFeedback } from "../Website";
-import AlertInFormer from "../../Layout/AlertInFormer";
+import AlertInFormer from "../../Common/AlertInFormer";
 
 const Subject: React.FC<FieldProps<WebsiteFeedback>> = props => {
   const {

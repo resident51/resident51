@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 
 import { FieldProps } from "formik";
 import { EventFormValues } from "../EventForm";
-import AlertInFormer from "../../Layout/AlertInFormer";
+import AlertInFormer from "../../Common/AlertInFormer";
 
 // #TODO move this somewhere more logical
 const orgs = [

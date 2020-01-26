@@ -6,7 +6,7 @@ import { FieldProps } from "formik";
 
 import Form from "react-bootstrap/Form";
 
-import AlertInFormer from "../../Layout/AlertInFormer";
+import AlertInFormer from "../../Common/AlertInFormer";
 
 const ResidentEmail: React.FC<FieldProps<VerificationRequest>> = props => {
   const {

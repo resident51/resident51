@@ -23,6 +23,8 @@ import EventLocationInput from "./EventForm/Location";
 import EventPublicInput from "./EventForm/Public";
 import EventFacilitationInput from "./EventForm/Facilitation";
 
+import PromptIfDirty from "../Common/PromptIfDirty";
+
 import validationSchema from "./EventForm/validationSchema";
 
 const threeDaysFromNow = Date.now() + 1000 * 60 * 60 * 24 * 3;
@@ -96,6 +98,8 @@ const EventFormComponent: React.FC<EventFormProps> = props => {
       {({ handleSubmit, isSubmitting }): React.ReactElement => {
         return (
           <Form noValidate onSubmit={handleSubmit}>
+            <PromptIfDirty />
+
             {eventUpdated && updatedWarning}
 
             <h3>1. Name the event</h3>

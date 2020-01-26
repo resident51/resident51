@@ -16,6 +16,7 @@ import Col from "react-bootstrap/Col";
 
 import Subject from "./FeedbackInputs/Subject";
 import Message from "./FeedbackInputs/Message";
+import PromptIfDirty from "../Common/PromptIfDirty";
 import validationSchema from "./feedbackValidationSchema";
 
 export type WebsiteFeedback = { subject: string; message: string };
@@ -77,6 +78,7 @@ const WebsiteForm: React.FC<WebsiteFormProps> = props => {
       >
         {({ handleSubmit, isSubmitting }): React.ReactElement => (
           <Form noValidate onSubmit={handleSubmit}>
+            <PromptIfDirty />
             <FastField name="subject" component={Subject} />
             <FastField name="message" component={Message} />
             <Row className="justify-content-center my-5">

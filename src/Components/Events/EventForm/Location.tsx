@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 
 import { FieldProps } from "formik";
 import { EventFormValues } from "../EventForm";
-import AlertInFormer from "../../Layout/AlertInFormer";
+import AlertInFormer from "../../Common/AlertInFormer";
 
 // DV: I fucking hate this component if anyone finds a better way to do it please tell me
 

@@ -10,7 +10,7 @@ import Form from "react-bootstrap/Form";
 
 import { FieldProps } from "formik";
 import { EventFormValues } from "../EventForm";
-import AlertInFormer from "../../Layout/AlertInFormer";
+import AlertInFormer from "../../Common/AlertInFormer";
 
 const EventTypeInput: React.FC<FieldProps<EventFormValues>> = props => {
   const {
