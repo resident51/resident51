@@ -6,6 +6,7 @@ export interface UserInterface extends Pick<FirebaseUser, "getIdToken"> {
   displayName: string | null;
   email: string | null;
   permissions: 0 | 1 | 2 | 3;
+  kuEmail: string;
   hall?: Hall | null;
   verified?: boolean;
   verificationRequests?: firestore.Query | null;

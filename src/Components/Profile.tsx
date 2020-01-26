@@ -26,8 +26,7 @@ const Profile: React.FC = () => {
   // Return empty component while waiting for auth
   if (!user) return <div />;
 
-  const { displayName, hall, permissions } = user;
-
+  const { permissions } = user;
   const status = !permissions
     ? "Unverified"
     : permissions === 1
@@ -48,8 +47,8 @@ const Profile: React.FC = () => {
             <Container>
               <Row>
                 <Col>
-                  <h1>{displayName}</h1>
-                  <h3>{hall ? hall : <i>No hall selected</i>}</h3>
+                  <h1>{user.displayName}</h1>
+                  <h3>{user.hall || <i>No hall selected</i>}</h3>
                   <h3>{status}</h3>
                   {permissions === 0 && (
                     <p>

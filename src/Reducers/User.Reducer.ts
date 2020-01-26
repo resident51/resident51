@@ -18,6 +18,7 @@ export const loggedOutUser: UserInterface = {
   uid: "",
   displayName: null,
   email: null,
+  kuEmail: "",
   permissions: 0,
   getIdToken: (forceRefresh?: boolean) => new Promise(r => r(""))
   // #TODO logged out user should have email: '', permissions: 0, etc.
@@ -31,7 +32,8 @@ const userReducer = (currentUser: User, action: UserAction): User => {
     case "LOGGED_IN":
       // Merge in Firebase auth user properties
       return Object.assign(action.data, {
-        permissions: 0 as UserInterface["permissions"]
+        permissions: 0 as UserInterface["permissions"],
+        kuEmail: "" as UserInterface["kuEmail"]
       });
     case "USER_FOUND":
       // #TODO this runs even when the user is updated, ie after requesting verification.
