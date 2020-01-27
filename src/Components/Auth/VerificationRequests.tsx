@@ -11,12 +11,12 @@ import { verifyUser } from "../../Firebase/firebase";
 type verifyType = "RESIDENT" | "EDITOR" | "ADMIN";
 
 const confirmEditorMessage = `
-This operation will allow this user to freely create, update, and remove events related to your hall.
+This operation will allow this user to freely create, update, and remove events related to your hall. They will be permitted to see all events, including private events such as meetings from other halls.
 
 Would you like to continue?`;
 
 const confirmAdminMessage = `
-This operation will allow this user to freely create, update, and remove events related to your hall.
+This operation will allow this user to freely create, update, and remove events related to your hall. They will be permitted to see all events, including private events such as meetings from other halls.
 
 This user will also be able to verify and designate roles to other users from this hall, giving them the same permissions as you.
 
