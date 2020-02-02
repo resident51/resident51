@@ -1,23 +1,23 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
-import { UserContext } from "../../Contexts/User";
+import { UserContext } from '../../Contexts/User';
 
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
-import { firestore } from "firebase/app";
+import { firestore } from 'firebase/app';
 
-import { Formik, FastField, FormikHelpers } from "formik";
+import { Formik, FastField, FormikHelpers } from 'formik';
 
-import Alert from "react-bootstrap/Alert";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Alert from 'react-bootstrap/Alert';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-import Subject from "./FeedbackInputs/Subject";
-import Message from "./FeedbackInputs/Message";
-import PromptIfDirty from "../Common/PromptIfDirty";
-import validationSchema from "./feedbackValidationSchema";
+import Subject from './FeedbackInputs/Subject';
+import Message from './FeedbackInputs/Message';
+import PromptIfDirty from '../Common/PromptIfDirty';
+import validationSchema from './feedbackValidationSchema';
 
 export type WebsiteFeedback = { subject: string; message: string };
 
@@ -34,7 +34,7 @@ const unauthenticatedErrorAlert = (
   </Alert>
 );
 
-const formInitialValues = { subject: "", message: "" };
+const formInitialValues = { subject: '', message: '' };
 
 type WebsiteFormProps = { feedbackCollection: firestore.CollectionReference };
 const WebsiteForm: React.FC<WebsiteFormProps> = props => {
@@ -50,7 +50,7 @@ const WebsiteForm: React.FC<WebsiteFormProps> = props => {
     if (!user || !user.displayName) {
       // Direct user to log in.
       setUnauthenticated(true);
-      props.feedbackCollection.add({ ...feedback, creation, user: "Unauthenticated" });
+      props.feedbackCollection.add({ ...feedback, creation, user: 'Unauthenticated' });
       return;
     }
 
@@ -58,7 +58,7 @@ const WebsiteForm: React.FC<WebsiteFormProps> = props => {
     props.feedbackCollection
       .add({ ...feedback, creation, user: { uid, displayName, email } })
       .then(() => {
-        history.push("/events", { update: "Feedback submitted! Thanks pal!", t: Date.now() });
+        history.push('/events', { update: 'Feedback submitted! Thanks pal!', t: Date.now() });
       })
       .catch(error => {
         actions.setSubmitting(false);

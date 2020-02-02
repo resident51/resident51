@@ -1,28 +1,28 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from 'react';
 
-import { EventForm as EventFormType } from "../Types/";
+import { EventForm as EventFormType } from '../Types/';
 
-import { firestore } from "firebase/app";
+import { firestore } from 'firebase/app';
 
-import { EventsContext } from "../Contexts/Events";
-import { UserContext } from "../Contexts/User";
+import { EventsContext } from '../Contexts/Events';
+import { UserContext } from '../Contexts/User';
 
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
-import { FormikHelpers } from "formik";
+import { FormikHelpers } from 'formik';
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-import { eventsCollection } from "../Firebase/firebase";
+import { eventsCollection } from '../Firebase/firebase';
 
-import EventForm from "./Events/EventForm";
-import EventCreationFAQ from "./Events/EventCreationFAQ";
+import EventForm from './Events/EventForm';
+import EventCreationFAQ from './Events/EventCreationFAQ';
 
 const CreateEvent: React.FC = () => {
   useEffect(() => {
-    document.title = "Resident 51 | Create Event";
+    document.title = 'Resident 51 | Create Event';
   }, []);
   const { formatSubmittedEvent } = useContext(EventsContext);
   const { user } = useContext(UserContext);
@@ -37,12 +37,12 @@ const CreateEvent: React.FC = () => {
       userId: user.uid,
       displayName: user.displayName,
       hall: user.hall,
-      dateTime: firestore.FieldValue.serverTimestamp()
+      dateTime: firestore.FieldValue.serverTimestamp(),
     });
 
     eventsCollection
       .add(formattedEvent)
-      .then(() => history.push("/events", { update: "Event created!", t: Date.now() }))
+      .then(() => history.push('/events', { update: 'Event created!', t: Date.now() }))
       .catch(e => {
         actions.setSubmitting(false);
         console.error(e);

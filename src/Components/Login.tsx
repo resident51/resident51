@@ -1,19 +1,19 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from 'react';
 
-import { UserContext } from "../Contexts/User";
+import { UserContext } from '../Contexts/User';
 
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
-import { ui, GoogleAuthProvider, FacebookAuthProvider } from "../Firebase/firebase";
-import "firebaseui/dist/firebaseui.css";
+import { ui, GoogleAuthProvider, FacebookAuthProvider } from '../Firebase/firebase';
+import 'firebaseui/dist/firebaseui.css';
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const Login: React.FC = () => {
   useEffect(() => {
-    document.title = "Resident 51 | Log In";
+    document.title = 'Resident 51 | Log In';
   }, []);
   const { user, userDispatch } = useContext(UserContext);
 
@@ -21,22 +21,22 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (user && user.uid) {
-      return history.replace("/profile");
+      return history.replace('/profile');
     } else if (!user) {
       return;
     }
 
-    ui.start("#firebaseui-auth-container", {
+    ui.start('#firebaseui-auth-container', {
       callbacks: {
         signInSuccessWithAuthResult: function(authResult): boolean {
           if (authResult.additionalUserInfo && authResult.additionalUserInfo.isNewUser) {
-            userDispatch({ type: "NEW_USER" });
-            history.push("/first-login");
+            userDispatch({ type: 'NEW_USER' });
+            history.push('/first-login');
           } else {
-            history.push("/events");
+            history.push('/events');
           }
           return false;
-        }
+        },
         // Not sure why this isn't successful?
         // signInFailure: error => {
         //   // TODO: handle errors gracefully
@@ -45,10 +45,10 @@ const Login: React.FC = () => {
         //   return false;
         // }
       },
-      signInFlow: "popup",
+      signInFlow: 'popup',
       signInOptions: [GoogleAuthProvider, FacebookAuthProvider],
-      tosUrl: () => history.push("/terms-of-service"),
-      privacyPolicyUrl: () => history.push("/privacy-policy")
+      tosUrl: () => history.push('/terms-of-service'),
+      privacyPolicyUrl: () => history.push('/privacy-policy'),
     });
   }, [user, history, userDispatch]);
 

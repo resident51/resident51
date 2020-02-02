@@ -1,14 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 // import { Events, EventR51, Hall, EventFormPublicType } from "../../Types";
 
-import { UserContext } from "../../Contexts/User";
+import { UserContext } from '../../Contexts/User';
 
-import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/Table";
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 
-import { verifyUser } from "../../Firebase/firebase";
+import {
+  verifyUserAsResident,
+  verifyUserAsEditor,
+  verifyUserAsAdmin,
+} from '../../Firebase/firebase';
 
-type verifyType = "RESIDENT" | "EDITOR" | "ADMIN";
+type VerifyType = 'RESIDENT' | 'EDITOR' | 'ADMIN';
 
 const confirmEditorMessage = `
 This operation will allow this user to freely create, update, and remove events related to your hall. They will be permitted to see all events, including private events such as meetings from other halls.
@@ -22,16 +26,16 @@ This user will also be able to verify and designate roles to other users from th
 
 Would you like to continue?`;
 
-const verifySelected = (email: string | null, verifyType: verifyType) => (): void => {
-  if (verifyType === "RESIDENT") {
-    verifyUser({ email });
-  } else if (verifyType === "EDITOR") {
+const verifySelected = (email: string | null, verifyType: VerifyType) => (): void => {
+  if (verifyType === 'RESIDENT') {
+    verifyUserAsResident({ email });
+  } else if (verifyType === 'EDITOR') {
     if (window.confirm(confirmEditorMessage)) {
-      verifyUser({ email });
+      verifyUserAsEditor({ email });
     }
-  } else if (verifyType === "ADMIN") {
+  } else if (verifyType === 'ADMIN') {
     if (window.confirm(confirmAdminMessage)) {
-      verifyUser({ email });
+      verifyUserAsAdmin({ email });
     }
   }
 };
@@ -60,17 +64,17 @@ const VerificationRequests: React.FC = () => {
             <td className="text-center">{request.displayName}</td>
             <td className="text-center">{request.kuEmail}</td>
             <td className="text-center justify-content-center">
-              <Button size="sm" onClick={verifySelected(request.email, "RESIDENT")}>
+              <Button size="sm" onClick={verifySelected(request.email, 'RESIDENT')}>
                 Resident
               </Button>
             </td>
             <td className="text-center justify-content-center">
-              <Button size="sm" variant="warning" onClick={verifySelected(request.email, "EDITOR")}>
+              <Button size="sm" variant="warning" onClick={verifySelected(request.email, 'EDITOR')}>
                 Editor
               </Button>
             </td>
             <td className="text-center justify-content-center">
-              <Button size="sm" variant="danger" onClick={verifySelected(request.email, "ADMIN")}>
+              <Button size="sm" variant="danger" onClick={verifySelected(request.email, 'ADMIN')}>
                 Admin
               </Button>
             </td>

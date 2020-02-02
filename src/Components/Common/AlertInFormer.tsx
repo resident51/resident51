@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { FieldProps } from "formik";
-import Alert from "react-bootstrap/Alert";
+import { FieldProps } from 'formik';
+import Alert from 'react-bootstrap/Alert';
 
 /**
  * Dig into formik's `errors` and `touched` objects by using either a string
@@ -12,11 +12,11 @@ import Alert from "react-bootstrap/Alert";
  */
 const digObjectByName: (
   obj: any, // eslint-disable-line
-  name: string | string[]
+  name: string | string[],
 ) => string | undefined = (obj, name) =>
-  typeof name === "string" ? obj[name] : name.reduce((result, prop) => result && result[prop], obj);
+  typeof name === 'string' ? obj[name] : name.reduce((result, prop) => result && result[prop], obj);
 
-type FormErrorAlertProps = Pick<FieldProps["form"], "touched" | "errors"> & {
+type FormErrorAlertProps = Pick<FieldProps['form'], 'touched' | 'errors'> & {
   name: string | string[];
 };
 const AlertInFormer: React.FC<FormErrorAlertProps> = props => {
@@ -28,7 +28,7 @@ const AlertInFormer: React.FC<FormErrorAlertProps> = props => {
   return (
     <>
       {children}
-      {error && touch ? <Alert variant={"danger"}>{error}</Alert> : <div />}
+      {error && touch ? <Alert variant={'danger'}>{error}</Alert> : <div />}
     </>
   );
 };

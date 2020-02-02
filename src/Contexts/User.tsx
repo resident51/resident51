@@ -1,9 +1,9 @@
-import React, { useReducer, createContext, useEffect, useState } from "react";
+import React, { useReducer, createContext, useEffect, useState } from 'react';
 
-import { UserInterface } from "../Types/";
+import { UserInterface } from '../Types/';
 
-import { auth, usersCollection } from "../Firebase/firebase";
-import UserReducer, { User, UserAction } from "../Reducers/User.Reducer";
+import { auth, usersCollection } from '../Firebase/firebase';
+import UserReducer, { User, UserAction } from '../Reducers/User.Reducer';
 
 interface UserContextProps {
   user: User;
@@ -20,10 +20,10 @@ export const UserProvider: React.FC<UserProps> = props => {
   // Reference to user's document in Cloud Firestore.
   const [userQuery, setUserQuery] = useState<firebase.firestore.DocumentReference | null>(null);
   const [verificationRequests, setVerificationRequests] = useState<firebase.firestore.Query | null>(
-    null
+    null,
   );
   const [usersRequestingVerification, setUsersRequestingVerification] = useState<UserInterface[]>(
-    []
+    [],
   );
 
   // Check for auth token on client, use to sign user in.
@@ -33,16 +33,16 @@ export const UserProvider: React.FC<UserProps> = props => {
         // Note that the callback passed to auth.onAuthStateChanged will fire
         // automatically  when a user logs in or logs out.
         if (authUser) {
-          userDispatch({ type: "LOGGED_IN", data: authUser });
+          userDispatch({ type: 'LOGGED_IN', data: authUser });
           setUserQuery(usersCollection.doc(authUser.uid));
         } else {
-          userDispatch({ type: "LOGGED_OUT" });
+          userDispatch({ type: 'LOGGED_OUT' });
           setUserQuery(null);
           setVerificationRequests(null);
           setUsersRequestingVerification([]);
         }
       }),
-    []
+    [],
   );
 
   // When the Firestore user document is found, set extra permissions/info
@@ -55,24 +55,24 @@ export const UserProvider: React.FC<UserProps> = props => {
             if (snapshot.exists) {
               const { hall, permissions, verified } = snapshot.data() as UserInterface;
               userDispatch({
-                type: "USER_FOUND",
-                data: { hall, permissions, verified }
+                type: 'USER_FOUND',
+                data: { hall, permissions, verified },
               });
 
               // Set reference query for users requesting verification - will only succeed if user is an admin.
               // #TODO you know ..... this really should just be a cloud function.....
               const unverifiedUsersQuery = usersCollection
-                .where("hall", "==", hall)
-                .where("permissions", "==", 0)
-                .where("verified", "==", false);
+                .where('hall', '==', hall)
+                .where('permissions', '==', 0)
+                .where('verified', '==', false);
               setVerificationRequests(
-                verified && permissions && permissions >= 3 ? unverifiedUsersQuery : null
+                verified && permissions && permissions >= 3 ? unverifiedUsersQuery : null,
               );
             } else {
               setVerificationRequests(null);
             }
           }),
-    [userQuery]
+    [userQuery],
   );
 
   // When the query for users requesting verification is set, we can try to send the query to Firebase.
@@ -84,13 +84,13 @@ export const UserProvider: React.FC<UserProps> = props => {
         snapshot.docChanges().forEach(change => {
           const userRequesting = {
             ...change.doc.data(),
-            uid: change.doc.id
+            uid: change.doc.id,
           } as UserInterface;
-          if (change.type === "added") {
+          if (change.type === 'added') {
             setUsersRequestingVerification(last => [...last, userRequesting]);
-          } else if (change.type === "modified") {
+          } else if (change.type === 'modified') {
             setUsersRequestingVerification(last =>
-              last.map(u => (u.uid === change.doc.id ? userRequesting : u))
+              last.map(u => (u.uid === change.doc.id ? userRequesting : u)),
             );
           } else {
             setUsersRequestingVerification(last => last.filter(u => u.uid !== change.doc.id));

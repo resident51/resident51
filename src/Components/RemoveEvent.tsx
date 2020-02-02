@@ -1,38 +1,38 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from 'react';
 
-import { EventsContext } from "../Contexts/Events";
+import { EventsContext } from '../Contexts/Events';
 
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from 'react-router-dom';
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-import { eventsCollection } from "../Firebase/firebase";
+import { eventsCollection } from '../Firebase/firebase';
 
-import EventCreationFAQ from "./Events/EventCreationFAQ";
-import EventNotFound from "./Events/EventNotFound";
-import ConfirmRemoveEvent from "./Events/ConfirmRemoveEvent";
+import EventCreationFAQ from './Events/EventCreationFAQ';
+import EventNotFound from './Events/EventNotFound';
+import ConfirmRemoveEvent from './Events/ConfirmRemoveEvent';
 
 const RemoveEvent: React.FC = () => {
   useEffect(() => {
-    document.title = "Resident 51 | Remove Event";
+    document.title = 'Resident 51 | Remove Event';
   }, []);
   const { events } = useContext(EventsContext);
   const [deleting, setDeleting] = useState(false);
 
   const history = useHistory();
-  const { id = "" } = useParams();
+  const { id = '' } = useParams();
 
   if (events === null) return <h1>Loading event...</h1>;
 
-  const eventToRemove = (events || []).find(e => "" + e.id === "" + id);
+  const eventToRemove = (events || []).find(e => '' + e.id === '' + id);
   const handleConfirm = (): void => {
     setDeleting(true);
     eventsCollection
       .doc(id)
-      .update("publicStatus.type", "unpublished")
-      .then(() => history.push("/events", { update: "Event removed.", t: Date.now() }))
+      .update('publicStatus.type', 'unpublished')
+      .then(() => history.push('/events', { update: 'Event removed.', t: Date.now() }))
       .catch(e => {
         console.error(e);
         setDeleting(false);
@@ -55,7 +55,7 @@ const RemoveEvent: React.FC = () => {
             eventToRemove && (
               <ConfirmRemoveEvent
                 handleConfirm={handleConfirm}
-                handleCancel={(): void => history.push("/events")}
+                handleCancel={(): void => history.push('/events')}
                 event={eventToRemove}
               />
             )

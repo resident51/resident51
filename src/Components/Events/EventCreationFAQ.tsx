@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import Card from "react-bootstrap/Card";
+import Card from 'react-bootstrap/Card';
 
 const EventCreationFAQ: React.FC = () => (
   <Card>

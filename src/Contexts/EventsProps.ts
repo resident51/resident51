@@ -6,43 +6,71 @@ import {
   EventR51,
   EventTypeFormats,
   Events,
-  EventForm as EventFormType
-} from "../Types/";
+  EventForm as EventFormType,
+} from '../Types/';
 
-import { firestore } from "firebase/app";
-import moment from "moment";
+import { EventAction } from '../Reducers/Events.Reducer';
+
+import { firestore } from 'firebase/app';
+import moment from 'moment';
 
 export const eventTypes: EventTypeFormats = {
-  social: { formal: "Social Event", color: "green" },
-  meeting: { formal: "Meeting", color: "orange" },
-  community: { formal: "Community Event", color: "plum" },
-  meal: { formal: "Co-Hall Meal", color: "lightcoral" },
-  alumni: { formal: "Alumni Event", color: "maroon" },
-  campus: { formal: "Campus Event", color: "lightseagreen" }
+  social: { formal: 'Social Event', color: 'green' },
+  meeting: { formal: 'Meeting', color: 'orange' },
+  community: { formal: 'Community Event', color: 'plum' },
+  meal: { formal: 'Co-Hall Meal', color: 'lightcoral' },
+  alumni: { formal: 'Alumni Event', color: 'maroon' },
+  campus: { formal: 'Campus Event', color: 'lightseagreen' },
 };
 
 export const halls: Hall[] = [
-  "Battenfeld",
-  "Douthart",
-  "Grace Pearson",
-  "KK Amini",
-  "Krehbiel",
-  "Margaret Amini",
-  "Miller",
-  "Pearson",
-  "Rieger",
-  "Sellards",
-  "Stephenson",
-  "Watkins"
+  'Battenfeld',
+  'Douthart',
+  'Grace Pearson',
+  'KK Amini',
+  'Krehbiel',
+  'Margaret Amini',
+  'Miller',
+  'Pearson',
+  'Rieger',
+  'Sellards',
+  'Stephenson',
+  'Watkins',
 ];
 
+/**
+ * Fetch events from Cloud Firestore based on User's permissions.
+ */
+export const querySnapshot = (
+  dispatch: React.Dispatch<EventAction>,
+  query: firebase.firestore.Query,
+): (() => void) =>
+  query.onSnapshot(snapshot => {
+    if (!snapshot.size) return dispatch({ type: 'EMPTY' });
+
+    snapshot.docChanges().forEach(function(change) {
+      // Dispatch using the snapshot change type as the action type
+      // #TODO adding every event one by one the first time is easy but causes a lot
+      // of renders. Let's get all events at once.
+      // #TODO now that we have separate queries for public and private events,
+      // we need to have a condition for when an event changes from public to private
+      const type = change.type.toUpperCase() as 'ADDED' | 'MODIFIED' | 'REMOVED';
+      const event = {
+        ...change.doc.data({ serverTimestamps: 'estimate' }),
+        id: change.doc.id,
+      } as CFSEvent;
+      const eventFormatted = formatRetrievedEvent(event);
+      dispatch({ type, event: eventFormatted });
+    });
+  });
+
 const determineEventType = (
-  publicStatusCFS: CFSEvent["publicStatus"]
-): EventR51["publicStatus"]["type"] => {
-  if (publicStatusCFS.type === "private") {
-    return publicStatusCFS.halls.length === 1 ? "hall" : "halls";
+  publicStatusCFS: CFSEvent['publicStatus'],
+): EventR51['publicStatus']['type'] => {
+  if (publicStatusCFS.type === 'private') {
+    return publicStatusCFS.halls.length === 1 ? 'hall' : 'halls';
   } else {
-    return "public";
+    return 'public';
   }
 };
 
@@ -52,47 +80,47 @@ export const formatRetrievedEvent = (event: CFSEvent): EventR51 => ({
   dateTime: event.dateTime.toMillis(),
   publicStatus: {
     type: determineEventType(event.publicStatus),
-    halls: event.publicStatus.halls
+    halls: event.publicStatus.halls,
   },
   lastEdit: event.lastEdit.toMillis(),
   submission: {
     ...event.submission,
-    dateTime: event.submission.dateTime.toMillis()
-  }
+    dateTime: event.submission.dateTime.toMillis(),
+  },
 });
 
 const determineCFSEventType = (
   hall: Hall,
-  publicStatus: EventR51["publicStatus"]
-): CFSEvent["publicStatus"] => ({
-  type: publicStatus.type === "public" ? "public" : "private",
+  publicStatus: EventR51['publicStatus'],
+): CFSEvent['publicStatus'] => ({
+  type: publicStatus.type === 'public' ? 'public' : 'private',
   halls:
-    publicStatus.type === "public"
+    publicStatus.type === 'public'
       ? halls
-      : publicStatus.type === "hall"
+      : publicStatus.type === 'hall'
       ? [hall]
-      : publicStatus.halls
+      : publicStatus.halls,
 });
 
 // Format event before sending to Firebase
 export const formatSubmittedEventByHall = (hall: Hall) => (
   event: EventFormType,
-  submission: EventToCFSSubmission
+  submission: EventToCFSSubmission,
 ): EventToCFS => {
   // destructure date and time off of event
-  const { date, time, ...CFSEvent } = event;
-  const [hour, minute] = time.split(":").map(num => +num);
+  const { date, time, ...eventFromForm } = event;
+  const [hour, minute] = time.split(':').map(num => +num);
   const momentDate = moment.unix(date);
 
   return {
-    ...CFSEvent,
+    ...eventFromForm,
     dateTime: momentDate
       .hour(hour)
       .minute(minute)
       .toDate(),
     publicStatus: determineCFSEventType(hall, event.publicStatus),
     lastEdit: firestore.FieldValue.serverTimestamp(),
-    submission
+    submission,
   };
 };
 

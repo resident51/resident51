@@ -1,23 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-import { VerificationRequest } from "../../Types";
+import { VerificationRequest } from '../../Types';
 
-import { EventsContext } from "../../Contexts/Events";
+import { EventsContext } from '../../Contexts/Events';
 
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
-import { Formik, FastField, FormikHelpers } from "formik";
+import { Formik, FastField, FormikHelpers } from 'formik';
 
-import ResidentName from "./FirstLoginForm/ResidentName";
-import ResidentHall from "./FirstLoginForm/ResidentHall";
-import ResidentEmail from "./FirstLoginForm/ResidentEmail";
+import ResidentName from './FirstLoginForm/ResidentName';
+import ResidentHall from './FirstLoginForm/ResidentHall';
+import ResidentEmail from './FirstLoginForm/ResidentEmail';
 
-import PromptIfDirty from "../Common/PromptIfDirty";
+import PromptIfDirty from '../Common/PromptIfDirty';
 
-import generateResidentValidationSchema from "./FirstLoginForm/residentValidationSchema";
+import generateResidentValidationSchema from './FirstLoginForm/residentValidationSchema';
 
 type FormProps = {
   name: string;
@@ -27,7 +27,7 @@ const FirstLoginForm: React.FunctionComponent<FormProps> = props => {
   const { name, onSubmit } = props;
   const { halls } = useContext(EventsContext);
 
-  const formInitialValues = { name, hall: "", email: "" };
+  const formInitialValues = { name, hall: '', email: '' };
 
   const validationSchema = generateResidentValidationSchema(halls);
 

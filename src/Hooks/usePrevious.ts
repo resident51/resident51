@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect } from 'react';
 
 function usePrevious<Type>(value: Type): Type | undefined {
   const ref = useRef<Type>();

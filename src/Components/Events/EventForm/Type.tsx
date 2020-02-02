@@ -1,21 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-import { EventType } from "../../../Types/";
+import { EventType } from '../../../Types/';
 
-import { EventsContext } from "../../../Contexts/Events";
+import { EventsContext } from '../../../Contexts/Events';
 
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 
-import { FieldProps } from "formik";
-import { EventFormValues } from "../EventForm";
-import AlertInFormer from "../../Common/AlertInFormer";
+import { FieldProps } from 'formik';
+import { EventFormValues } from '../EventForm';
+import AlertInFormer from '../../Common/AlertInFormer';
 
 const EventTypeInput: React.FC<FieldProps<EventFormValues>> = props => {
   const {
     form: { values, touched, errors },
-    field
+    field,
   } = props;
   const { eventTypes } = useContext(EventsContext);
 

@@ -8,15 +8,15 @@ export type DeepPartial<T> = {
 };
 
 export type Hall =
-  | "Battenfeld"
-  | "Douthart"
-  | "Grace Pearson"
-  | "KK Amini"
-  | "Krehbiel"
-  | "Margaret Amini"
-  | "Miller"
-  | "Pearson"
-  | "Rieger"
-  | "Sellards"
-  | "Stephenson"
-  | "Watkins";
+  | 'Battenfeld'
+  | 'Douthart'
+  | 'Grace Pearson'
+  | 'KK Amini'
+  | 'Krehbiel'
+  | 'Margaret Amini'
+  | 'Miller'
+  | 'Pearson'
+  | 'Rieger'
+  | 'Sellards'
+  | 'Stephenson'
+  | 'Watkins';

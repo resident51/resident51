@@ -1,27 +1,27 @@
-import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import Jumbotron from "react-bootstrap/Jumbotron";
+import Jumbotron from 'react-bootstrap/Jumbotron';
 
-import Header from "./Components/Layout/Header";
-import Routes from "./Components/Routes";
-import Footer from "./Components/Layout/Footer";
+import Header from './Components/Layout/Header';
+import Routes from './Components/Routes';
+import Footer from './Components/Layout/Footer';
 
-import "react-dates/lib/css/_datepicker.css";
-import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./Styles/App.scss";
+import 'react-dates/lib/css/_datepicker.css';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Styles/App.scss';
 // import "./Styles/R51-Title.scss";
 
-import { EventsProvider } from "./Contexts/Events";
-import { UserProvider } from "./Contexts/User";
+import { EventsProvider } from './Contexts/Events';
+import { UserProvider } from './Contexts/User';
 
 const gradient =
-  "linear-gradient(to right, lightseagreen, green, orange, plum, lightcoral, maroon)";
+  'linear-gradient(to right, lightseagreen, green, orange, plum, lightcoral, maroon)';
 
 const App: React.FC = () => (
   <Router>
-    <div style={{ backgroundImage: gradient, height: ".45em" }} />
+    <div style={{ backgroundImage: gradient, height: '.45em' }} />
     <div id="app_container">
       <Jumbotron id="r51" className="mb-0">
         <h1 id="title" className="display-1 text-center">

@@ -1,22 +1,22 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
-import { Hall } from "../../../Types/";
+import { Hall } from '../../../Types/';
 
-import { EventsContext } from "../../../Contexts/Events";
-import { UserContext } from "../../../Contexts/User";
+import { EventsContext } from '../../../Contexts/Events';
+import { UserContext } from '../../../Contexts/User';
 
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 
-import { FieldProps } from "formik";
-import { EventFormValues } from "../EventForm";
-import AlertInFormer from "../../Common/AlertInFormer";
+import { FieldProps } from 'formik';
+import { EventFormValues } from '../EventForm';
+import AlertInFormer from '../../Common/AlertInFormer';
 
 const EventPublicInput: React.FC<FieldProps<EventFormValues>> = props => {
   const {
     form: { values, errors, touched },
-    field
+    field,
   } = props;
   const { user } = useContext(UserContext);
   const { halls } = useContext(EventsContext);
@@ -25,14 +25,14 @@ const EventPublicInput: React.FC<FieldProps<EventFormValues>> = props => {
   const [selected, setSelected] = useState(values.publicStatus.halls);
 
   const types = [
-    ["public", "Open to anyone"],
-    ["halls", "Multiple halls"],
-    ["hall", "My hall"]
+    ['public', 'Open to anyone'],
+    ['halls', 'Multiple halls'],
+    ['hall', 'My hall'],
   ];
 
   return (
-    <AlertInFormer errors={errors} touched={touched} name={["publicStatus", "type"]}>
-      <AlertInFormer errors={errors} touched={touched} name={["publicStatus", "halls"]}>
+    <AlertInFormer errors={errors} touched={touched} name={['publicStatus', 'type']}>
+      <AlertInFormer errors={errors} touched={touched} name={['publicStatus', 'halls']}>
         <Form.Group>
           <Form.Label>Who will be attending this event?</Form.Label>
           <Row>
@@ -53,7 +53,7 @@ const EventPublicInput: React.FC<FieldProps<EventFormValues>> = props => {
             ))}
           </Row>
         </Form.Group>
-        {values.publicStatus.type === "halls" && (
+        {values.publicStatus.type === 'halls' && (
           <Form.Group>
             <Form.Label>Which halls?</Form.Label>
             <Row>

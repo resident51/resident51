@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 const ToCreateEvent: React.FC = () => (
   <Card className="mb-3">

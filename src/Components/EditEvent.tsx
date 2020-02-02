@@ -1,29 +1,29 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from 'react';
 
-import { EventsContext } from "../Contexts/Events";
-import { UserContext } from "../Contexts/User";
-import usePrevious from "../Hooks/usePrevious";
+import { EventsContext } from '../Contexts/Events';
+import { UserContext } from '../Contexts/User';
+import usePrevious from '../Hooks/usePrevious';
 
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from 'react-router-dom';
 
-import isEqual from "lodash/isEqual";
+import isEqual from 'lodash/isEqual';
 
-import { FormikHelpers } from "formik";
+import { FormikHelpers } from 'formik';
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-import { eventsCollection } from "../Firebase/firebase";
+import { eventsCollection } from '../Firebase/firebase';
 
-import EventForm from "./Events/EventForm";
-import EventCreationFAQ from "./Events/EventCreationFAQ";
-import EventNotFound from "./Events/EventNotFound";
-import { EventForm as EventFormType } from "../Types/";
+import EventForm from './Events/EventForm';
+import EventCreationFAQ from './Events/EventCreationFAQ';
+import EventNotFound from './Events/EventNotFound';
+import { EventForm as EventFormType } from '../Types/';
 
 const EditEvent: React.FC = () => {
   useEffect(() => {
-    document.title = "Resident 51 | Edit Event";
+    document.title = 'Resident 51 | Edit Event';
   }, []);
   const [eventUpdated, setEventUpdated] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,7 +32,7 @@ const EditEvent: React.FC = () => {
 
   const history = useHistory();
   const { id } = useParams();
-  const eventToEdit = (events || []).find(e => "" + e.id === "" + id);
+  const eventToEdit = (events || []).find(e => '' + e.id === '' + id);
 
   // Inform the user if someone else just updated the same event.
   const initialEvent = usePrevious(eventToEdit);
@@ -45,7 +45,7 @@ const EditEvent: React.FC = () => {
   useEffect(() => {
     const dontShow = user && (!user.permissions || user.permissions < 2);
     if (dontShow) {
-      history.push("/events");
+      history.push('/events');
     }
   }, [history, user]);
 
@@ -57,7 +57,7 @@ const EditEvent: React.FC = () => {
     submittedEvent.id = id as string;
     const formattedEvent = formatSubmittedEvent(submittedEvent, {
       ...eventToEdit.submission,
-      dateTime: new Date(eventToEdit.submission.dateTime)
+      dateTime: new Date(eventToEdit.submission.dateTime),
     });
 
     setIsSubmitting(true);
@@ -66,7 +66,7 @@ const EditEvent: React.FC = () => {
       .doc(formattedEvent.id)
       .set(formattedEvent)
       .then(() => {
-        history.push("/events", { update: "Event updated!", t: Date.now() });
+        history.push('/events', { update: 'Event updated!', t: Date.now() });
       })
       .catch(e => {
         setIsSubmitting(false);

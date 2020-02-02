@@ -1,24 +1,24 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from 'react';
 
-import { EventsContext } from "../Contexts/Events";
-import { UserContext } from "../Contexts/User";
+import { EventsContext } from '../Contexts/Events';
+import { UserContext } from '../Contexts/User';
 
-import useEventTypes from "../Hooks/useEventTypes";
+import useEventTypes from '../Hooks/useEventTypes';
 
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
-import Alert from "react-bootstrap/Alert";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Alert from 'react-bootstrap/Alert';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-import ColorKey from "./Events/ColorKey";
-import ToCreateEvent from "./Events/ToCreateEvent";
-import EventList from "./Events/EventList";
+import ColorKey from './Events/ColorKey';
+import ToCreateEvent from './Events/ToCreateEvent';
+import EventList from './Events/EventList';
 
 const Events: React.FC = () => {
   useEffect(() => {
-    document.title = "Resident 51 | Events";
+    document.title = 'Resident 51 | Events';
   }, []);
   const { events } = useContext(EventsContext);
   const { user } = useContext(UserContext);
@@ -27,7 +27,7 @@ const Events: React.FC = () => {
   const history = useHistory();
   const update =
     history.location.state &&
-    typeof history.location.state.t === "number" &&
+    typeof history.location.state.t === 'number' &&
     Date.now() - history.location.state.t < 1000 * 60 &&
     history.location.state.update;
 

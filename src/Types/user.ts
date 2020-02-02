@@ -1,11 +1,13 @@
-import { firestore, User as FirebaseUser } from "firebase/app";
-import { Hall } from "./common";
+import { firestore, User as FirebaseUser } from 'firebase/app';
+import { Hall } from './common';
 
-export interface UserInterface extends Pick<FirebaseUser, "getIdToken"> {
+export type Permissions = 0 | 1 | 2 | 3;
+
+export interface UserInterface extends Pick<FirebaseUser, 'getIdToken'> {
   uid: string;
   displayName: string | null;
   email: string | null;
-  permissions: 0 | 1 | 2 | 3;
+  permissions: Permissions;
   kuEmail: string;
   hall?: Hall | null;
   verified?: boolean;

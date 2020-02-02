@@ -1,31 +1,31 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo } from 'react';
 
-import { EventR51, EventForm as EventFormType, Hall } from "../../Types/";
+import { EventR51, EventForm as EventFormType, Hall } from '../../Types/';
 
-import { EventsContext } from "../../Contexts/Events";
-import { UserContext } from "../../Contexts/User";
+import { EventsContext } from '../../Contexts/Events';
+import { UserContext } from '../../Contexts/User';
 
-import moment from "moment";
-import { Formik, Field, FastField, FormikHelpers } from "formik";
+import moment from 'moment';
+import { Formik, Field, FastField, FormikHelpers } from 'formik';
 
-import Alert from "react-bootstrap/Alert";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import Alert from 'react-bootstrap/Alert';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
-import EventNameInput from "./EventForm/Name";
-import EventTypeInput from "./EventForm/Type";
-import EventDescriptionInput from "./EventForm/Description";
-import EventDateInput from "./EventForm/Date";
-import EventTimeInput from "./EventForm/Time";
-import EventLocationInput from "./EventForm/Location";
-import EventPublicInput from "./EventForm/Public";
-import EventFacilitationInput from "./EventForm/Facilitation";
+import EventNameInput from './EventForm/Name';
+import EventTypeInput from './EventForm/Type';
+import EventDescriptionInput from './EventForm/Description';
+import EventDateInput from './EventForm/Date';
+import EventTimeInput from './EventForm/Time';
+import EventLocationInput from './EventForm/Location';
+import EventPublicInput from './EventForm/Public';
+import EventFacilitationInput from './EventForm/Facilitation';
 
-import PromptIfDirty from "../Common/PromptIfDirty";
+import PromptIfDirty from '../Common/PromptIfDirty';
 
-import validationSchema from "./EventForm/validationSchema";
+import validationSchema from './EventForm/validationSchema';
 
 const threeDaysFromNow = Date.now() + 1000 * 60 * 60 * 24 * 3;
 const updatedWarning = (
@@ -66,27 +66,27 @@ const EventFormComponent: React.FC<EventFormProps> = props => {
 
   const formValidationSchema = useMemo(() => validationSchema({ halls, eventTypes }), [
     halls,
-    eventTypes
+    eventTypes,
   ]);
 
   if (!user) return <div />;
 
   const formInitialValues: EventFormType = {
-    id: event.id || "",
-    name: event.name || "",
+    id: event.id || '',
+    name: event.name || '',
     type: event.type || undefined,
-    description: event.description || "",
-    location: event.location || "",
+    description: event.description || '',
+    location: event.location || '',
     date: dateTimeMoment.unix(),
-    time: event.dateTime ? dateTimeMoment.format("kk:mm") : "18:00",
+    time: event.dateTime ? dateTimeMoment.format('kk:mm') : '18:00',
     publicStatus: event.publicStatus || {
-      type: "public",
-      halls: [user.hall]
+      type: 'public',
+      halls: [user.hall],
     },
     facilitation: event.facilitation || {
       organizationType: undefined,
-      organizationName: ""
-    }
+      organizationName: '',
+    },
   };
 
   return (

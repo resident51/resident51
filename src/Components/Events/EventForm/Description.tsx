@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import Form from "react-bootstrap/Form";
+import Form from 'react-bootstrap/Form';
 
-import { FieldProps } from "formik";
-import { EventFormValues } from "../EventForm";
-import AlertInFormer from "../../Common/AlertInFormer";
+import { FieldProps } from 'formik';
+import { EventFormValues } from '../EventForm';
+import AlertInFormer from '../../Common/AlertInFormer';
 
 const EventDescriptionInput: React.FC<FieldProps<EventFormValues>> = props => {
   const {
     form: { values, touched, errors },
-    field
+    field,
   } = props;
 
   return (

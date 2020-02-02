@@ -2,8 +2,8 @@
 
 ## Features
 
-* **Events**: Create, view, and share events with fellow residents.
-* **Announcements**: Inform residents of your hall and members of the Schol-Hall community what's happening!
+- **Events**: Create, view, and share events with fellow residents.
+- **Announcements**: Inform residents of your hall and members of the Schol-Hall community what's happening!
 
 ## Technical Design
 

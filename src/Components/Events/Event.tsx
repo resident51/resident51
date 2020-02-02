@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import { EventR51, EventTypeFormat, Hall, EventFormPublicType } from "../../Types/";
+import { EventR51, EventTypeFormat, Hall, EventFormPublicType } from '../../Types/';
 
-import moment from "moment";
+import moment from 'moment';
 
-import Accordion from "react-bootstrap/Accordion";
-import Card from "react-bootstrap/Card";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 type EventProps = {
   event: EventR51;
@@ -18,12 +18,12 @@ type EventProps = {
 };
 const Event: React.FC<EventProps> = props => {
   const event =
-    props.event && props.event.name ? props.event : ({ name: "Event data error" } as EventR51);
+    props.event && props.event.name ? props.event : ({ name: 'Event data error' } as EventR51);
 
   const format =
     props.format && props.format.color
       ? props.format
-      : ({ color: "black", formal: "Event formatting error" } as EventTypeFormat);
+      : ({ color: 'black', formal: 'Event formatting error' } as EventTypeFormat);
 
   const { id, name, location, description, dateTime } = event;
   const dateTimeMoment = moment(dateTime);
@@ -44,7 +44,7 @@ const Event: React.FC<EventProps> = props => {
           <Col className="d-block" md="auto" xs={12}>
             <Row className="justify-content-between">
               <Col xs="auto">
-                <i>{dateTimeMoment.format("MMMM Do, YYYY")}</i>
+                <i>{dateTimeMoment.format('MMMM Do, YYYY')}</i>
               </Col>
             </Row>
           </Col>
@@ -63,14 +63,14 @@ const Event: React.FC<EventProps> = props => {
               <Col xs="auto" className="event-admin-config">
                 <Link
                   to={{ pathname: `/events/edit/${id}`, state: { event } }}
-                  style={{ color: "slategray" }}
+                  style={{ color: 'slategray' }}
                 >
                   Edit
                 </Link>
                 <span> &middot; </span>
                 <Link
                   to={{ pathname: `/events/delete/${id}`, state: { event } }}
-                  style={{ color: "red" }}
+                  style={{ color: 'red' }}
                 >
                   Delete
                 </Link>
@@ -81,7 +81,7 @@ const Event: React.FC<EventProps> = props => {
             <Col>
               <h6 className="mb-0">
                 <span className="d-sm-inline d-none">Time: </span>
-                {dateTimeMoment.format("h:mm A")}
+                {dateTimeMoment.format('h:mm A')}
               </h6>
             </Col>
             <Col xs="auto">
@@ -96,7 +96,7 @@ const Event: React.FC<EventProps> = props => {
           <Row className="justify-content-between mb-0 pb-0">
             <Col xs="auto">
               <small className="text-muted">
-                {event.publicStatus.type === "public" ? "Public" : "Private"} event
+                {event.publicStatus.type === 'public' ? 'Public' : 'Private'} event
               </small>
             </Col>
             <Col xs="auto">

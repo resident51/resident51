@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 // import { EventType } from '../Types/'; // tried coercing type below to EventType...
 
@@ -23,7 +23,7 @@ const useEventTypes = (): EventTypeFilterState => {
     community: [community, setCommunity],
     meeting: [meeting, setMeeting],
     alumni: [alumni, setAlumni],
-    campus: [campus, setCampus]
+    campus: [campus, setCampus],
   };
 
   return displayTypes;

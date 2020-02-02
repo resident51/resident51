@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import { EventR51 } from "../../Types/";
+import { EventR51 } from '../../Types/';
 
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-import EventList from "./EventList";
+import EventList from './EventList';
 
 type ConfirmRemoveEventProps = {
   handleConfirm: () => void;

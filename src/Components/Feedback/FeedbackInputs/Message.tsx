@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import Form from "react-bootstrap/Form";
-import { FieldProps } from "formik";
+import Form from 'react-bootstrap/Form';
+import { FieldProps } from 'formik';
 
-import { WebsiteFeedback } from "../Website";
-import AlertInFormer from "../../Common/AlertInFormer";
+import { WebsiteFeedback } from '../Website';
+import AlertInFormer from '../../Common/AlertInFormer';
 
 const Message: React.FC<FieldProps<WebsiteFeedback>> = props => {
   const {
     form: { values, touched, errors },
-    field
+    field,
   } = props;
 
   return (

@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-import { EventType } from "../../Types/";
-import { EventTypeFilterState } from "../../Hooks/useEventTypes";
+import { EventType } from '../../Types/';
+import { EventTypeFilterState } from '../../Hooks/useEventTypes';
 
-import { EventsContext } from "../../Contexts/Events";
+import { EventsContext } from '../../Contexts/Events';
 
-import Card from "react-bootstrap/Card";
-import EventTypeButton from "./EventTypeButton";
+import Card from 'react-bootstrap/Card';
+import EventTypeButton from './EventTypeButton';
 
 type ColorKeyProps = { displayTypes: EventTypeFilterState };
 const ColorKey: React.FC<ColorKeyProps> = props => {

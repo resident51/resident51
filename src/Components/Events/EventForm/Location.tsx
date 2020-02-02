@@ -1,36 +1,36 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 
-import { EventsContext } from "../../../Contexts/Events";
+import { EventsContext } from '../../../Contexts/Events';
 
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 
-import { FieldProps } from "formik";
-import { EventFormValues } from "../EventForm";
-import AlertInFormer from "../../Common/AlertInFormer";
+import { FieldProps } from 'formik';
+import { EventFormValues } from '../EventForm';
+import AlertInFormer from '../../Common/AlertInFormer';
 
 // DV: I fucking hate this component if anyone finds a better way to do it please tell me
 
 const EventLocationInput: React.FC<FieldProps<EventFormValues>> = props => {
   const {
     form: { values, errors, touched },
-    field
+    field,
   } = props;
   const { halls } = useContext(EventsContext);
-  const locs = [...halls, "Crawford Building", "Complex-wide"];
+  const locs = [...halls, 'Crawford Building', 'Complex-wide'];
 
   // `otherText` is its own variable because we want the input text
   // to remain populated even if another option is clicked.
   const [otherEnabled, setOtherEnabled] = useState(false);
-  const [otherText, setOtherText] = useState("");
+  const [otherText, setOtherText] = useState('');
 
   // On first render, get initial location input and set first state
   useEffect(() => {
     const otherIsChecked = Boolean(values.location && !locs.includes(values.location));
 
     setOtherEnabled(otherIsChecked);
-    setOtherText(otherIsChecked ? values.location : "");
+    setOtherText(otherIsChecked ? values.location : '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -42,7 +42,7 @@ const EventLocationInput: React.FC<FieldProps<EventFormValues>> = props => {
           better to use the options above. Provide details in your description instead!
         </p>
       ),
-    [otherEnabled]
+    [otherEnabled],
   );
 
   return (
@@ -70,7 +70,7 @@ const EventLocationInput: React.FC<FieldProps<EventFormValues>> = props => {
           ))}
         </Row>
         <Row>
-          <Col sm={"auto"} className="mt-2 pr-2">
+          <Col sm={'auto'} className="mt-2 pr-2">
             <Form.Check
               custom
               type="radio"

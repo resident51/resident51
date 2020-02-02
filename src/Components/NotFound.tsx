@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 const NotFound: React.FC = () => {
   useEffect(() => {
-    document.title = "Resident 51 | 404";
+    document.title = 'Resident 51 | 404';
   }, []);
 
   const history = useHistory();
@@ -26,7 +26,7 @@ const NotFound: React.FC = () => {
             className="text-center"
             block
             onClick={(): void => {
-              history.push("/");
+              history.push('/');
             }}
             variant="primary"
             type="submit"

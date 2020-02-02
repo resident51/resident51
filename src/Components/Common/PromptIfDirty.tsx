@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { useFormikContext } from "formik";
-import { Prompt } from "react-router-dom";
+import { useFormikContext } from 'formik';
+import { Prompt } from 'react-router-dom';
 
 const PromptIfDirty: React.FC = () => {
   const formik = useFormikContext();

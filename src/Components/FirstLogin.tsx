@@ -1,21 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 
-import { VerificationRequest } from "../Types/";
+import { VerificationRequest } from '../Types/';
 
-import { UserContext } from "../Contexts/User";
+import { UserContext } from '../Contexts/User';
 
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
-import { FormikHelpers } from "formik";
+import { FormikHelpers } from 'formik';
 
-import Alert from "react-bootstrap/Alert";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Alert from 'react-bootstrap/Alert';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-import { requestVerification } from "../Firebase/firebase";
+import { requestVerification } from '../Firebase/firebase';
 
-import FirstLoginForm from "./Auth/FirstLoginForm";
+import FirstLoginForm from './Auth/FirstLoginForm';
 
 const requestErrorAlert = (
   <Col xs={12} md={8} className="justify-content-center my-3">
@@ -28,7 +28,7 @@ const requestErrorAlert = (
 
 const FirstLogin: React.FC = () => {
   useEffect(() => {
-    document.title = "Resident 51 | First Login";
+    document.title = 'Resident 51 | First Login';
   }, []);
   const [requestError, setRequestError] = useState(false);
   const [tokenIsRefreshed, setTokenIsRefreshed] = useState(false);
@@ -42,12 +42,12 @@ const FirstLogin: React.FC = () => {
     // Waiting for user info from Firebase Auth - wait.
     if (user === null) return;
 
-    if (typeof user.permissions !== "number") {
+    if (typeof user.permissions !== 'number') {
       // No user logged in, direct to /login
-      history.replace("/login");
+      history.replace('/login');
     } else if (user.permissions !== 0) {
       // User logged in, but already verified.
-      history.replace("/profile");
+      history.replace('/profile');
     } else {
       user.getIdToken(true).then(() => setTokenIsRefreshed(true));
     }
@@ -55,7 +55,7 @@ const FirstLogin: React.FC = () => {
 
   const onSubmit = async (
     request: VerificationRequest,
-    actions: FormikHelpers<VerificationRequest>
+    actions: FormikHelpers<VerificationRequest>,
   ): Promise<void> => {
     if (user) {
       // Refresh token to ensure custom claims are set.
@@ -65,16 +65,16 @@ const FirstLogin: React.FC = () => {
       const requestData = {
         displayName: request.name,
         kuEmail: request.email,
-        requestedHall: request.hall
+        requestedHall: request.hall,
       };
 
       const result = await requestVerification(requestData);
 
       if (result.data) {
         await user.getIdToken(true);
-        history.push("/events", {
-          update: "Successfully requested verification!",
-          t: Date.now()
+        history.push('/events', {
+          update: 'Successfully requested verification!',
+          t: Date.now(),
         });
         return;
       } else {
@@ -84,7 +84,7 @@ const FirstLogin: React.FC = () => {
     actions.setSubmitting(false);
   };
 
-  const initialName = user && user.displayName ? user.displayName : "";
+  const initialName = user && user.displayName ? user.displayName : '';
 
   return user === null ? (
     <div />

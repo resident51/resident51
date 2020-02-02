@@ -1,25 +1,26 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from 'react';
 
-import { UserContext } from "../Contexts/User";
+import { UserContext } from '../Contexts/User';
 
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link } from 'react-router-dom';
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-import VerificationRequests from "./Auth/VerificationRequests";
+import VerificationRequests from './Auth/VerificationRequests';
 
 const Profile: React.FC = () => {
   useEffect(() => {
-    document.title = "Resident 51 | Profile";
+    document.title = 'Resident 51 | Profile';
   }, []);
   const { user } = useContext(UserContext);
 
+  console.log(user);
   const history = useHistory();
   useEffect(() => {
     if (user && !user.displayName) {
-      history.replace("/login");
+      history.replace('/login');
     }
   }, [user, history]);
 
@@ -28,14 +29,14 @@ const Profile: React.FC = () => {
 
   const { permissions } = user;
   const status = !permissions
-    ? "Unverified"
+    ? 'Unverified'
     : permissions === 1
-    ? "Resident"
+    ? 'Resident'
     : permissions === 2
-    ? "Editor"
+    ? 'Editor'
     : permissions === 3
-    ? "Admin"
-    : "User";
+    ? 'Admin'
+    : 'User';
 
   return (
     <Container fluid={!!user}>
@@ -64,7 +65,7 @@ const Profile: React.FC = () => {
           <Col xs={12} md={7}>
             <Container>
               <h1 className="text-center mb-4">
-                {user.permissions > 2 ? "Admin" : "Your"} Dashboard
+                {user.permissions > 2 ? 'Admin' : 'Your'} Dashboard
               </h1>
             </Container>
             {!!permissions && permissions >= 3 ? (

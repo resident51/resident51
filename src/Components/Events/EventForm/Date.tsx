@@ -1,18 +1,18 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 
-import moment from "moment";
-import "react-dates/initialize";
-import { DayPickerSingleDateController, isInclusivelyBeforeDay } from "react-dates";
+import moment from 'moment';
+import 'react-dates/initialize';
+import { DayPickerSingleDateController, isInclusivelyBeforeDay } from 'react-dates';
 
-import Form from "react-bootstrap/Form";
-import { FieldProps } from "formik";
-import { EventFormValues } from "../EventForm";
-import AlertInFormer from "../../Common/AlertInFormer";
+import Form from 'react-bootstrap/Form';
+import { FieldProps } from 'formik';
+import { EventFormValues } from '../EventForm';
+import AlertInFormer from '../../Common/AlertInFormer';
 
 const EventDateInput: React.FC<FieldProps<EventFormValues>> = props => {
   const {
     form: { setFieldValue, values, errors, touched },
-    field
+    field,
   } = props;
 
   const momentToday = useMemo(() => moment(), []);

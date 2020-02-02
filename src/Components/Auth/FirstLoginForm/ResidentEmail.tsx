@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 
-import { VerificationRequest } from "../../../Types";
+import { VerificationRequest } from '../../../Types';
 
-import { FieldProps } from "formik";
+import { FieldProps } from 'formik';
 
-import Form from "react-bootstrap/Form";
+import Form from 'react-bootstrap/Form';
 
-import AlertInFormer from "../../Common/AlertInFormer";
+import AlertInFormer from '../../Common/AlertInFormer';
 
 const ResidentEmail: React.FC<FieldProps<VerificationRequest>> = props => {
   const {
     form: { values, touched, errors },
-    field
+    field,
   } = props;
 
   return (
