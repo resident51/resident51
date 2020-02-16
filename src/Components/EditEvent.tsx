@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { EventsContext } from '../Contexts/Events';
 import { UserContext } from '../Contexts/User';
 import usePrevious from '../Hooks/usePrevious';
+import useDocumentTitle from '../Hooks/useDocumentTitle';
 
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -22,9 +23,7 @@ import EventNotFound from './Events/EventNotFound';
 import { EventForm as EventFormType } from '../Types/';
 
 const EditEvent: React.FC = () => {
-  useEffect(() => {
-    document.title = 'Resident 51 | Edit Event';
-  }, []);
+  useDocumentTitle('Resident 51 | Edit Event');
   const [eventUpdated, setEventUpdated] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { events, formatSubmittedEvent } = useContext(EventsContext);

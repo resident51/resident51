@@ -10,7 +10,6 @@ export type UserAction =
   | { type: 'LOGOUT' };
 
 const userReducer = (currentUser: User, action: UserAction): User => {
-  console.log(action.type);
   switch (action.type) {
     case 'LOGGED_IN': {
       // Merge in Firebase auth user properties
@@ -35,7 +34,6 @@ const userReducer = (currentUser: User, action: UserAction): User => {
       if (currentUser.hall !== action.data.hall) return updatedObj;
       if (currentUser.kuEmail !== action.data.kuEmail) return updatedObj;
       // #TODO the case for updated roles is not handled.
-      console.log("hey we're getting here right?");
       // If there is no change, skip update and return the same user object.
       return currentUser;
     }

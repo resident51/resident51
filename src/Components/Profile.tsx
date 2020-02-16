@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 
 import { UserContext } from '../Contexts/User';
+import useDocumentTitle from '../Hooks/useDocumentTitle';
 
 import { useHistory, Link } from 'react-router-dom';
 
@@ -11,9 +12,7 @@ import Col from 'react-bootstrap/Col';
 import VerificationRequests from './Auth/VerificationRequests';
 
 const Profile: React.FC = () => {
-  useEffect(() => {
-    document.title = 'Resident 51 | Profile';
-  }, []);
+  useDocumentTitle('Resident 51 | Profile');
   const { user, isLoggingIn } = useContext(UserContext);
 
   const history = useHistory();

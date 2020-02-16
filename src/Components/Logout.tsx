@@ -5,7 +5,10 @@ import { useHistory } from 'react-router-dom';
 import { UserContext } from '../Contexts/User';
 import { auth } from '../Firebase/firebase';
 
+import useDocumentTitle from '../Hooks/useDocumentTitle';
+
 const Logout: React.FC = () => {
+  useDocumentTitle('Resident 51 | Log out');
   const { user, userDispatch, isLoggingIn } = useContext(UserContext);
   const history = useHistory();
 

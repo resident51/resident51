@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import { EventsContext } from '../Contexts/Events';
 import { UserContext } from '../Contexts/User';
 
 import useEventTypes from '../Hooks/useEventTypes';
+import useDocumentTitle from '../Hooks/useDocumentTitle';
 
 import { useHistory } from 'react-router-dom';
 
@@ -25,9 +26,7 @@ const showUpdate = (historyState: { t?: number; update?: string }): string | voi
 };
 
 const Events: React.FC = () => {
-  useEffect(() => {
-    document.title = 'Resident 51 | Events';
-  }, []);
+  useDocumentTitle('Resident 51 | Events');
   const { events } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 

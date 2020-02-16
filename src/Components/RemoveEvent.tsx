@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 
 import { EventsContext } from '../Contexts/Events';
 import { UserContext } from '../Contexts/User';
+import useDocumentTitle from '../Hooks/useDocumentTitle';
 
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -18,9 +19,7 @@ import ConfirmRemoveEvent from './Events/ConfirmRemoveEvent';
 import { canUpdate } from '../Utils';
 
 const RemoveEvent: React.FC = () => {
-  useEffect(() => {
-    document.title = 'Resident 51 | Remove Event';
-  }, []);
+  useDocumentTitle('Resident 51 | Remove Event');
   const { events } = useContext(EventsContext);
   const { user, isLoggingIn } = useContext(UserContext);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -33,7 +32,6 @@ const RemoveEvent: React.FC = () => {
   const maySeePage = eventToRemove && canUpdate(eventToRemove.publicStatus, user);
 
   useEffect(() => {
-    // #TODO this will probably trigger before user's permissions arrive to the user object.
     if (!isLoggingIn && !maySeePage && events) {
       return history.push('/events');
     }

@@ -16,14 +16,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { eventsCollection } from '../Firebase/firebase';
+import useDocumentTitle from '../Hooks/useDocumentTitle';
 
 import EventForm from './Events/EventForm';
 import EventCreationFAQ from './Events/EventCreationFAQ';
 
 const CreateEvent: React.FC = () => {
-  useEffect(() => {
-    document.title = 'Resident 51 | Create Event';
-  }, []);
+  useDocumentTitle('Resident 51 | Create Event');
   const { formatSubmittedEvent } = useContext(EventsContext);
   const { user, isLoggingIn } = useContext(UserContext);
 

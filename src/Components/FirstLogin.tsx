@@ -4,6 +4,8 @@ import { VerificationRequest } from '../Types/';
 
 import { UserContext } from '../Contexts/User';
 
+import useDocumentTitle from '../Hooks/useDocumentTitle';
+
 import { useHistory } from 'react-router-dom';
 
 import { FormikHelpers } from 'formik';
@@ -27,19 +29,16 @@ const requestErrorAlert = (
 );
 
 const FirstLogin: React.FC = () => {
-  useEffect(() => {
-    document.title = 'Resident 51 | First Login';
-  }, []);
+  useDocumentTitle('Resident 51 | First Login');
   const [requestError, setRequestError] = useState(false);
   const { user, isLoggingIn } = useContext(UserContext);
 
   const history = useHistory();
 
   useEffect(() => {
-    console.log('howdy!');
-    console.log(user);
-    if (isLoggingIn) return;
-    if (user.uid === null) {
+    if (isLoggingIn) {
+      return;
+    } else if (user.uid === null) {
       history.replace('/login');
     } else if (user.kuEmail) {
       // User logged in, but already requested verification.

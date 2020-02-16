@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from 'react';
 
 import { UserContext } from '../Contexts/User';
 
+import useDocumentTitle from '../Hooks/useDocumentTitle';
+
 import { useHistory } from 'react-router-dom';
 
 import { ui, GoogleAuthProvider, FacebookAuthProvider, logError } from '../Firebase/firebase';
@@ -12,9 +14,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const Login: React.FC = () => {
-  useEffect(() => {
-    document.title = 'Resident 51 | Log In';
-  }, []);
+  useDocumentTitle('Resident 51 | Log In');
   const { user, userDispatch, isLoggingIn, setIsLoggingIn } = useContext(UserContext);
 
   const history = useHistory();
@@ -33,7 +33,6 @@ const Login: React.FC = () => {
         signInSuccessWithAuthResult: function(authResult): boolean {
           if (authResult.additionalUserInfo && authResult.additionalUserInfo.isNewUser) {
             setIsLoggingIn(true);
-            console.log('HEY okay so we KNOW YOU ARE NEW DORK');
             history.push('/first-login');
           } else {
             history.push('/events');
