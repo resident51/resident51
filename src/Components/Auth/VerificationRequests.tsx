@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-// import { Events, EventR51, Hall, EventFormPublicType } from "../../Types";
 
 import { UserContext } from '../../Contexts/User';
 
@@ -41,11 +40,15 @@ const verifySelected = (email: string | null, verifyType: VerifyType) => (): voi
 };
 
 const VerificationRequests: React.FC = () => {
-  const { usersRequestingVerification } = useContext(UserContext);
+  const { usersRequestingVerify } = useContext(UserContext);
 
-  const anyToShow = usersRequestingVerification.length > 0;
+  const anyToShow = usersRequestingVerify.length > 0;
 
-  return anyToShow ? (
+  if (!anyToShow) return <h5>No requests.</h5>;
+
+  // #TODO Add disabled button style workflow
+
+  return (
     <Table responsive bordered hover size="sm">
       <thead>
         <tr>
@@ -58,7 +61,7 @@ const VerificationRequests: React.FC = () => {
         </tr>
       </thead>
       <tbody>
-        {usersRequestingVerification.map((request, index) => (
+        {usersRequestingVerify.map((request, index) => (
           <tr key={request.uid}>
             <td className="text-center">{index + 1}</td>
             <td className="text-center">{request.displayName}</td>
@@ -82,8 +85,6 @@ const VerificationRequests: React.FC = () => {
         ))}
       </tbody>
     </Table>
-  ) : (
-    <h5>No requests.</h5>
   );
 };
 

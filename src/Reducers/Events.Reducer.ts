@@ -8,6 +8,7 @@ export type EventAction =
   | { type: 'REMOVED'; event: EventR51 };
 
 const eventsReducer = (events: Events | null, action: EventAction): Events => {
+  // #TODO store events in an object with id key lookup instead of an array.
   const eventsLast = events || [];
 
   switch (action.type) {

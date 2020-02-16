@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Events, EventR51, Hall, EventFormPublicType } from '../../Types';
+import { Events, EventR51 } from '../../Types';
 
 import { EventsContext } from '../../Contexts/Events';
 import { UserContext } from '../../Contexts/User';
@@ -9,10 +9,13 @@ import { EventTypeFilterState } from '../../Hooks/useEventTypes';
 import Accordion from 'react-bootstrap/Accordion';
 import Event from './Event';
 
+import { canUpdate } from '../../Utils';
+
 type EventListProps = { events: Events; displayTypes?: EventTypeFilterState };
 const EventList: React.FC<EventListProps> = props => {
   const { events, displayTypes } = props;
   const { eventTypes } = useContext(EventsContext);
+  // #TODO pull user state out and determine event moderation with a curried function (given just event.publicStatus).
   const { user } = useContext(UserContext);
 
   if (events === null) {
@@ -22,18 +25,6 @@ const EventList: React.FC<EventListProps> = props => {
       </h5>
     );
   }
-
-  const canUpdate = ({ type, halls }: { type: EventFormPublicType; halls: Hall[] }): boolean => {
-    if (!user || !user.permissions || user.permissions < 2 || !user.hall) {
-      return false;
-    } else if (type === 'public' && user.permissions === 3) {
-      return true;
-      // #TODO Provide support for user roles, eg. ASHC, Community service committee, etc.
-    } else if ((type === 'hall' || type === 'halls') && halls.includes(user.hall)) {
-      return true;
-    }
-    return false;
-  };
 
   // Check if any types are being displayed and an event is of that type
   const anyToShow = displayTypes
@@ -50,7 +41,7 @@ const EventList: React.FC<EventListProps> = props => {
           event =>
             event && (
               <Event
-                canUpdate={canUpdate}
+                canModerate={canUpdate(event.publicStatus, user)}
                 key={`${event.id}_${event.publicStatus.type}`}
                 event={event}
                 format={eventTypes[event.type]}

@@ -34,9 +34,8 @@ export const EventsProvider: React.FC = props => {
   const [privateEvents, dispatchPrivateEvents] = useReducer(EventsReducer, null);
   const events = concatEvents(publicEvents, privateEvents);
 
-  const hall = user && user.hall;
-  const formatSubmittedEvent = formatSubmittedEventByHall(hall || 'Miller'); // #TODO: this is fucking awful
-  const queryPerms = user ? user.permissions : -1;
+  const userHall = (user.uid && user.hall) || 'Miller'; // #TODO: this is fucking awful
+  const formatSubmittedEvent = formatSubmittedEventByHall(userHall);
 
   // Query all public events.
   useEffect(() => {
@@ -46,28 +45,17 @@ export const EventsProvider: React.FC = props => {
 
   // Query all private events available to the user.
   useEffect(() => {
-    console.log('mmmmmm private events');
-    if (user && user.permissions) {
-      const query = currentEvents.where('publicStatus.type', '==', 'private');
-      if (user.permissions === 1) {
-        const privateHallEvents = query.where('publicStatus.halls', 'array-contains', user.hall);
-        return querySnapshot(dispatchPrivateEvents, privateHallEvents);
-      } else if (user.permissions > 1) {
-        console.log('I MEAN ?????');
-        return querySnapshot(dispatchPrivateEvents, query);
-      }
+    const query = currentEvents.where('publicStatus.type', '==', 'private');
+    if (user.permissions === 1) {
+      const privateHallEvents = query.where('publicStatus.halls', 'array-contains', userHall);
+      return querySnapshot(dispatchPrivateEvents, privateHallEvents);
+    } else if (user.permissions > 1) {
+      return querySnapshot(dispatchPrivateEvents, query);
     }
-  }, [user, queryPerms]);
+  }, [userHall, user.permissions]);
 
   return (
-    <EventsContext.Provider
-      value={{
-        events,
-        formatSubmittedEvent,
-        eventTypes,
-        halls,
-      }}
-    >
+    <EventsContext.Provider value={{ events, formatSubmittedEvent, eventTypes, halls }}>
       {props.children}
     </EventsContext.Provider>
   );

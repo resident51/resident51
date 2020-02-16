@@ -46,17 +46,15 @@ const WebsiteForm: React.FC<WebsiteFormProps> = props => {
 
   const onSubmit = (feedback: WebsiteFeedback, actions: FormikHelpers<WebsiteFeedback>): void => {
     const creation = firestore.FieldValue.serverTimestamp();
-    console.log(user);
-    if (!user || !user.displayName) {
+    if (!user.uid) {
       // Direct user to log in.
       setUnauthenticated(true);
       props.feedbackCollection.add({ ...feedback, creation, user: 'Unauthenticated' });
       return;
     }
 
-    const { uid, displayName, email } = user;
     props.feedbackCollection
-      .add({ ...feedback, creation, user: { uid, displayName, email } })
+      .add({ ...feedback, creation, user })
       .then(() => {
         history.push('/events', { update: 'Feedback submitted! Thanks pal!', t: Date.now() });
       })

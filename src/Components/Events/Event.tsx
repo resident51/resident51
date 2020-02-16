@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { EventR51, EventTypeFormat, Hall, EventFormPublicType } from '../../Types/';
+import { EventR51, EventTypeFormat } from '../../Types/';
 
 import moment from 'moment';
 
@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 
 type EventProps = {
   event: EventR51;
-  canUpdate: (publicStatus: { type: EventFormPublicType; halls: Hall[] }) => boolean;
+  canModerate?: boolean;
   format: EventTypeFormat;
 };
 const Event: React.FC<EventProps> = props => {
@@ -27,8 +27,6 @@ const Event: React.FC<EventProps> = props => {
 
   const { id, name, location, description, dateTime } = event;
   const dateTimeMoment = moment(dateTime);
-
-  const { canUpdate } = props;
 
   return (
     <Card>
@@ -59,7 +57,7 @@ const Event: React.FC<EventProps> = props => {
                 {location}
               </h5>
             </Col>
-            {canUpdate(event.publicStatus) && (
+            {props.canModerate && (
               <Col xs="auto" className="event-admin-config">
                 <Link
                   to={{ pathname: `/events/edit/${id}`, state: { event } }}

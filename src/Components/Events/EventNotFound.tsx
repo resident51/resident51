@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 
-const EditEventNotFound: React.FC = () => (
+const EventNotFound: React.FC = () => (
   <>
     <Alert variant="danger">Event not found...</Alert>
     <Link to="/events">
@@ -16,4 +16,4 @@ const EditEventNotFound: React.FC = () => (
   </>
 );
 
-export default EditEventNotFound;
+export default EventNotFound;

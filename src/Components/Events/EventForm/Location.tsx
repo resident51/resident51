@@ -38,7 +38,7 @@ const EventLocationInput: React.FC<FieldProps<EventFormValues>> = props => {
     () =>
       otherEnabled && (
         <p className="mt-1 font-italic font-weight-light small">
-          *Note: if your event is somewhere like "Reiger dining room" or "Crawford fountain", it's
+          *Note: if your event is somewhere like "Rieger dining room" or "Crawford fountain", it's
           better to use the options above. Provide details in your description instead!
         </p>
       ),

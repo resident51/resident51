@@ -6,18 +6,19 @@ import { UserContext } from '../Contexts/User';
 import { auth } from '../Firebase/firebase';
 
 const Logout: React.FC = () => {
-  const { user, userDispatch } = useContext(UserContext);
+  const { user, userDispatch, isLoggingIn } = useContext(UserContext);
   const history = useHistory();
 
   useEffect(() => {
-    if (user && user.uid) {
-      auth.signOut();
-      userDispatch({ type: 'LOGOUT' });
-      history.push('/events', { update: 'Logged out successfully.', t: Date.now() });
-    } else if (user !== null) {
+    if (user.uid) {
+      auth.signOut().then(() => {
+        userDispatch({ type: 'LOGOUT' });
+        history.push('/events', { update: 'Logged out successfully.', t: Date.now() });
+      });
+    } else if (!isLoggingIn) {
       history.replace('/login');
     }
-  }, [user, userDispatch, history]);
+  }, [user.uid, userDispatch, history, isLoggingIn]);
 
   return <div />;
 };

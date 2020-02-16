@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import { EventForm as EventFormType } from '../Types/';
+import { EventForm as EventFormType, Admin, Editor } from '../Types/';
 
 import { firestore } from 'firebase/app';
 
@@ -25,18 +25,27 @@ const CreateEvent: React.FC = () => {
     document.title = 'Resident 51 | Create Event';
   }, []);
   const { formatSubmittedEvent } = useContext(EventsContext);
-  const { user } = useContext(UserContext);
+  const { user, isLoggingIn } = useContext(UserContext);
 
   const history = useHistory();
 
+  // For now, only let editors and admins create events. Residents can submit later.
+  // #TODO let residents request events be created.
+  useEffect(() => {
+    if (!isLoggingIn && user.permissions < 2) {
+      history.push('/events');
+    }
+  }, [user.permissions, history, isLoggingIn]);
+
   // After event is validated, dispatch the event to firebase and redirect to the events page.
   const onSubmit = (event: EventFormType, actions: FormikHelpers<EventFormType>): void => {
-    if (!user || !user.displayName || !user.hall || user.permissions < 2) return;
+    // #TODO let residents request events be created.
+    if (!user.uid || user.permissions < 2) return;
 
     const formattedEvent = formatSubmittedEvent(event, {
       userId: user.uid,
       displayName: user.displayName,
-      hall: user.hall,
+      hall: (user as Editor | Admin).hall,
       dateTime: firestore.FieldValue.serverTimestamp(),
     });
 
@@ -48,6 +57,8 @@ const CreateEvent: React.FC = () => {
         console.error(e);
       });
   };
+
+  if (user.permissions < 2) return <div />;
 
   return (
     <Container fluid={true}>

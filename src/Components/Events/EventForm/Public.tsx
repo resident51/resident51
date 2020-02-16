@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-import { Hall } from '../../../Types/';
+import { Hall, LoggedInUser } from '../../../Types/';
 
 import { EventsContext } from '../../../Contexts/Events';
 import { UserContext } from '../../../Contexts/User';
@@ -21,7 +21,7 @@ const EventPublicInput: React.FC<FieldProps<EventFormValues>> = props => {
   const { user } = useContext(UserContext);
   const { halls } = useContext(EventsContext);
 
-  const userHall = user && user.hall;
+  const userHall = (user as LoggedInUser).hall;
   const [selected, setSelected] = useState(values.publicStatus.halls);
 
   const types = [

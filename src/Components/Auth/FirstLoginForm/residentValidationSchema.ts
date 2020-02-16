@@ -17,7 +17,7 @@ const generateResidentValidationSchema = (halls: Hall[]): yup.ObjectSchema =>
       .required('Please?')
       .min(4, 'Please!')
       .email("Hey! That's no email!")
-      .matches(/@ku\.edu$/, 'Valid KU email please!')
+      .matches(/^[a-z0-9._%+-]+@ku\.edu$/i, 'Valid KU email please!')
       .max(100, "That's... a lot of email..."),
   });
 

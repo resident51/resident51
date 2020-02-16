@@ -1,43 +1,46 @@
-import { UserInterface, Permissions } from '../Types/';
+import { User, UserDocument, UnverifiedUser } from '../Types/';
 
-export type User = null | UserInterface;
-export type UserActionType = 'LOGGED_OUT' | 'LOGGED_IN' | 'USER_FOUND' | 'NEW_USER' | 'LOGOUT';
+import { loggedOutUser } from '../Contexts/UserProps';
+
+export type UserActionType = 'LOGGED_OUT' | 'LOGGED_IN' | 'USER_FOUND' | 'LOGOUT';
 export type UserAction =
   | { type: 'LOGGED_OUT' }
   | { type: 'LOGGED_IN'; data: firebase.User }
-  | {
-      type: 'USER_FOUND';
-      data: Pick<UserInterface, 'hall' | 'permissions' | 'verified'>;
-    }
-  | { type: 'NEW_USER' }
+  | { type: 'USER_FOUND'; data: UserDocument }
   | { type: 'LOGOUT' };
 
-export const loggedOutUser: UserInterface = {
-  uid: '',
-  displayName: null,
-  email: null,
-  kuEmail: '',
-  permissions: 0,
-  getIdToken: (forceRefresh?: boolean) => new Promise(r => r('')),
-  // #TODO logged out user should have email: '', permissions: 0, etc.
-  // null should only be used for when we are waiting for data to be fetched.
-};
-
 const userReducer = (currentUser: User, action: UserAction): User => {
+  console.log(action.type);
   switch (action.type) {
     case 'LOGGED_IN': {
       // Merge in Firebase auth user properties
-      const permissions = 0 as Permissions;
-      const kuEmail = '' as UserInterface['kuEmail'];
-      return Object.assign(action.data, { permissions, kuEmail });
+      const nextUser = {
+        uid: action.data.uid,
+        email: action.data.email,
+        displayName: action.data.displayName,
+        // Initialize other user properties while waiting for data from firestore.
+        permissions: 0,
+        hall: null,
+        creationTime: '',
+        kuEmail: null,
+      };
+      return nextUser as UnverifiedUser;
     }
     case 'USER_FOUND': {
-      // #TODO this runs even when the user is updated, ie after requesting verification. hibbity jibbiyty
-      // We should separate each change to the user into separate actions.
-      return Object.assign({}, currentUser, action.data);
+      const updatedObj = Object.assign({}, currentUser, action.data);
+      if (!currentUser.uid) return updatedObj;
+      if (currentUser.email !== action.data.email) return updatedObj;
+      if (currentUser.displayName !== action.data.displayName) return updatedObj;
+      if (currentUser.permissions !== action.data.permissions) return updatedObj;
+      if (currentUser.hall !== action.data.hall) return updatedObj;
+      if (currentUser.kuEmail !== action.data.kuEmail) return updatedObj;
+      // #TODO the case for updated roles is not handled.
+      console.log("hey we're getting here right?");
+      // If there is no change, skip update and return the same user object.
+      return currentUser;
     }
+    // case 'NEW_USER': // idk what I'm doing with this one but ???. can maybe do setLoggingIn here instead?.
     case 'LOGGED_OUT':
-    case 'NEW_USER':
     case 'LOGOUT':
     default: {
       if (currentUser === null) return Object.assign({}, loggedOutUser);

@@ -16,6 +16,14 @@ import ColorKey from './Events/ColorKey';
 import ToCreateEvent from './Events/ToCreateEvent';
 import EventList from './Events/EventList';
 
+const showUpdate = (historyState: { t?: number; update?: string }): string | void => {
+  if (historyState && typeof historyState.t === 'number') {
+    if (Date.now() - historyState.t < 1000 * 60) {
+      return historyState.update;
+    }
+  }
+};
+
 const Events: React.FC = () => {
   useEffect(() => {
     document.title = 'Resident 51 | Events';
@@ -23,15 +31,11 @@ const Events: React.FC = () => {
   const { events } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 
+  const displayTypes = useEventTypes();
+
   // Show updates from history state API when events are mutated
   const history = useHistory();
-  const update =
-    history.location.state &&
-    typeof history.location.state.t === 'number' &&
-    Date.now() - history.location.state.t < 1000 * 60 &&
-    history.location.state.update;
-
-  const displayTypes = useEventTypes();
+  const update = showUpdate(history.location.state);
 
   return (
     <Container fluid={true}>
@@ -43,7 +47,7 @@ const Events: React.FC = () => {
       <Row className="justify-content-md-center px-lg-4 px-md-2">
         <Col sm={12} md={4}>
           <ColorKey displayTypes={displayTypes} />
-          {user && user.permissions > 1 && <ToCreateEvent />}
+          {user.permissions > 1 && <ToCreateEvent />}
         </Col>
         <Col sm={12} md={8}>
           {update && <Alert variant="success">{update}</Alert>}

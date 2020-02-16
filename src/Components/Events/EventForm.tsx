@@ -62,15 +62,14 @@ const EventFormComponent: React.FC<EventFormProps> = props => {
   const { eventTypes, halls } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 
-  const dateTimeMoment = moment(event.dateTime || threeDaysFromNow);
-
   const formValidationSchema = useMemo(() => validationSchema({ halls, eventTypes }), [
     halls,
     eventTypes,
   ]);
 
-  if (!user) return <div />;
+  if (!user.uid) return <div />;
 
+  const dateTimeMoment = moment(event.dateTime || threeDaysFromNow);
   const formInitialValues: EventFormType = {
     id: event.id || '',
     name: event.name || '',
@@ -131,13 +130,20 @@ const EventFormComponent: React.FC<EventFormProps> = props => {
 
             <hr />
             <h3>6. Extra Info</h3>
-            <Field name="faciliation" component={EventFacilitationInput} />
+            <Field name="facilitation" component={EventFacilitationInput} />
 
             {eventUpdated && updatedWarning}
 
             <Row className="mt-5">
               <Col xl={3} lg={3} md={4} sm={4} className="mb-3 pr-sm-0">
-                <Button block variant="secondary" size="lg" type="button" disabled={isSubmitting}>
+                <Button
+                  block
+                  variant="secondary"
+                  size="lg"
+                  type="button"
+                  onClick={(): void => alert("Psyche! That doesn't work AT ALL!")}
+                  disabled={isSubmitting}
+                >
                   Save draft
                 </Button>
               </Col>

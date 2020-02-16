@@ -16,12 +16,9 @@ import './Styles/App.scss';
 import { EventsProvider } from './Contexts/Events';
 import { UserProvider } from './Contexts/User';
 
-const gradient =
-  'linear-gradient(to right, lightseagreen, green, orange, plum, lightcoral, maroon)';
-
 const App: React.FC = () => (
   <Router>
-    <div style={{ backgroundImage: gradient, height: '.45em' }} />
+    <div id="crown" />
     <div id="app_container">
       <Jumbotron id="r51" className="mb-0">
         <h1 id="title" className="display-1 text-center">

@@ -1,7 +1,20 @@
+#crown {
+  background-image: linear-gradient(
+    to right,
+    lightseagreen,
+    green,
+    orange,
+    plum,
+    lightcoral,
+    maroon
+  );
+  height: 0.45em;
+}
+
 #app_container {
   display: flex;
-	flex-direction: column;
-	height: 100vh;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .header-link {
@@ -13,9 +26,9 @@
 
 #page_footer {
   flex-shrink: 0;
-	background-color: #134c7d;
+  background-color: #134c7d;
   text-align: center;
-  background-color: #343a40!important;
+  background-color: #343a40 !important;
   color: #fff;
 }
 

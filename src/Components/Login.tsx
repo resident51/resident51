@@ -4,7 +4,7 @@ import { UserContext } from '../Contexts/User';
 
 import { useHistory } from 'react-router-dom';
 
-import { ui, GoogleAuthProvider, FacebookAuthProvider } from '../Firebase/firebase';
+import { ui, GoogleAuthProvider, FacebookAuthProvider, logError } from '../Firebase/firebase';
 import 'firebaseui/dist/firebaseui.css';
 
 import Container from 'react-bootstrap/Container';
@@ -15,44 +15,41 @@ const Login: React.FC = () => {
   useEffect(() => {
     document.title = 'Resident 51 | Log In';
   }, []);
-  const { user, userDispatch } = useContext(UserContext);
+  const { user, userDispatch, isLoggingIn, setIsLoggingIn } = useContext(UserContext);
 
   const history = useHistory();
 
   useEffect(() => {
-    if (user && user.uid) {
-      return history.replace('/profile');
-    } else if (!user) {
-      return;
-    }
+    if (isLoggingIn) return;
+
+    if (user.uid) return history.replace('/profile');
 
     ui.start('#firebaseui-auth-container', {
+      signInFlow: 'popup',
+      signInOptions: [GoogleAuthProvider, FacebookAuthProvider],
+      tosUrl: () => history.push('/terms-of-service'),
+      privacyPolicyUrl: () => history.push('/privacy-policy'),
       callbacks: {
         signInSuccessWithAuthResult: function(authResult): boolean {
           if (authResult.additionalUserInfo && authResult.additionalUserInfo.isNewUser) {
-            userDispatch({ type: 'NEW_USER' });
+            setIsLoggingIn(true);
+            console.log('HEY okay so we KNOW YOU ARE NEW DORK');
             history.push('/first-login');
           } else {
             history.push('/events');
           }
           return false;
         },
-        // Not sure why this isn't successful?
-        // signInFailure: error => {
-        //   // TODO: handle errors gracefully
-        //   // Actually do I even need that? I think it fails gracefully enough.
-        //   history.push('/login', { error });
-        //   return false;
-        // }
+        signInFailure: async (): Promise<void> => {
+          history.push('/events', { update: 'Login failed? Hm.', t: Date.now() });
+          await logError(`Error in sign in. User: ${JSON.stringify(user)}`);
+          return;
+        },
       },
-      signInFlow: 'popup',
-      signInOptions: [GoogleAuthProvider, FacebookAuthProvider],
-      tosUrl: () => history.push('/terms-of-service'),
-      privacyPolicyUrl: () => history.push('/privacy-policy'),
     });
-  }, [user, history, userDispatch]);
+  }, [user, history, userDispatch, isLoggingIn, setIsLoggingIn]);
 
-  if (user === null || user.uid) {
+  if (isLoggingIn || user.uid) {
     return <div />;
   }
 

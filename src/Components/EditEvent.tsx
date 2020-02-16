@@ -28,7 +28,7 @@ const EditEvent: React.FC = () => {
   const [eventUpdated, setEventUpdated] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { events, formatSubmittedEvent } = useContext(EventsContext);
-  const { user } = useContext(UserContext);
+  const { user, isLoggingIn } = useContext(UserContext);
 
   const history = useHistory();
   const { id } = useParams();
@@ -43,14 +43,12 @@ const EditEvent: React.FC = () => {
   }, [eventToEdit, initialEvent, events, isSubmitting]);
 
   useEffect(() => {
-    const dontShow = user && (!user.permissions || user.permissions < 2);
-    if (dontShow) {
+    if (!isLoggingIn && user.permissions < 2) {
       history.push('/events');
     }
-  }, [history, user]);
+  }, [user.permissions, history, isLoggingIn]);
 
-  const canEdit = user && user.permissions >= 2;
-  if (!canEdit) return <div />;
+  if (user.permissions < 2) return <div />;
 
   const onSubmit = (submittedEvent: EventFormType, actions: FormikHelpers<EventFormType>): void => {
     if (!eventToEdit) return;

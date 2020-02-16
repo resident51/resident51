@@ -4,8 +4,10 @@ import { useState } from 'react';
 
 export type Statuple = [boolean, (next: boolean) => void];
 export interface EventTypeFilterState {
+  // tried with just [type: string]: ReturnType<typeof useState>;
   [type: string]: Statuple;
 }
+
 /**
  * State for storing the list of filtered/un-filtered event types
  */

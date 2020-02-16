@@ -38,3 +38,4 @@ export const requestVerification = functions.httpsCallable('requestVerification'
 export const verifyUserAsResident = functions.httpsCallable('verifyUserAsResident');
 export const verifyUserAsEditor = functions.httpsCallable('verifyUserAsEditor');
 export const verifyUserAsAdmin = functions.httpsCallable('verifyUserAsAdmin');
+export const logError = functions.httpsCallable('logError');

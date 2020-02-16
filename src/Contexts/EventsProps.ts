@@ -6,6 +6,7 @@ import {
   EventR51,
   EventTypeFormats,
   Events,
+  EventFormPublicType,
   EventForm as EventFormType,
 } from '../Types/';
 
@@ -49,24 +50,17 @@ export const querySnapshot = (
     if (!snapshot.size) return dispatch({ type: 'EMPTY' });
 
     snapshot.docChanges().forEach(function(change) {
-      // Dispatch using the snapshot change type as the action type
-      // #TODO adding every event one by one the first time is easy but causes a lot
-      // of renders. Let's get all events at once.
-      // #TODO now that we have separate queries for public and private events,
-      // we need to have a condition for when an event changes from public to private
       const type = change.type.toUpperCase() as 'ADDED' | 'MODIFIED' | 'REMOVED';
-      const event = {
+      const event = formatRetrievedEvent({
         ...change.doc.data({ serverTimestamps: 'estimate' }),
         id: change.doc.id,
-      } as CFSEvent;
-      const eventFormatted = formatRetrievedEvent(event);
-      dispatch({ type, event: eventFormatted });
+      } as CFSEvent);
+
+      dispatch({ type, event });
     });
   });
 
-const determineEventType = (
-  publicStatusCFS: CFSEvent['publicStatus'],
-): EventR51['publicStatus']['type'] => {
+const determineEventType = (publicStatusCFS: CFSEvent['publicStatus']): EventFormPublicType => {
   if (publicStatusCFS.type === 'private') {
     return publicStatusCFS.halls.length === 1 ? 'hall' : 'halls';
   } else {
