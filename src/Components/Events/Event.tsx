@@ -17,14 +17,7 @@ type EventProps = {
   format: EventTypeFormat;
 };
 const Event: React.FC<EventProps> = props => {
-  const event =
-    props.event && props.event.name ? props.event : ({ name: 'Event data error' } as EventR51);
-
-  const format =
-    props.format && props.format.color
-      ? props.format
-      : ({ color: 'black', formal: 'Event formatting error' } as EventTypeFormat);
-
+  const { event, format } = props;
   const { id, name, location, description, dateTime } = event;
   const dateTimeMoment = moment(dateTime);
 

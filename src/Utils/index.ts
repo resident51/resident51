@@ -1,6 +1,6 @@
 import { EventFormPublicType, Hall, User, VerifiedUser } from '../Types';
 
-export const canUpdate = (
+export const canUpdateEvent = (
   publicStatus: {
     type: EventFormPublicType;
     halls: Hall[];

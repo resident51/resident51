@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { EventsContext } from '../Contexts/Events';
 import { UserContext } from '../Contexts/User';
@@ -16,7 +16,7 @@ import EventCreationFAQ from './Events/EventCreationFAQ';
 import EventNotFound from './Events/EventNotFound';
 import ConfirmRemoveEvent from './Events/ConfirmRemoveEvent';
 
-import { canUpdate } from '../Utils';
+import { canUpdateEvent } from '../Utils';
 
 const RemoveEvent: React.FC = () => {
   useDocumentTitle('Resident 51 | Remove Event');
@@ -29,7 +29,7 @@ const RemoveEvent: React.FC = () => {
 
   const eventToRemove = (events || []).find(e => '' + e.id === '' + id);
 
-  const maySeePage = eventToRemove && canUpdate(eventToRemove.publicStatus, user);
+  const maySeePage = eventToRemove && canUpdateEvent(eventToRemove.publicStatus, user);
 
   useEffect(() => {
     if (!isLoggingIn && !maySeePage && events) {

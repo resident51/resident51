@@ -9,13 +9,12 @@ import { EventTypeFilterState } from '../../Hooks/useEventTypes';
 import Accordion from 'react-bootstrap/Accordion';
 import Event from './Event';
 
-import { canUpdate } from '../../Utils';
+import { canUpdateEvent } from '../../Utils';
 
 type EventListProps = { events: Events; displayTypes?: EventTypeFilterState };
 const EventList: React.FC<EventListProps> = props => {
   const { events, displayTypes } = props;
   const { eventTypes } = useContext(EventsContext);
-  // #TODO pull user state out and determine event moderation with a curried function (given just event.publicStatus).
   const { user } = useContext(UserContext);
 
   if (events === null) {
@@ -41,7 +40,7 @@ const EventList: React.FC<EventListProps> = props => {
           event =>
             event && (
               <Event
-                canModerate={canUpdate(event.publicStatus, user)}
+                canModerate={canUpdateEvent(event.publicStatus, user)}
                 key={`${event.id}_${event.publicStatus.type}`}
                 event={event}
                 format={eventTypes[event.type]}

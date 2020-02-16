@@ -15,7 +15,6 @@ const Logout: React.FC = () => {
   useEffect(() => {
     if (user.uid) {
       auth.signOut().then(() => {
-        userDispatch({ type: 'LOGOUT' });
         history.push('/events', { update: 'Logged out successfully.', t: Date.now() });
       });
     } else if (!isLoggingIn) {

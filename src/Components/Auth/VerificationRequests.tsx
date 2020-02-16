@@ -25,7 +25,7 @@ This user will also be able to verify and designate roles to other users from th
 
 Would you like to continue?`;
 
-const verifySelected = (email: string | null, verifyType: VerifyType) => (): void => {
+const verifySelected = (email: string, verifyType: VerifyType) => (): void => {
   if (verifyType === 'RESIDENT') {
     verifyUserAsResident({ email });
   } else if (verifyType === 'EDITOR') {
