@@ -19,7 +19,7 @@ const Header: React.FC = () => {
   );
 
   return (
-    <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" className="mb-3">
+    <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
       <Container fluid className="my-auto">
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

@@ -18,8 +18,8 @@ import { UserProvider } from './Contexts/User';
 
 const App: React.FC = () => (
   <Router>
-    <div id="crown" />
-    <div id="app_container">
+    <div id="app-container">
+      <div id="crown" />
       <Jumbotron id="r51" className="mb-0">
         <h1 id="title" className="display-1 text-center">
           R<span className="d-sm-inline d-none">esident </span>51
@@ -29,7 +29,9 @@ const App: React.FC = () => (
         <UserProvider>
           <Header />
           <EventsProvider>
-            <Routes />
+            <div id="route-container" className="pt-3 pb-5">
+              <Routes />
+            </div>
           </EventsProvider>
         </UserProvider>
       </div>

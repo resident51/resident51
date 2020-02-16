@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const Footer: React.FC = () => (
-  <footer className="mt-5 py-2 px-md-4" id="page_footer">
+  <footer className="py-2 px-md-4" id="page_footer">
     <Container fluid>
       <Row>
         <Col xs="auto">
