@@ -112,10 +112,10 @@ const EventFormComponent: React.FC<EventFormProps> = props => {
             <hr />
             <h3>3. Choose a time</h3>
             <Row>
-              <Col xs={12} xl={6}>
+              <Col xs={12} md={6}>
                 <FastField name="date" component={EventDateInput} />
               </Col>
-              <Col xs={12} sm={10} md={8} xl={6}>
+              <Col xs={12} sm={10} md={6}>
                 <FastField name="time" component={EventTimeInput} />
               </Col>
             </Row>

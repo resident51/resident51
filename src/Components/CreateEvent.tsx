@@ -19,7 +19,6 @@ import { eventsCollection } from '../Firebase/firebase';
 import useDocumentTitle from '../Hooks/useDocumentTitle';
 
 import EventForm from './Events/EventForm';
-import EventCreationFAQ from './Events/EventCreationFAQ';
 
 const CreateEvent: React.FC = () => {
   useDocumentTitle('Resident 51 | Create Event');
@@ -62,10 +61,7 @@ const CreateEvent: React.FC = () => {
   return (
     <Container fluid={true}>
       <Row className="justify-content-md-center">
-        <Col sm={12} md={4}>
-          <EventCreationFAQ />
-        </Col>
-        <Col sm={12} md={7}>
+        <Col sm={12} md={10} lg={8}>
           <h1>Create New Event</h1>
           <hr />
           <EventForm onSubmit={onSubmit} />
