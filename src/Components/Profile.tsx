@@ -9,11 +9,11 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import VerificationRequests from './Auth/VerificationRequests';
+import UserTable from './Auth/UserTable';
 
 const Profile: React.FC = () => {
   useDocumentTitle('Resident 51 | Profile');
-  const { user, isLoggingIn } = useContext(UserContext);
+  const { user, isLoggingIn, usersRequestingVerify, verifiedResidents } = useContext(UserContext);
 
   const history = useHistory();
   useEffect(() => {
@@ -55,7 +55,10 @@ const Profile: React.FC = () => {
             </h1>
           </Container>
           {user.permissions >= 3 ? (
-            <VerificationRequests />
+            <div>
+              <UserTable userList={usersRequestingVerify} />
+              <UserTable userList={verifiedResidents} />
+            </div>
           ) : (
             <Row className="justify-content-center">
               <Col className="text-center" xs={12}>

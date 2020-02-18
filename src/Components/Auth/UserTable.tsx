@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
-
-import { UserContext } from '../../Contexts/User';
+import React from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
@@ -10,6 +8,7 @@ import {
   verifyUserAsEditor,
   verifyUserAsAdmin,
 } from '../../Firebase/firebase';
+import { VisibleUser } from '../../Types';
 
 type VerifyType = 'RESIDENT' | 'EDITOR' | 'ADMIN';
 
@@ -39,10 +38,11 @@ const verifySelected = (email: string, verifyType: VerifyType) => (): void => {
   }
 };
 
-const VerificationRequests: React.FC = () => {
-  const { usersRequestingVerify } = useContext(UserContext);
+type UserTableProps = { userList: VisibleUser[] };
+const UserTable: React.FC<UserTableProps> = props => {
+  const { userList } = props;
 
-  const anyToShow = usersRequestingVerify.length > 0;
+  const anyToShow = userList.length > 0;
 
   if (!anyToShow) return <h5>No requests.</h5>;
 
@@ -61,7 +61,7 @@ const VerificationRequests: React.FC = () => {
         </tr>
       </thead>
       <tbody>
-        {usersRequestingVerify.map((request, index) => (
+        {userList.map((request, index) => (
           <tr key={request.uid}>
             <td className="text-center">{index + 1}</td>
             <td className="text-center">{request.displayName}</td>
@@ -88,4 +88,4 @@ const VerificationRequests: React.FC = () => {
   );
 };
 
-export default VerificationRequests;
+export default UserTable;
