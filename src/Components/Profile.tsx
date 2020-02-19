@@ -9,7 +9,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import UserTable from './Auth/UserTable';
+import UserList from './Auth/UserList';
 
 const Profile: React.FC = () => {
   useDocumentTitle('Resident 51 | Profile');
@@ -56,8 +56,11 @@ const Profile: React.FC = () => {
           </Container>
           {user.permissions >= 3 ? (
             <div>
-              <UserTable userList={usersRequestingVerify} />
-              <UserTable userList={verifiedResidents} />
+              <h5>Users Requesting Verification</h5>
+              <UserList variant="REQUESTS" userList={usersRequestingVerify} />
+              <hr />
+              <h5>Your Hall's Residents</h5>
+              <UserList variant="RESIDENTS" userList={verifiedResidents} />
             </div>
           ) : (
             <Row className="justify-content-center">
