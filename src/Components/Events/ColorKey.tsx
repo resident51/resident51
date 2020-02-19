@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { EventType } from '../../Types/';
-import { EventTypeFilterState } from '../../Hooks/useEventTypes';
+import { EventTypeFilterState } from '../../Hooks/useEventTypeFilter';
 
 import { EventsContext } from '../../Contexts/Events';
 

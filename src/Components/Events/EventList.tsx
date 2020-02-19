@@ -4,16 +4,21 @@ import { Events, EventR51 } from '../../Types';
 import { EventsContext } from '../../Contexts/Events';
 import { UserContext } from '../../Contexts/User';
 
-import { EventTypeFilterState } from '../../Hooks/useEventTypes';
+import { EventTypeFilterState } from '../../Hooks/useEventTypeFilter';
+import { PublicStatusFilterState } from '../../Hooks/usePublicStatusFilter';
 
 import Accordion from 'react-bootstrap/Accordion';
 import Event from './Event';
 
 import { canUpdateEvent } from '../../Utils';
 
-type EventListProps = { events: Events; displayTypes?: EventTypeFilterState };
+type EventListProps = {
+  events: Events;
+  displayTypes?: EventTypeFilterState;
+  publicStatusFilters?: PublicStatusFilterState;
+};
 const EventList: React.FC<EventListProps> = props => {
-  const { events, displayTypes } = props;
+  const { events, displayTypes, publicStatusFilters } = props;
   const { eventTypes } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 
@@ -25,16 +30,17 @@ const EventList: React.FC<EventListProps> = props => {
     );
   }
 
-  // Check if any types are being displayed and an event is of that type
-  const anyToShow = displayTypes
-    ? Object.values(displayTypes).some(d => d[0]) &&
-      events.some(event => displayTypes[event.type][0])
-    : events.length;
+  const eventsFiltered = events.filter(event => {
+    const passesTypeFilter = displayTypes ? displayTypes[event.type][0] : true;
+    if (!passesTypeFilter) return false;
 
-  return anyToShow ? (
+    const publicType = event.publicStatus.type === 'public' ? 'public' : 'private';
+    return publicStatusFilters ? publicStatusFilters[publicType][0] : true;
+  });
+
+  return eventsFiltered.length ? (
     <Accordion className="mb-4">
-      {events
-        .filter(event => (displayTypes ? displayTypes[event.type][0] : true))
+      {eventsFiltered
         .sort((e1: EventR51, e2: EventR51) => e1.dateTime - e2.dateTime)
         .map(
           event =>

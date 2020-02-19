@@ -11,7 +11,7 @@ export interface EventTypeFilterState {
 /**
  * State for storing the list of filtered/un-filtered event types
  */
-const useEventTypes = (): EventTypeFilterState => {
+const useEventTypeFilter = (): EventTypeFilterState => {
   const [social, setSocial] = useState(true);
   const [meal, setMeal] = useState(true);
   const [community, setCommunity] = useState(true);
@@ -31,4 +31,4 @@ const useEventTypes = (): EventTypeFilterState => {
   return displayTypes;
 };
 
-export default useEventTypes;
+export default useEventTypeFilter;
