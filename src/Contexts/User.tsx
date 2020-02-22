@@ -12,6 +12,7 @@ import useVerifiedResidents from '../Hooks/useVerifiedResidents';
 
 interface UserContextProps {
   user: User;
+  refreshToken: () => Promise<string>;
   userDispatch: React.Dispatch<UserAction>;
   isLoggingIn: boolean;
   setIsLoggingIn: (next: boolean) => void;
@@ -25,7 +26,7 @@ export const UserProvider: React.FC = props => {
   const [user, userDispatch] = useReducer(UserReducer, loggedOutUser);
   const [isLoggingIn, setIsLoggingIn] = useState(true);
 
-  const userAuth = useFirebaseAuth(userDispatch, setIsLoggingIn);
+  const [userAuth, refreshToken] = useFirebaseAuth(userDispatch, setIsLoggingIn);
   useUserDocument(user, userDispatch, userAuth, isLoggingIn, setIsLoggingIn);
   const usersRequestingVerify = useVerificationRequests(user);
   const verifiedResidents = useVerifiedResidents(user);
@@ -34,6 +35,7 @@ export const UserProvider: React.FC = props => {
     <UserContext.Provider
       value={{
         user,
+        refreshToken,
         isLoggingIn,
         setIsLoggingIn,
         userDispatch,

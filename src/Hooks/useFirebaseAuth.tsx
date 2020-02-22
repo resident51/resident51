@@ -6,8 +6,11 @@ import { UserAction } from '../Reducers/User.Reducer';
 const useFirebaseAuth = (
   userDispatch: (value: UserAction) => void,
   setIsLoggingIn: (state: boolean) => void,
-): firebase.User | null => {
+): [firebase.User | null, () => Promise<string>] => {
   const [userAuth, setUserAuth] = useState<firebase.User | null>(null);
+  const refreshToken = (): Promise<string> =>
+    userAuth ? userAuth.getIdToken(true) : Promise.reject('');
+
   useEffect(
     () =>
       auth.onIdTokenChanged(authUserSnapshot => {
@@ -23,7 +26,7 @@ const useFirebaseAuth = (
     [userDispatch, userAuth, setIsLoggingIn],
   );
 
-  return userAuth;
+  return [userAuth, refreshToken];
 };
 
 export default useFirebaseAuth;

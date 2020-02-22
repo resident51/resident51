@@ -53,7 +53,7 @@ const FirstLoginForm: React.FunctionComponent<FormProps> = props => {
           <Row className="justify-content-center my-5">
             <Col xs={8}>
               <Button block variant="primary" size="lg" type="submit" disabled={isSubmitting}>
-                Request Verification
+                Request{!!isSubmitting && 'ing'} Verification{!!isSubmitting && '...'}
               </Button>
             </Col>
           </Row>

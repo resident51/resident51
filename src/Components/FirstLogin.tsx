@@ -31,7 +31,7 @@ const requestErrorAlert = (
 const FirstLogin: React.FC = () => {
   useDocumentTitle('Resident 51 | First Login');
   const [requestError, setRequestError] = useState(false);
-  const { user, isLoggingIn } = useContext(UserContext);
+  const { user, isLoggingIn, refreshToken } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -52,6 +52,7 @@ const FirstLogin: React.FC = () => {
     request: VerificationRequest,
     actions: FormikHelpers<VerificationRequest>,
   ): Promise<void> => {
+    await refreshToken();
     const result = await requestVerification({
       displayName: request.name,
       kuEmail: request.email,
