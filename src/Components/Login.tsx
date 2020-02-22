@@ -56,7 +56,7 @@ const Login: React.FC = () => {
     <Container fluid={true}>
       <Row>
         <Col className="text-center" xs={12}>
-          <h1>Log in to Resident 51:</h1>
+          <h1>Log In or Create an Account:</h1>
         </Col>
         <Col xs={12}>
           <div id="firebaseui-auth-container"></div>
