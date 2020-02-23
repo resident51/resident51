@@ -8,6 +8,7 @@ import CreateEvent from './CreateEvent';
 import EditEvent from './EditEvent';
 import RemoveEvent from './RemoveEvent';
 import Feedback from './Feedback';
+import FAQ from './FAQ';
 import LogIn from './Login';
 import FirstLogin from './FirstLogin';
 import PrivacyPolicy from './Policy/PrivacyPolicy';
@@ -24,6 +25,7 @@ const Routes: React.FC = () => (
     <Route component={EditEvent} path="/events/edit/:id" exact />
     <Route component={RemoveEvent} path="/events/delete/:id" exact />
     <Route component={Feedback} path="/feedback/" exact />
+    <Route component={FAQ} path="/faq/" exact />
     <Route component={LogIn} path="/login/" exact />
     <Route component={FirstLogin} path="/first-login/" exact />
     <Route component={LogOut} path="/logout/" exact />
