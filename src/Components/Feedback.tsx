@@ -12,7 +12,7 @@ import WebsiteForm from './Feedback/Website';
 import { feedbackCollection } from '../Firebase/firebase';
 
 const Feedback: React.FC = () => {
-  useDocumentTitle('Resident 51 | Feedback');
+  useDocumentTitle('Feedback');
 
   return (
     <Container fluid={true}>

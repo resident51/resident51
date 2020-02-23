@@ -19,7 +19,7 @@ import ConfirmRemoveEvent from './Events/ConfirmRemoveEvent';
 import { canUpdateEvent } from '../Utils';
 
 const RemoveEvent: React.FC = () => {
-  useDocumentTitle('Resident 51 | Remove Event');
+  useDocumentTitle('Remove Event');
   const { events } = useContext(EventsContext);
   const { user, isLoggingIn } = useContext(UserContext);
   const [isDeleting, setIsDeleting] = useState(false);

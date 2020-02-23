@@ -29,7 +29,7 @@ const requestErrorAlert = (
 );
 
 const FirstLogin: React.FC = () => {
-  useDocumentTitle('Resident 51 | First Login');
+  useDocumentTitle('First Login');
   const [requestError, setRequestError] = useState(false);
   const { user, isLoggingIn, refreshToken } = useContext(UserContext);
 

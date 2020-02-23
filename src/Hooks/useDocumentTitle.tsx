@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 const useDocumentTitle = (title: string): void => {
   useEffect(() => {
-    document.title = title;
+    document.title = `Resident 51 | ${title}`;
   }, [title]);
 };
 

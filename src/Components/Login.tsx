@@ -14,7 +14,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const Login: React.FC = () => {
-  useDocumentTitle('Resident 51 | Log In');
+  useDocumentTitle('Log In');
   const { user, userDispatch, isLoggingIn, setIsLoggingIn } = useContext(UserContext);
 
   const history = useHistory();

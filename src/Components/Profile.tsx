@@ -12,7 +12,7 @@ import Col from 'react-bootstrap/Col';
 import UserList from './Auth/UserList';
 
 const Profile: React.FC = () => {
-  useDocumentTitle('Resident 51 | Profile');
+  useDocumentTitle('Profile');
   const { user, isLoggingIn, usersRequestingVerify, verifiedResidents } = useContext(UserContext);
 
   const history = useHistory();

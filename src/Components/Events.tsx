@@ -28,7 +28,7 @@ const showUpdate = (historyState: { t?: number; update?: string }): string | voi
 };
 
 const Events: React.FC = () => {
-  useDocumentTitle('Resident 51 | Events');
+  useDocumentTitle('Events');
   const { events } = useContext(EventsContext);
   const { user } = useContext(UserContext);
 

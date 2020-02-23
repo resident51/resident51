@@ -21,7 +21,7 @@ import useDocumentTitle from '../Hooks/useDocumentTitle';
 import EventForm from './Events/EventForm';
 
 const CreateEvent: React.FC = () => {
-  useDocumentTitle('Resident 51 | Create Event');
+  useDocumentTitle('Create Event');
   const { formatSubmittedEvent } = useContext(EventsContext);
   const { user, isLoggingIn } = useContext(UserContext);
 

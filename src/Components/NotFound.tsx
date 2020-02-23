@@ -9,14 +9,14 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
 const NotFound: React.FC = () => {
-  useDocumentTitle('Resident 51 | Not Found');
+  useDocumentTitle('Not Found');
 
   const history = useHistory();
 
   return (
     <Container>
       <Row className="justify-content-center">
-        <Col xs={12} md={8} className="justify-contents-center">
+        <Col xs={12} md={8}>
           <h1 className="my-4 text-center">Bad News Bears:</h1>
           <p className="my-5 text-center lead">
             There is nothing here. Are you happy? Is this what you wanted? *Ruffles your hair* Gah,

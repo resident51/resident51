@@ -8,7 +8,7 @@ import { auth } from '../Firebase/firebase';
 import useDocumentTitle from '../Hooks/useDocumentTitle';
 
 const Logout: React.FC = () => {
-  useDocumentTitle('Resident 51 | Log out');
+  useDocumentTitle('Log out');
   const { user, userDispatch, isLoggingIn } = useContext(UserContext);
   const history = useHistory();
 

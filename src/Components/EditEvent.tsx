@@ -22,7 +22,7 @@ import EventNotFound from './Events/EventNotFound';
 import { EventForm as EventFormType } from '../Types/';
 
 const EditEvent: React.FC = () => {
-  useDocumentTitle('Resident 51 | Edit Event');
+  useDocumentTitle('Edit Event');
   const [eventUpdated, setEventUpdated] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { events, formatSubmittedEvent } = useContext(EventsContext);

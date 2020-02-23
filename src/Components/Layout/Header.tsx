@@ -10,13 +10,7 @@ import HeaderLink from './HeaderLink';
 
 const Header: React.FC = () => {
   const { user, isLoggingIn } = useContext(UserContext);
-  const action = isLoggingIn ? (
-    <div />
-  ) : user.uid ? (
-    <HeaderLink to="/profile/">Profile</HeaderLink>
-  ) : (
-    <HeaderLink to="/login/">Log In</HeaderLink>
-  );
+  const showFAQ = Boolean(!isLoggingIn && user.uid);
 
   return (
     <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
@@ -26,8 +20,17 @@ const Header: React.FC = () => {
           <Nav className="mr-auto">
             <HeaderLink to="/events/">Events</HeaderLink>
             <HeaderLink to="/feedback">Feedback</HeaderLink>
+            {showFAQ && <HeaderLink to="/faq">FAQ</HeaderLink>}
           </Nav>
-          <Nav>{action}</Nav>
+          <Nav>
+            {isLoggingIn ? (
+              <div />
+            ) : user.uid ? (
+              <HeaderLink to="/profile/">Profile</HeaderLink>
+            ) : (
+              <HeaderLink to="/login/">Log In</HeaderLink>
+            )}
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
