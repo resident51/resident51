@@ -1,4 +1,4 @@
-import React, { useReducer, useState, createContext } from 'react';
+import React, { useReducer, createContext } from 'react';
 
 import { User, VisibleUser } from '../Types/';
 
@@ -6,7 +6,6 @@ import UserReducer, { UserAction } from '../Reducers/User.Reducer';
 import { loggedOutUser } from './UserProps';
 
 import useFirebaseAuth from '../Hooks/useFirebaseAuth';
-import useUserDocument from '../Hooks/useUserDocument';
 import useVerificationRequests from '../Hooks/useVerificationRequests';
 import useVerifiedResidents from '../Hooks/useVerifiedResidents';
 
@@ -24,12 +23,13 @@ export const UserContext = createContext({} as UserContextProps);
 
 export const UserProvider: React.FC = props => {
   const [user, userDispatch] = useReducer(UserReducer, loggedOutUser);
-  const [isLoggingIn, setIsLoggingIn] = useState(true);
-
-  const [userAuth, refreshToken] = useFirebaseAuth(userDispatch, setIsLoggingIn);
-  useUserDocument(user, userDispatch, userAuth, isLoggingIn, setIsLoggingIn);
+  const [userAuth, loginState] = useFirebaseAuth(user, userDispatch);
   const usersRequestingVerify = useVerificationRequests(user);
   const verifiedResidents = useVerifiedResidents(user);
+
+  const [isLoggingIn, setIsLoggingIn] = loginState;
+  const refreshToken = (): Promise<string> =>
+    userAuth ? userAuth.getIdToken(true) : Promise.reject('');
 
   return (
     <UserContext.Provider
