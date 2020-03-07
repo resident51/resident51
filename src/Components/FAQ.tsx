@@ -11,7 +11,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const FAQ: React.FC = () => {
-  useDocumentTitle('Resident 51 | FAQ');
+  useDocumentTitle('FAQ');
 
   const { user, isLoggingIn } = useContext(UserContext);
 
