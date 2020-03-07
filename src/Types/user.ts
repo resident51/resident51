@@ -54,6 +54,7 @@ export interface UserBase {
   email: string;
   displayName: string;
   permissions: Permissions;
+  hall: Hall | null;
 }
 
 export interface LoggedInUser extends UserBase {
@@ -98,6 +99,7 @@ export interface LoggedOutUser extends UserBase {
   uid: null;
   permissions: 0;
   displayName: '';
+  hall: null;
   email: '';
 }
 
@@ -112,12 +114,12 @@ export interface UserDocument {
   kuEmail: string | null;
   roles?: Roles;
 }
-export interface VisibleUser extends Omit<UserDocument, 'hall' | 'kuEmail'> {
+export interface FetchedUser extends UserDocument {
   uid: string;
   hall: Hall;
   kuEmail: string;
 }
-export interface ConfirmedVerificationRequest extends Omit<UserDocument, 'hall' | 'kuEmail'> {
+export interface QueriedUser extends UserDocument {
   hall: Hall;
   kuEmail: string;
 }

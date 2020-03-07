@@ -5,6 +5,7 @@ export const loggedOutUser: LoggedOutUser = {
   displayName: '',
   email: '',
   permissions: 0,
+  hall: null,
 };
 
 export const initializeLoggedInUserState = (userAuth: firebase.User): UnverifiedUser => {

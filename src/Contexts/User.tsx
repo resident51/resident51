@@ -1,13 +1,14 @@
-import React, { useReducer, createContext } from 'react';
+import React, { useReducer, createContext, useMemo } from 'react';
 
-import { User, VisibleUser } from '../Types/';
+import { User, FetchedUser } from '../Types/';
 
 import UserReducer, { UserAction } from '../Reducers/User.Reducer';
 import { loggedOutUser } from './UserProps';
 
+import { usersCollection } from '../Firebase/firebase';
+
 import useFirebaseAuth from '../Hooks/useFirebaseAuth';
-import useVerificationRequests from '../Hooks/useVerificationRequests';
-import useVerifiedResidents from '../Hooks/useVerifiedResidents';
+import useUserCollection from '../Hooks/useUserCollection';
 
 interface UserContextProps {
   user: User;
@@ -15,8 +16,8 @@ interface UserContextProps {
   userDispatch: React.Dispatch<UserAction>;
   isLoggingIn: boolean;
   setIsLoggingIn: (next: boolean) => void;
-  usersRequestingVerify: VisibleUser[];
-  verifiedResidents: VisibleUser[];
+  usersRequestingVerify: FetchedUser[];
+  verifiedResidents: FetchedUser[];
 }
 
 export const UserContext = createContext({} as UserContextProps);
@@ -24,8 +25,14 @@ export const UserContext = createContext({} as UserContextProps);
 export const UserProvider: React.FC = props => {
   const [user, userDispatch] = useReducer(UserReducer, loggedOutUser);
   const [userAuth, loginState] = useFirebaseAuth(user, userDispatch);
-  const usersRequestingVerify = useVerificationRequests(user);
-  const verifiedResidents = useVerifiedResidents(user);
+
+  // Need memoized queries, as firebase creates new values even if two queries are identical
+  const baseQuery = useMemo(() => usersCollection.where('hall', '==', user.hall), [user]);
+  const requestingUsersQuery = useMemo(() => baseQuery.where('permissions', '==', 0), [baseQuery]);
+  const verifiedUsersQuery = useMemo(() => baseQuery.where('permissions', '>=', 1), [baseQuery]);
+
+  const usersRequestingVerify = useUserCollection(user, requestingUsersQuery);
+  const verifiedResidents = useUserCollection(user, verifiedUsersQuery);
 
   const [isLoggingIn, setIsLoggingIn] = loginState;
   const refreshToken = (): Promise<string> =>
