@@ -23,9 +23,7 @@ const UserTable: React.FC<UserTableProps> = props => {
           {isRequests && <th className="text-center">Join Date</th>}
           <th className="text-center">Name</th>
           <th className="text-center">KU Email</th>
-          <th className="text-center" colSpan={3}>
-            Verify As
-          </th>
+          <th className="text-center">{isRequests ? 'Approve' : 'Role'}</th>
         </tr>
       </thead>
       <tbody>
