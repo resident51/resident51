@@ -1,11 +1,11 @@
-import React, { useReducer, createContext, useMemo } from 'react';
+import React, { useReducer, useEffect, createContext, useMemo } from 'react';
 
 import { User, FetchedUser } from '../Types/';
 
 import UserReducer, { UserAction } from '../Reducers/User.Reducer';
 import { loggedOutUser } from './UserProps';
 
-import { usersCollection } from '../Firebase/firebase';
+import { usersCollection, logUser } from '../Firebase/firebase';
 
 import useFirebaseAuth from '../Hooks/useFirebaseAuth';
 import useUserCollection from '../Hooks/useUserCollection';
@@ -25,6 +25,10 @@ export const UserContext = createContext({} as UserContextProps);
 export const UserProvider: React.FC = props => {
   const [user, userDispatch] = useReducer(UserReducer, loggedOutUser);
   const [userAuth, loginState] = useFirebaseAuth(user, userDispatch);
+
+  useEffect(() => {
+    logUser();
+  }, [userAuth]);
 
   // Need memoized queries, as firebase creates new values even if two queries are identical
   const baseQuery = useMemo(() => usersCollection.where('hall', '==', user.hall), [user]);
