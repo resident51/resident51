@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://resident51.com",
   "dependencies": {
+    "@material-ui/core": "^4.9.11",
     "@types/jest": "^24.0.23",
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.14",

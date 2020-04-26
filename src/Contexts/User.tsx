@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, createContext, useMemo } from 'react';
+import React, { useReducer, useEffect, createContext, useMemo, useContext } from 'react';
 
 import { User, FetchedUser } from '../Types/';
 
@@ -10,7 +10,7 @@ import { usersCollection, logUser } from '../Firebase/firebase';
 import useFirebaseAuth from '../Hooks/useFirebaseAuth';
 import useUserCollection from '../Hooks/useUserCollection';
 
-interface UserContextProps {
+export interface UserCtx {
   user: User;
   refreshToken: () => Promise<string>;
   userDispatch: React.Dispatch<UserAction>;
@@ -20,7 +20,8 @@ interface UserContextProps {
   verifiedResidents: FetchedUser[];
 }
 
-export const UserContext = createContext({} as UserContextProps);
+export const UserContext = createContext({} as UserCtx);
+export const useUser = (): UserCtx => useContext<UserCtx>(UserContext);
 
 export const UserProvider: React.FC = props => {
   const [user, userDispatch] = useReducer(UserReducer, loggedOutUser);

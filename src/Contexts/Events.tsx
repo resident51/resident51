@@ -11,7 +11,7 @@ import {
 
 import { currentEvents } from '../Firebase/firebase';
 import EventsReducer from '../Reducers/Events.Reducer';
-import { UserContext } from './User';
+import { useUser } from './User';
 import {
   querySnapshot,
   formatSubmittedEventByHall,
@@ -20,16 +20,17 @@ import {
   concatEvents,
 } from './EventsProps';
 
-interface EventContextProps {
+interface EventsCtx {
   events: Events;
   formatSubmittedEvent: (event: EventFormType, submission: EventToCFSSubmission) => EventToCFS;
   eventTypes: EventTypeFormats;
   halls: Hall[];
 }
-export const EventsContext = createContext({} as EventContextProps);
+export const EventsContext = createContext({} as EventsCtx);
+export const useEvents = (): EventsCtx => useContext<EventsCtx>(EventsContext);
 
 export const EventsProvider: React.FC = props => {
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
   const [publicEvents, dispatchPublicEvents] = useReducer(EventsReducer, null);
   const [privateEvents, dispatchPrivateEvents] = useReducer(EventsReducer, null);
   const events = concatEvents(publicEvents, privateEvents);

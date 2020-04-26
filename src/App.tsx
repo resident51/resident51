@@ -1,42 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import Jumbotron from 'react-bootstrap/Jumbotron';
-
-import Header from './Components/Layout/Header';
+// import Header from './Components/Layout/Header';
 import Routes from './Components/Routes';
-import Footer from './Components/Layout/Footer';
 
-import 'react-dates/lib/css/_datepicker.css';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './Styles/App.scss';
-// import "./Styles/R51-Title.scss";
+// import 'react-dates/lib/css/_datepicker.css';
+// import 'bootstrap';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import './Styles/App.scss';
+// // import "./Styles/R51-Title.scss";
 
 import { EventsProvider } from './Contexts/Events';
 import { UserProvider } from './Contexts/User';
 
 const App: React.FC = () => (
   <Router>
-    <div id="app-container">
-      <div id="crown" />
-      <Jumbotron id="r51" className="mb-0">
-        <h1 id="title" className="display-1 text-center">
-          R<span className="d-sm-inline d-none">esident </span>51
-        </h1>
-      </Jumbotron>
-      <div id="everything-else">
-        <UserProvider>
-          <Header />
-          <EventsProvider>
-            <div id="route-container" className="pt-3 pb-5">
-              <Routes />
-            </div>
-          </EventsProvider>
-        </UserProvider>
-      </div>
-      <Footer />
-    </div>
+    R<span className="d-sm-inline d-none">esident </span>51
+    <UserProvider>
+      <EventsProvider>
+        <Routes />
+      </EventsProvider>
+    </UserProvider>
   </Router>
 );
 
