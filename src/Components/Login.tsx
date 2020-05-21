@@ -9,10 +9,6 @@ import { useHistory } from 'react-router-dom';
 import { ui, GoogleAuthProvider, FacebookAuthProvider, logError } from '../Firebase/firebase';
 import 'firebaseui/dist/firebaseui.css';
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
 const Login: React.FC = () => {
   useDocumentTitle('Log In');
   const { user, userDispatch, isLoggingIn, setIsLoggingIn } = useContext(UserContext);
@@ -53,16 +49,10 @@ const Login: React.FC = () => {
   }
 
   return (
-    <Container fluid={true}>
-      <Row>
-        <Col className="text-center" xs={12}>
-          <h1>Log In or Create an Account:</h1>
-        </Col>
-        <Col xs={12}>
-          <div id="firebaseui-auth-container"></div>
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      <h1>Log In or Create an Account:</h1>
+      <div id="firebaseui-auth-container"></div>
+    </div>
   );
 };
 

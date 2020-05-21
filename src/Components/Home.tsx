@@ -6,6 +6,7 @@ import { useEvents } from '../Contexts/Events';
 const Home: React.FC = () => {
   const { user } = useUser();
   const { events } = useEvents();
+
   return (
     <div>
       hey {user.displayName || 'pal'}, there's {events ? events.length : '(loading)'} events.
