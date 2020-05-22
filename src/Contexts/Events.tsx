@@ -1,24 +1,24 @@
-import React, { useReducer, createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
+import EventsReducer from '../Reducers/Events.Reducer';
 import {
+  EventForm as EventFormType,
   EventToCFS,
   EventToCFSSubmission,
-  EventForm as EventFormType,
+  EventTypeFormats,
   Events,
   Hall,
-  EventTypeFormats,
 } from '../Types/';
-
 import { currentEvents } from '../Firebase/firebase';
-import EventsReducer from '../Reducers/Events.Reducer';
-import { useUser } from './User';
+
 import {
-  querySnapshot,
+  concatEvents,
+  eventTypes,
   formatSubmittedEventByHall,
   halls,
-  eventTypes,
-  concatEvents,
+  querySnapshot,
 } from './EventsProps';
+import { useUser } from './User';
 
 interface EventsCtx {
   events: Events;

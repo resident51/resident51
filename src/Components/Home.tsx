@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { useUser } from '../Contexts/User';
-import { useEvents } from '../Contexts/Events';
 import useDocumentTitle from '../Hooks/useDocumentTitle';
+import { useEvents } from '../Contexts/Events';
+import { useUser } from '../Contexts/User';
+
+import Header from './navigation/Header';
 
 const Home: React.FC = () => {
   const { user } = useUser();
@@ -11,9 +13,12 @@ const Home: React.FC = () => {
   useDocumentTitle('Home');
 
   return (
-    <div>
-      hey {user.displayName || 'pal'}, there's {events ? events.length : '(loading)'} events.
-    </div>
+    <>
+      <Header />
+      <div>
+        hey {user.displayName || 'pal'}, there's {events ? events.length : '(loading)'} events.
+      </div>
+    </>
   );
 };
 

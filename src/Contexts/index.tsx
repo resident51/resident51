@@ -1,9 +1,10 @@
 import React from 'react';
-import { UserProvider } from './User';
+
 import { EventsProvider } from './Events';
 import { ThemeProvider } from './Theme';
+import { UserProvider } from './User';
 
-export const Resident51Contexts: React.FC = ({ children }) => (
+const Resident51Contexts: React.FC = ({ children }) => (
   <UserProvider>
     <EventsProvider>
       <ThemeProvider>{children}</ThemeProvider>

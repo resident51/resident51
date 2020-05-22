@@ -1,19 +1,18 @@
+import moment from 'moment';
+import { firestore } from 'firebase/app';
+
 import {
-  Hall,
   CFSEvent,
-  EventToCFSSubmission,
-  EventToCFS,
-  EventR51,
-  EventTypeFormats,
-  Events,
   EventFormPublicType,
   EventForm as EventFormType,
+  EventR51,
+  EventToCFS,
+  EventToCFSSubmission,
+  EventTypeFormats,
+  Events,
+  Hall,
 } from '../Types/';
-
 import { EventAction } from '../Reducers/Events.Reducer';
-
-import { firestore } from 'firebase/app';
-import moment from 'moment';
 
 export const eventTypes: EventTypeFormats = {
   social: { formal: 'Social Event', color: 'green' },

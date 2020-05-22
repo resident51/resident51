@@ -1,12 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 
-import { UserContext } from '../Contexts/User';
-
-import useDocumentTitle from '../Hooks/useDocumentTitle';
-
 import { useHistory } from 'react-router-dom';
 
-import { ui, GoogleAuthProvider, FacebookAuthProvider, logError } from '../Firebase/firebase';
+import useDocumentTitle from '../Hooks/useDocumentTitle';
+import { FacebookAuthProvider, GoogleAuthProvider, logError, ui } from '../Firebase/firebase';
+import { UserContext } from '../Contexts/User';
+
 import 'firebaseui/dist/firebaseui.css';
 
 const Login: React.FC = () => {
