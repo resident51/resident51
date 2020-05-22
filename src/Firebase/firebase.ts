@@ -1,10 +1,9 @@
+import * as firebaseui from 'firebaseui';
 import firebase from 'firebase/app';
 
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/functions';
-
-import * as firebaseui from 'firebaseui';
 
 // Initialize Firebase with R51 Firebase configuration
 firebase.initializeApp({

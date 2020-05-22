@@ -1,4 +1,4 @@
-import { User, UserDocument, LoggedOutUser, UnverifiedUser } from '../Types';
+import { LoggedOutUser, UnverifiedUser, User, UserDocument } from '../Types';
 
 export const loggedOutUser: LoggedOutUser = {
   uid: null,

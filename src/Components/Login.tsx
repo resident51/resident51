@@ -1,17 +1,16 @@
 import React, { useContext, useEffect } from 'react';
 
-import { UserContext } from '../Contexts/User';
-
-import useDocumentTitle from '../Hooks/useDocumentTitle';
-
 import { useHistory } from 'react-router-dom';
 
-import { ui, GoogleAuthProvider, FacebookAuthProvider, logError } from '../Firebase/firebase';
+import useDocumentTitle from '../Hooks/useDocumentTitle';
+import { FacebookAuthProvider, GoogleAuthProvider, logError, ui } from '../Firebase/firebase';
+import { UserContext } from '../Contexts/User';
+
 import 'firebaseui/dist/firebaseui.css';
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Container from 'react-bootstrap/Container';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
 
 const Login: React.FC = () => {
   useDocumentTitle('Log In');
@@ -53,16 +52,16 @@ const Login: React.FC = () => {
   }
 
   return (
-    <Container fluid={true}>
-      <Row>
-        <Col className="text-center" xs={12}>
+    <div>
+      <div>
+        <div className="text-center">
           <h1>Log In or Create an Account:</h1>
-        </Col>
-        <Col xs={12}>
+        </div>
+        <div>
           <div id="firebaseui-auth-container"></div>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 };
 

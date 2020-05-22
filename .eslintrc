@@ -3,12 +3,15 @@
     "node": true
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["@typescript-eslint", "import", "prettier", "sort-imports-es6-autofix"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
     "plugin:prettier/recommended",
     "prettier",
     "prettier/@typescript-eslint",
@@ -28,6 +31,24 @@
         "objects": "always-multiline"
       }
     ],
-    "no-shadow": 2
+    "no-shadow": 2,
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always"
+      }
+    ],
+    "sort-imports-es6-autofix/sort-imports-es6": [2, {
+      "memberSyntaxSortOrder": ["all", "single", "multiple", "none"]
+    }]
   }
 }

@@ -1,9 +1,8 @@
 import { User, UserDocument } from '../Types/';
-
 import {
+  initializeLoggedInUserState,
   loggedOutUser,
   shouldUpdateUserState,
-  initializeLoggedInUserState,
 } from '../Contexts/UserProps';
 
 export type UserActionType = 'LOGGED_IN' | 'USER_FOUND' | 'LOGGED_OUT';

@@ -1,14 +1,12 @@
-import React, { useReducer, useEffect, createContext, useMemo, useContext } from 'react';
-
-import { User, FetchedUser } from '../Types/';
+import React, { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 
 import UserReducer, { UserAction } from '../Reducers/User.Reducer';
-import { loggedOutUser } from './UserProps';
-
-import { usersCollection, logUser } from '../Firebase/firebase';
-
 import useFirebaseAuth from '../Hooks/useFirebaseAuth';
 import useUserCollection from '../Hooks/useUserCollection';
+import { FetchedUser, User } from '../Types/';
+import { logUser, usersCollection } from '../Firebase/firebase';
+
+import { loggedOutUser } from './UserProps';
 
 export interface UserCtx {
   user: User;
