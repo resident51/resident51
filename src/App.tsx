@@ -4,13 +4,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Routes from './Components/Routes';
-import { EventsProvider } from './Contexts/Events';
-import { UserProvider } from './Contexts/User';
+import Routes from 'components/Routes';
+import { EventsProvider } from 'contexts/Events';
+import { UserProvider } from 'contexts/User';
 
 const useStyles = makeStyles({
   '@global': {
-    'html, body': {
+    'html, body, #root': {
       height: '100%',
       width: '100%',
     },
