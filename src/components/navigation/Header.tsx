@@ -1,16 +1,12 @@
 import PropTypes, { InferProps } from 'prop-types';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { Menu as MenuIcon, MenuOpen as MenuOpenIcon } from '@material-ui/icons';
 
 import { AlertDialogControls, ModalCtx } from 'types';
 
+import Login from 'components/auth/Login';
 import { useAlertDialog } from 'contexts/ui/AlertDialogProvider';
 import { useModal } from 'contexts/ui/ModalProvider';
 
@@ -31,7 +27,6 @@ const HeaderProps = {
 
 const Header: React.FC<InferProps<typeof HeaderProps>> = props => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
-  const alertDialogContext: AlertDialogControls | null = useAlertDialog();
   const modalContext: ModalCtx = useModal();
   const classes = useStyles();
 
@@ -42,6 +37,12 @@ const Header: React.FC<InferProps<typeof HeaderProps>> = props => {
   const handleDrawerClose = useCallback(() => {
     setDrawerOpen(false);
   }, []);
+
+  const handleLoginClick = useCallback(() => {
+    modalContext?.disclose({
+      content: <Login onClose={modalContext.dismiss} />,
+    });
+  }, [modalContext]);
 
   useEffect(() => {
     const unlisten = history.listen(() => {
@@ -61,7 +62,9 @@ const Header: React.FC<InferProps<typeof HeaderProps>> = props => {
           <Typography component="h1" variant="h6" onClick={(): void => history.push('/')}>
             Resident51
           </Typography>
-          <Button>Login</Button>
+          <Button className={classes.loginButton} onClick={handleLoginClick}>
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
       <div className={classes.rainbowOffset} />

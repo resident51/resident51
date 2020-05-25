@@ -9,9 +9,8 @@ import React, {
   useState,
 } from 'react';
 
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import uniqid from 'uniqid';
+import { Backdrop, CircularProgress } from '@material-ui/core';
 
 import {
   LoadingOverlayConfig,

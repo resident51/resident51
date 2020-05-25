@@ -70,6 +70,7 @@
           "firebase": "./src/firebase",
           "hooks": "./src/hooks",
           "reducers": "./src/reducers",
+          "resources": "./src/resources",
           "types": "./src/types",
           "utils": "./src/utils"
         },

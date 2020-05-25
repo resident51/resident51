@@ -1,9 +1,7 @@
 import PropTypes, { InferProps } from 'prop-types';
 import React, { useMemo } from 'react';
 
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
+import { Divider, Drawer, List } from '@material-ui/core';
 
 import { NavigationItem, UtilityItem } from 'types';
 

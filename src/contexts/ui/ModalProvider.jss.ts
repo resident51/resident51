@@ -7,16 +7,22 @@ export default makeStyles((theme: Theme) => ({
     alignItems: 'center',
   },
   modalContentContainer: {
-    position: 'relative',
     margin: theme.spacing(3),
   },
-  modalLoadingContainer: {
-    position: 'absolute',
-    zIndex: 0,
-    border: '1px solid transparent',
-    borderRadius: theme.shape.borderRadius,
+  loadingPaper: {
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+  },
+  loadingIndicator: {
+    borderTopRightRadius: theme.shape.borderRadius,
+    borderTopLeftRadius: theme.shape.borderRadius,
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
   },
   paper: {
     padding: theme.spacing(2),
+    maxHeight: 'calc(100vh - 10px)',
+    maxWidth: 'calc(100vw - 10px)',
+    overflow: 'auto',
   },
 }));
