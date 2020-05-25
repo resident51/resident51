@@ -26,7 +26,7 @@ import { useStyles } from '../../Hooks/useStyles';
 import ListItemLink from './_ListItemLink';
 import AuthActionButton from './_AuthActionButton';
 
-const Header: React.FC = ({ children }) => {
+const Navigation: React.FC = ({ children }) => {
   const [anchorEl, setAnchorEl] = React.useState<(EventTarget & HTMLButtonElement) | null>(null);
   const [open, setOpen] = React.useState(false);
   const { user } = useUser();
@@ -129,4 +129,4 @@ const Header: React.FC = ({ children }) => {
   );
 };
 
-export default Header;
+export default Navigation;
