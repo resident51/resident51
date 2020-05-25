@@ -1,21 +1,23 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 import Routes from './Components/Routes';
 
-import { EventsProvider } from './Contexts/Events';
+import Navigation from './Components/Layout/Navigation';
 import { UserProvider } from './Contexts/User';
-
-import TopLevelNavigation from './Components/Layout/Navigation';
+import { EventsProvider } from './Contexts/Events';
 
 const App: React.FC = () => {
   return (
     <Router>
+      <CssBaseline />
       <UserProvider>
         <EventsProvider>
-          <TopLevelNavigation>
+          <Navigation>
             <Routes />
-          </TopLevelNavigation>
+          </Navigation>
         </EventsProvider>
       </UserProvider>
     </Router>

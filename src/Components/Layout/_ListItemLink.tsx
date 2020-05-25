@@ -1,15 +1,12 @@
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
 import { Omit } from '@material-ui/types';
 
-const useStyles = makeStyles(theme => ({
-  gutters: theme.mixins.gutters(),
-}));
+import { useStyles } from '../../Hooks/useStyles';
 
 interface ListItemLinkProps {
   icon?: React.ReactElement;
