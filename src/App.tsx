@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import Routes from './Components/Routes';
@@ -6,33 +6,16 @@ import Routes from './Components/Routes';
 import { EventsProvider } from './Contexts/Events';
 import { UserProvider } from './Contexts/User';
 
-import Header from './Components/Layout/Header';
-import NavDrawer from './Components/Layout/NavDrawer';
+import TopLevelNavigation from './Components/Layout/Navigation';
 
 const App: React.FC = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false);
-
-  const toggleDrawerOpen = (open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent,
-  ): void => {
-    const isTabOrShift =
-      event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' ||
-        (event as React.KeyboardEvent).key === 'Shift');
-    if (!isTabOrShift) {
-      setIsNavOpen(open);
-    }
-  };
-
   return (
     <Router>
       <UserProvider>
         <EventsProvider>
-          <NavDrawer toggleDrawerOpen={toggleDrawerOpen} isNavOpen={isNavOpen} />
-          <Header onDrawerOpen={toggleDrawerOpen(true)} />
-          <div style={{ top: '64px' }}>
+          <TopLevelNavigation>
             <Routes />
-          </div>
+          </TopLevelNavigation>
         </EventsProvider>
       </UserProvider>
     </Router>

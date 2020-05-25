@@ -1,12 +1,10 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import useDocumentTitle from '../Hooks/useDocumentTitle';
 
 const NotFound: React.FC = () => {
   useDocumentTitle('Not Found');
-
-  const history = useHistory();
 
   return (
     <div>
@@ -15,9 +13,7 @@ const NotFound: React.FC = () => {
         There is nothing here. Are you happy? Is this what you wanted? *Ruffles your hair* Gah, I
         can't stay mad at you :^)
       </p>
-      <button className="text-center" onClick={(): void => history.push('/')} type="submit">
-        Back to Civilization, Pal!
-      </button>
+      <Link to="/">Back to Civilization!</Link>
     </div>
   );
 };
