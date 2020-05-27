@@ -4,9 +4,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Navigation from './Components/Layout/Navigation';
-import Resident51Contexts from './Contexts';
-import Routes from './Components/Routes';
+import Navigation from './components/layout/Navigation';
+import Resident51Contexts from './contexts';
+import Routes from './components/Routes';
 
 const useStyles = makeStyles({
   '@global': {

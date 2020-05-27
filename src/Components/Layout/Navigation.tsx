@@ -1,30 +1,28 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
-import clsx from 'clsx';
-
+import Announcement from '@material-ui/icons/AnnouncementRounded';
 import AppBar from '@material-ui/core/AppBar';
+import CalendarToday from '@material-ui/icons/CalendarTodaySharp';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
-import MenuItem from '@material-ui/core/MenuItem';
+import MailIcon from '@material-ui/icons/Mail';
 import Menu from '@material-ui/core/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import SettingsIcon from '@material-ui/icons/Settings';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 
-import Announcement from '@material-ui/icons/AnnouncementRounded';
-import CalendarToday from '@material-ui/icons/CalendarTodaySharp';
-import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { useStyles } from '../../hooks/useStyles';
+import { useUser } from '../../contexts/User';
 
-import { useUser } from '../../Contexts/User';
-import { useStyles } from '../../Hooks/useStyles';
-
-import ListItemLink from './_ListItemLink';
 import AuthActionButton from './_AuthActionButton';
+import ListItemLink from './_ListItemLink';
 
 const Navigation: React.FC = ({ children }) => {
   const [anchorEl, setAnchorEl] = React.useState<(EventTarget & HTMLButtonElement) | null>(null);

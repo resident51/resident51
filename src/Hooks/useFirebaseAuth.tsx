@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { User, UserDocument } from '../Types';
-import { UserAction } from '../Reducers/User.Reducer';
-import { auth, usersCollection } from '../Firebase/firebase';
+import { User, UserDocument } from '../types';
+import { UserAction } from '../reducers/User.Reducer';
+import { auth, usersCollection } from '../firebase/firebase';
 
 type useFirebaseAuthType = (
   user: User,

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
-import EventsReducer from '../Reducers/Events.Reducer';
+import EventsReducer from '../reducers/Events.Reducer';
 import {
   EventForm as EventFormType,
   EventToCFS,
@@ -8,8 +8,8 @@ import {
   EventTypeFormats,
   Events,
   Hall,
-} from '../Types/';
-import { currentEvents } from '../Firebase/firebase';
+} from '../types/';
+import { currentEvents } from '../firebase/firebase';
 
 import {
   concatEvents,

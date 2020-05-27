@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { FetchedUser, QueriedUser, User } from '../Types';
+import { FetchedUser, QueriedUser, User } from '../types';
 
 const useUserCollection = (
   user: User,

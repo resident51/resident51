@@ -1,8 +1,8 @@
 import React from 'react';
 
-import useDocumentTitle from '../Hooks/useDocumentTitle';
-import { useEvents } from '../Contexts/Events';
-import { useUser } from '../Contexts/User';
+import useDocumentTitle from '../hooks/useDocumentTitle';
+import { useEvents } from '../contexts/Events';
+import { useUser } from '../contexts/User';
 
 import Header from './navigation/Header';
 

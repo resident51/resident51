@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
-import PropTypes, { InferProps } from 'prop-types';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Theme, makeStyles } from '@material-ui/core/styles';
@@ -46,17 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const HeaderProps = {
-  onLoginClick: PropTypes.func,
-  user: PropTypes.shape({
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    email: PropTypes.string,
-    profileImgSrc: PropTypes.string,
-  }),
-};
-
-const Header: React.FC<InferProps<typeof HeaderProps>> = props => {
+const Header: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const classes = useStyles();
 
@@ -86,8 +75,6 @@ const Header: React.FC<InferProps<typeof HeaderProps>> = props => {
     </>
   );
 };
-
-Header.propTypes = HeaderProps;
 
 export default Header;
 

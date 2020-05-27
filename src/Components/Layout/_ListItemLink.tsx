@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
-import clsx from 'clsx';
+
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import clsx from 'clsx';
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
-import { Omit } from '@material-ui/types';
 
-import { useStyles } from '../../Hooks/useStyles';
+import { useStyles } from '../../hooks/useStyles';
 
 interface ListItemLinkProps {
   icon?: React.ReactElement;

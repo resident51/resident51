@@ -1,4 +1,4 @@
-import { EventR51, Events } from '../Types/';
+import { EventR51, Events } from '../types/';
 
 export type EventActionType = 'EMPTY' | 'ADDED' | 'MODIFIED' | 'REMOVED';
 export type EventAction =

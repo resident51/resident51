@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 
-import UserReducer, { UserAction } from '../Reducers/User.Reducer';
-import useFirebaseAuth from '../Hooks/useFirebaseAuth';
-import useUserCollection from '../Hooks/useUserCollection';
-import { FetchedUser, User } from '../Types/';
-import { logUser, usersCollection } from '../Firebase/firebase';
+import UserReducer, { UserAction } from '../reducers/User.Reducer';
+import useFirebaseAuth from '../hooks/useFirebaseAuth';
+import useUserCollection from '../hooks/useUserCollection';
+import { FetchedUser, User } from '../types/';
+import { logUser, usersCollection } from '../firebase/firebase';
 
 import { loggedOutUser } from './UserProps';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useDocumentTitle from '../Hooks/useDocumentTitle';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 
 const NotFound: React.FC = () => {
   useDocumentTitle('Not Found');

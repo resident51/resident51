@@ -1,14 +1,13 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
-import clsx from 'clsx';
-
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 
-import { useUser } from '../../Contexts/User';
-import { useStyles } from '../../Hooks/useStyles';
+import { useStyles } from '../../hooks/useStyles';
+import { useUser } from '../../contexts/User';
 
 interface AuthActionProps {
   menuId: string;

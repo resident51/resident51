@@ -2,9 +2,9 @@ import React, { useContext, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import useDocumentTitle from '../Hooks/useDocumentTitle';
-import { FacebookAuthProvider, GoogleAuthProvider, logError, ui } from '../Firebase/firebase';
-import { UserContext } from '../Contexts/User';
+import useDocumentTitle from '../hooks/useDocumentTitle';
+import { FacebookAuthProvider, GoogleAuthProvider, logError, ui } from '../firebase/firebase';
+import { UserContext } from '../contexts/User';
 
 import 'firebaseui/dist/firebaseui.css';
 
