@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-interface NavigationItem {
+export interface NavigationItem {
   id: string;
   text: string;
   icon?: ReactNode;
@@ -9,7 +9,7 @@ interface NavigationItem {
   subItemList?: NavigationItem[];
 }
 
-interface UtilityItem {
+export interface UtilityItem {
   id: string;
   text: string;
   icon?: ReactNode;
@@ -18,12 +18,9 @@ interface UtilityItem {
   url?: string;
 }
 
-interface NavItemParents {
+export interface NavItemParents {
   [key: string]: {
     path: string;
     parents: string[];
   };
 }
-
-// eslint-disable-next-line
-export type { NavigationItem, UtilityItem, NavItemParents }

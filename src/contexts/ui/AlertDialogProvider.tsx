@@ -1,14 +1,17 @@
 import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
 
-import Button from '@material-ui/core/Button';
-import CloseIcon from '@material-ui/icons/Close';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton';
 import uniqid from 'uniqid';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+} from '@material-ui/core';
+import { Close as CloseIcon } from '@material-ui/icons';
+import { useSnackbar } from 'notistack';
 
 import { AlertDialogControls, AlertDialogCtx, AlertDialogOptions } from '../../types';
 
@@ -21,6 +24,7 @@ const AlertDialogProvider: React.FC = props => {
   const [open, setOpen] = useState<boolean>(false);
   const [options, setOptions] = useState<AlertDialogOptions | null>(null);
   const [promiseInProgress, setPromiseInProgress] = useState<boolean>(false);
+  const snackbarContext = useSnackbar();
   const contentKey = useRef<number>(1);
   const dismissCallback = useRef<Function | null>(null);
   const classes = useStyles();
@@ -67,6 +71,9 @@ const AlertDialogProvider: React.FC = props => {
             .catch((reason?: string) => {
               if (reason) {
                 // display a snackbar
+                snackbarContext.enqueueSnackbar(reason, {
+                  variant: 'error',
+                });
               }
             })
             .finally(() => setPromiseInProgress(false));
@@ -75,7 +82,7 @@ const AlertDialogProvider: React.FC = props => {
         dismiss(true);
       }
     },
-    [dismiss, options],
+    [dismiss, options, snackbarContext],
   );
 
   const handleClose = useCallback(() => dismiss(), [dismiss]);

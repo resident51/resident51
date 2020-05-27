@@ -30,6 +30,10 @@ export default makeStyles((theme: Theme) => ({
     marginRight: theme.spacing(2),
     color: theme.palette.primary.contrastText,
   },
+  loginButton: {
+    marginLeft: 'auto',
+    color: theme.palette.primary.contrastText,
+  },
   drawer: {
     width: drawerWidth,
   },
