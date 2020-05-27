@@ -1,52 +1,26 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { Theme, makeStyles } from '@material-ui/core/styles';
+
+import { AlertDialogControls, ModalCtx } from '../../types';
+import { useAlertDialog } from '../../contexts/ui/AlertDialogProvider';
+import { useModal } from '../../contexts/ui/ModalProvider';
 
 import SlideMenu from './SlideMenu';
+import history from './history';
 
-const drawerWidth = 300;
-const useStyles = makeStyles((theme: Theme) => ({
-  overlayAppBar: {
-    zIndex: theme.zIndex.modal + 1,
-  },
-  toolbarOffset: theme.mixins.toolbar,
-  rainbowBand: {
-    borderImage:
-      'linear-gradient(100deg,' +
-      'rgba(255, 36, 0, 0.7),' +
-      'rgba(232, 29, 29, 0.7),' +
-      'rgba(232, 183, 29, 0.7),' +
-      'rgba(227, 232, 29, 0.7),' +
-      'rgba(29, 232, 64, 0.7),' +
-      'rgba(29, 221, 232, 0.7),' +
-      'rgba(43, 29, 232, 0.7),' +
-      'rgba(221, 0, 243, 0.7),' +
-      'rgba(221, 0, 243, 0.7))' +
-      ' 1',
-    borderWidth: '5px 0 0',
-    borderStyle: 'solid',
-  },
-  rainbowOffset: {
-    height: '5px',
-    width: '100%',
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    color: theme.palette.primary.contrastText,
-  },
-  drawer: {
-    width: drawerWidth,
-  },
-}));
+import useStyles from './Header.jss';
 
 const Header: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const alertDialogContext: AlertDialogControls | null = useAlertDialog();
+  const modalContext: ModalCtx = useModal();
   const classes = useStyles();
 
   const handleMenuButtonClick = useCallback(() => {
@@ -57,6 +31,14 @@ const Header: React.FC = () => {
     setDrawerOpen(false);
   }, []);
 
+  useEffect(() => {
+    const unlisten = history.listen(() => {
+      setDrawerOpen(false);
+    });
+
+    return unlisten;
+  }, []);
+
   return (
     <>
       <AppBar position="fixed" className={classes.overlayAppBar}>
@@ -64,9 +46,10 @@ const Header: React.FC = () => {
           <IconButton edge="start" className={classes.menuButton} onClick={handleMenuButtonClick}>
             {drawerOpen ? <MenuOpenIcon /> : <MenuIcon />}
           </IconButton>
-          <Typography component="h1" variant="h6">
+          <Typography component="h1" variant="h6" onClick={(): void => history.push('/')}>
             Resident51
           </Typography>
+          <Button>Login</Button>
         </Toolbar>
       </AppBar>
       <div className={classes.rainbowOffset} />

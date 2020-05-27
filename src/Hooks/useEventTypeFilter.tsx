@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-// import { EventType } from '../Types/'; // tried coercing type below to EventType...
+// import { EventType } from 'types'; // tried coercing type below to EventType...
 
 export type Statuple = [boolean, (next: boolean) => void];
 export interface EventTypeFilterState {

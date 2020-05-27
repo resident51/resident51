@@ -1,43 +1,25 @@
 import React from 'react';
 
-import BusinessCenterIcon from '@material-ui/icons/BusinessCenter'
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import GithubIcon from '@material-ui/icons/GitHub';
 
-interface NavigationItem {
-  id: string;
-  text: string;
-  icon?: React.ReactNode;
-  path: string;
-  isVisible?: boolean | (() => boolean);
-  subItemList?: NavigationItem[];
-}
-
-interface UtilityItem {
-  id: string;
-  text: string;
-  icon?: React.ReactNode;
-  clickBehavior: 'disclose' | 'link';
-  disclosureComponent?: React.ReactNode;
-  url?: string;
-}
+import { NavItemParents, NavigationItem, UtilityItem } from '../../types';
 
 const navigationItems: NavigationItem[] = [
   {
     id: 'hall-admin',
     text: 'Manage your Hall',
     icon: <BusinessCenterIcon />,
-    path: '/hall-admin',
     subItemList: [
       {
         id: 'example-sub-item',
         text: 'Example Sub Item',
-        path: '/example-path',
         subItemList: [
           {
             id: 'another',
             text: 'Another Example Sub Item',
-            path: '/esdfsgs',
+            path: '/1/2/3',
           },
         ],
       },
@@ -48,7 +30,7 @@ const navigationItems: NavigationItem[] = [
 const utilityItems: UtilityItem[] = [
   {
     id: 'feedback',
-    text: 'Give Feedback',
+    text: 'Feedback',
     icon: <FeedbackIcon />,
     clickBehavior: 'disclose',
     disclosureComponent: <div>Feedback</div>,
@@ -62,7 +44,16 @@ const utilityItems: UtilityItem[] = [
   },
 ];
 
-// eslint-disable-next-line
-export type { NavigationItem, UtilityItem };
-export { navigationItems, utilityItems };
+const navigationItemParentMap: NavItemParents = {};
+const collectParents = (item: NavigationItem, parents: string[]): void => {
+  if ((!item.subItemList || !item.subItemList?.length) && item.path) {
+    navigationItemParentMap[item.id] = { path: item.path, parents };
+  } else {
+    item.subItemList?.forEach((_item: NavigationItem) =>
+      collectParents(_item, [...parents, item.id]),
+    );
+  }
+};
+navigationItems.forEach((item: NavigationItem): void => collectParents(item, []));
 
+export { navigationItems, navigationItemParentMap, utilityItems };

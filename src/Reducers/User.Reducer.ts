@@ -1,4 +1,4 @@
-import { User, UserDocument } from '../types/';
+import { User, UserDocument } from '../types';
 import {
   initializeLoggedInUserState,
   loggedOutUser,

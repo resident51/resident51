@@ -9,11 +9,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import PropTypes, { InferProps } from 'prop-types';
 import { Theme, makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
-import history from './history';
-import { NavigationItem, UtilityItem, navigationItems, utilityItems } from './NavigationItems';
+import { NavigationItem, UtilityItem } from '../../types';
+
+import { navigationItems, utilityItems } from './NavigationItems';
 
 const menuState = {
   expandedNavItems: new Set<string>(),
@@ -58,10 +59,11 @@ interface NavListItemProps extends NavigationItem {
 const NavListItem: React.FC<NavListItemProps> = props => {
   const [open, setOpen] = useState<boolean>(menuState.expandedNavItems.has(props.id));
   const classes = useStyles();
+  const history = useHistory();
   const hasSubList = !!props.subItemList?.length;
   const isSelected: boolean = history.location.pathname === props.path;
 
-  if ((typeof props.isVisible === 'function' && !props.isVisible()) || props.isVisible === false) {
+  if (typeof props.isVisible === 'function' && !props.isVisible()) {
     return null;
   }
 
@@ -75,8 +77,10 @@ const NavListItem: React.FC<NavListItemProps> = props => {
         setOpen(true);
       }
     } else {
-      history.push(props.path);
-      props.menuClosingAction();
+      if (typeof props.path === 'string') {
+        history.push(props.path);
+        props.menuClosingAction();
+      }
     }
   };
 
@@ -130,18 +134,12 @@ const UtilityListItem: React.FC<UtilityListItemProps> = props => {
   );
 };
 
-const SlideMenuProps = {
-  /**
-   * Determines whether the menu drawer is open
-   */
-  open: PropTypes.bool.isRequired,
-  /**
-   * Callback for when a closing action is taken. function(event).
-   */
-  onRequestClose: PropTypes.func.isRequired,
-};
+interface SlideMenuProps {
+  open: boolean;
+  onRequestClose: () => void;
+}
 
-const SlideMenu: React.FC<InferProps<typeof SlideMenuProps>> = props => {
+const SlideMenu: React.FC<SlideMenuProps> = props => {
   const { open, onRequestClose } = props;
   const classes = useStyles();
 
@@ -184,7 +182,5 @@ const SlideMenu: React.FC<InferProps<typeof SlideMenuProps>> = props => {
     </Drawer>
   );
 };
-
-SlideMenu.propTypes = SlideMenuProps;
 
 export default SlideMenu;

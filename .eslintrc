@@ -21,16 +21,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "comma-dangle": [
-      "error",
-      {
-        "arrays": "always-multiline",
-        "exports": "always-multiline",
-        "functions": "always-multiline",
-        "imports": "always-multiline",
-        "objects": "always-multiline"
-      }
-    ],
+    "comma-dangle": ["error", "always-multiline"],
     "no-shadow": 2,
     "import/order": [
       "error",
@@ -38,17 +29,30 @@
         "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
         "pathGroups": [
           {
-            "pattern": "react",
+            "pattern": "{react,prop-types}",
             "group": "external",
             "position": "before"
+          },
+          {
+            "pattern": "types",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "{.,..}/**/*.jss",
+            "group": "index",
+            "position": "after"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["react"],
+        "pathGroupsExcludedImportTypes": ["builtin"],
         "newlines-between": "always"
       }
     ],
-    "sort-imports-es6-autofix/sort-imports-es6": [2, {
-      "memberSyntaxSortOrder": ["all", "single", "multiple", "none"]
-    }]
+    "sort-imports-es6-autofix/sort-imports-es6": [
+      2,
+      {
+        "memberSyntaxSortOrder": ["all", "single", "multiple", "none"]
+      }
+    ]
   }
 }
