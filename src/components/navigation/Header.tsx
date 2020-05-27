@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { Menu as MenuIcon, MenuOpen as MenuOpenIcon } from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
 
 import Login from '../auth/Login';
 import { AlertDialogControls, ModalCtx } from '../../types';
@@ -9,12 +10,12 @@ import { useAlertDialog } from '../../contexts/ui/AlertDialogProvider';
 import { useModal } from '../../contexts/ui/ModalProvider';
 
 import SlideMenu from './SlideMenu';
-import history from './history';
 
 import useStyles from './Header.jss';
 
 const Header: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const history = useHistory();
   const modalContext: ModalCtx = useModal();
   const classes = useStyles();
 
@@ -38,7 +39,7 @@ const Header: React.FC = () => {
     });
 
     return unlisten;
-  }, []);
+  }, [history]);
 
   return (
     <>

@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Collapse, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
 
 import { NavigationItem, UtilityItem } from '../../types';
 
-import history from './history';
 import { navigationItemParentMap } from './NavigationItems';
 
 import useStyles from './SlideMenu.jss';
@@ -13,14 +13,6 @@ import useStyles from './SlideMenu.jss';
 const menuState = {
   expandedNavItems: new Set<string>(),
 };
-history.listen(location => {
-  const activeItem = Object.values(navigationItemParentMap).find(
-    item => item.path === location.pathname,
-  );
-  if (activeItem) {
-    activeItem.parents.forEach(parent => menuState.expandedNavItems.add(parent));
-  }
-});
 
 /**
  * List item for the navigation list in the slide menu
@@ -30,9 +22,22 @@ interface NavListItemProps extends NavigationItem {
 }
 const NavListItem: React.FC<NavListItemProps> = props => {
   const [open, setOpen] = useState<boolean>(menuState.expandedNavItems.has(props.id));
+  const history = useHistory();
   const classes = useStyles();
   const hasSubList = !!props.subItemList?.length;
   const isSelected: boolean = history.location.pathname === props.path;
+
+  // @ATTENTION I'd like to use rrd's useHistory hook - will this cause any issues?
+  useEffect(() => {
+    history.listen(location => {
+      const activeItem = Object.values(navigationItemParentMap).find(
+        item => item.path === location.pathname,
+      );
+      if (activeItem) {
+        activeItem.parents.forEach(parent => menuState.expandedNavItems.add(parent));
+      }
+    });
+  }, [history]);
 
   const handleClick = (): void => {
     if (hasSubList) {
