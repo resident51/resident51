@@ -72,14 +72,6 @@ const ModalProvider: React.FC = props => {
   const handleClose = useCallback(() => dismiss(true), [dismiss]);
   const dismissWithoutNotification = useCallback(() => dismiss(), [dismiss]);
 
-  const contextValue = useMemo(
-    () => ({
-      disclose,
-      dismiss: dismissWithoutNotification,
-    }),
-    [disclose, dismissWithoutNotification],
-  );
-
   const modalContent = useMemo(() => {
     if (modalProps.disablePaper) {
       return content;
@@ -92,7 +84,7 @@ const ModalProvider: React.FC = props => {
   }, [classes.loadingPaper, classes.paper, content, isLoading, modalProps.disablePaper]);
 
   return (
-    <ModalContext.Provider value={contextValue}>
+    <ModalContext.Provider value={{ disclose, dismiss: dismissWithoutNotification }}>
       <Modal
         ref={updateRootStyle}
         className={classes.modalRootContainer}

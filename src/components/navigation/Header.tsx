@@ -1,65 +1,76 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { Menu as MenuIcon, MenuOpen as MenuOpenIcon } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
-import Login from '../auth/Login';
-import { AlertDialogControls, ModalCtx } from '../../types';
-import { useAlertDialog } from '../../contexts/ui/AlertDialogProvider';
-import { useModal } from '../../contexts/ui/ModalProvider';
-
+import AuthAction from './AuthActionButton';
 import SlideMenu from './SlideMenu';
 
 import useStyles from './Header.jss';
 
-const Header: React.FC = () => {
+const Header: React.FC = ({ children }) => {
+  const [anchorEl, setAnchorEl] = React.useState<(EventTarget & HTMLButtonElement) | null>(null);
+  // const modalContext: ModalCtx = useModal();
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const history = useHistory();
-  const modalContext: ModalCtx = useModal();
   const classes = useStyles();
 
   const handleMenuButtonClick = useCallback(() => {
     setDrawerOpen(prevState => !prevState);
   }, []);
 
+  const handleProfileMenuOpen = useCallback(
+    (target: EventTarget & HTMLButtonElement) => setAnchorEl(target),
+    [],
+  );
+  const handleProfileMenuClose = useCallback((): void => {
+    setAnchorEl(null);
+  }, []);
+
   const handleDrawerClose = useCallback(() => {
     setDrawerOpen(false);
   }, []);
 
-  const handleLoginClick = useCallback(() => {
-    modalContext?.disclose({
-      content: <Login onClose={modalContext.dismiss} />,
-    });
-  }, [modalContext]);
+  useEffect(() => history.listen(handleDrawerClose), [history, handleDrawerClose]);
 
-  useEffect(() => {
-    const unlisten = history.listen(() => {
-      setDrawerOpen(false);
-    });
-
-    return unlisten;
-  }, [history]);
+  const menuId = 'primary-search-account-menu';
+  const isMenuOpen = Boolean(anchorEl);
 
   return (
-    <>
+    <div className={classes.root}>
       <AppBar position="fixed" className={classes.overlayAppBar}>
-        <Toolbar className={classes.rainbowBand}>
+        <Toolbar>
           <IconButton edge="start" className={classes.menuButton} onClick={handleMenuButtonClick}>
             {drawerOpen ? <MenuOpenIcon /> : <MenuIcon />}
           </IconButton>
           <Typography component="h1" variant="h6" onClick={(): void => history.push('/')}>
             Resident51
           </Typography>
-          <Button className={classes.loginButton} onClick={handleLoginClick}>
-            Login
-          </Button>
+          <AuthAction handleProfileMenuOpen={handleProfileMenuOpen} menuId={menuId} />
         </Toolbar>
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          id={menuId}
+          keepMounted
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMenuOpen}
+          onClose={handleProfileMenuClose}
+        >
+          <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
+          <MenuItem onClick={handleProfileMenuClose}>My account</MenuItem>
+        </Menu>
       </AppBar>
-      <div className={classes.rainbowOffset} />
       <div className={classes.toolbarOffset} />
       <SlideMenu open={drawerOpen} onRequestClose={handleDrawerClose} />
-    </>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        {children}
+      </main>
+    </div>
   );
 };
 

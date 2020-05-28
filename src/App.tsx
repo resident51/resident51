@@ -4,7 +4,7 @@ import { CssBaseline } from '@material-ui/core';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Navigation from './components/layout/Navigation';
+import Navigation from './components/navigation/Header';
 import Resident51Contexts from './contexts';
 import Routes from './components/Routes';
 
