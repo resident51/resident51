@@ -3,12 +3,15 @@
     "node": true
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["@typescript-eslint", "import", "prettier", "sort-imports-es6-autofix"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
     "plugin:prettier/recommended",
     "prettier",
     "prettier/@typescript-eslint",
@@ -18,16 +21,38 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "comma-dangle": [
+    "comma-dangle": ["error", "always-multiline"],
+    "no-shadow": 2,
+    "import/order": [
       "error",
       {
-        "arrays": "always-multiline",
-        "exports": "always-multiline",
-        "functions": "always-multiline",
-        "imports": "always-multiline",
-        "objects": "always-multiline"
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            "pattern": "{react,prop-types}",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "types",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "{.,..}/**/*.jss",
+            "group": "index",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "newlines-between": "always"
       }
     ],
-    "no-shadow": 2
+    "sort-imports-es6-autofix/sort-imports-es6": [
+      2,
+      {
+        "memberSyntaxSortOrder": ["all", "single", "multiple", "none"]
+      }
+    ]
   }
 }
