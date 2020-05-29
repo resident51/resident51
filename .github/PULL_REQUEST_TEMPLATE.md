@@ -9,7 +9,7 @@
 # Type of change
 <!-- Mark all that apply (the fewer the better) -->
 - [ ] 🐛 Bug fix
-- [ ] ✨ New feature
+- [ ] ✨ New feature/Enhancement
 - [ ] 🛠 Technical currency
 - [ ] 💎 Code cleanliness
 
@@ -22,4 +22,3 @@
 
 
 # Notes
-
