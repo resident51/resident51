@@ -1,156 +1,69 @@
-import React, { useMemo, useState } from 'react';
+import React, { ReactNode, useCallback, useMemo } from 'react';
 
-import Collapse from '@material-ui/core/Collapse';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { Theme, makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
+import clsx from 'clsx';
+import { Divider, Drawer, List, useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 
 import { NavigationItem, UtilityItem } from '../../types';
 
+import SlideMenuProvider from './SlideMenuContext';
+import { NavListItem, UtilityListItem } from './SlideMenuItems';
 import { navigationItems, utilityItems } from './NavigationItems';
 
-const menuState = {
-  expandedNavItems: new Set<string>(),
-};
+import useStyles from './SlideMenu.jss';
 
-const drawerWidth = 300;
-const useStyles = makeStyles((theme: Theme) => ({
-  overlayAppBar: {
-    zIndex: theme.zIndex.modal + 1,
-  },
-  toolbarOffset: theme.mixins.toolbar,
-  rainbowOffset: {
-    height: '5px',
-    width: '100%',
-  },
-  drawer: {
-    width: drawerWidth,
-  },
-  nestedListItem: {
-    paddingLeft: theme.spacing(3),
-  },
-  menuListContainer: {
-    flexGrow: 1,
-    display: 'flex',
-    flexFlow: 'column',
-    overflow: 'hidden',
-  },
-  navListContainer: {
-    flexGrow: 1,
-    flexShrink: 1,
-    overflow: 'auto',
-  },
-  utilityListContainer: {
-    flexShrink: 0,
-    marginTop: theme.spacing(2),
-  },
-}));
-
-interface NavListItemProps extends NavigationItem {
-  menuClosingAction: () => void;
-}
-const NavListItem: React.FC<NavListItemProps> = props => {
-  const [open, setOpen] = useState<boolean>(menuState.expandedNavItems.has(props.id));
-  const classes = useStyles();
-  const history = useHistory();
-  const hasSubList = !!props.subItemList?.length;
-  const isSelected: boolean = history.location.pathname === props.path;
-
-  if (typeof props.isVisible === 'function' && !props.isVisible()) {
-    return null;
-  }
-
-  const handleClick = (): void => {
-    if (hasSubList) {
-      if (open) {
-        menuState.expandedNavItems.delete(props.id);
-        setOpen(false);
-      } else {
-        menuState.expandedNavItems.add(props.id);
-        setOpen(true);
-      }
-    } else {
-      if (typeof props.path === 'string') {
-        history.push(props.path);
-        props.menuClosingAction();
-      }
-    }
-  };
-
-  const expandButton = open ? <ExpandLess /> : <ExpandMore />;
-
-  const subList: React.ReactNode = hasSubList ? (
-    <Collapse in={open} timeout="auto">
-      <List className={classes.nestedListItem} disablePadding>
-        {props.subItemList
-          ?.map((item: NavigationItem) => (
-            <NavListItem key={item.id} {...item} menuClosingAction={props.menuClosingAction} />
-          ))
-          .filter(Boolean)}
-      </List>
-    </Collapse>
-  ) : null;
-
-  return (
-    <>
-      <ListItem onClick={handleClick} selected={isSelected} button>
-        {props.icon ? <ListItemIcon>{props.icon}</ListItemIcon> : null}
-        <ListItemText primary={props.text} />
-        {hasSubList ? expandButton : null}
-      </ListItem>
-      {subList}
-    </>
-  );
-};
-
-interface UtilityListItemProps extends UtilityItem {
-  menuClosingAction: () => void;
-}
-const UtilityListItem: React.FC<UtilityListItemProps> = props => {
-  const handleClick = (): void => {
-    if (props.clickBehavior === 'disclose') {
-      // open modal
-      props.menuClosingAction();
-    } else if (props.clickBehavior === 'link') {
-      if (props.url) {
-        props.menuClosingAction();
-        window.open(props.url, '_blank');
-      }
-    }
-  };
-
-  return (
-    <ListItem onClick={handleClick} button>
-      {props.icon ? <ListItemIcon>{props.icon}</ListItemIcon> : null}
-      <ListItemText primary={props.text} />
-    </ListItem>
-  );
-};
-
+/**
+ * Slide menu disclosed in the drawer. Contains navigation and utility lists.
+ */
 interface SlideMenuProps {
+  /**
+   * Determines whether the menu drawer is open
+   */
   open: boolean;
+  /**
+   * Callback for when an opening action is taken. function().
+   */
+  onRequestOpen: () => void;
+  /**
+   * Callback for when a closing action is taken. function().
+   */
   onRequestClose: () => void;
 }
 
 const SlideMenu: React.FC<SlideMenuProps> = props => {
-  const { open, onRequestClose } = props;
+  const { open, onRequestOpen, onRequestClose } = props;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const classes = useStyles();
+  const drawerClass: string = clsx(classes.drawer, {
+    [classes.drawerOpen]: !isMobile && open,
+    [classes.drawerClose]: !isMobile && !open,
+  });
+  const navListClass: string = clsx(classes.navListContainer, { [classes.navListClose]: !open });
+
+  const updateRootStyles = useCallback(
+    (ref: HTMLElement | null) => {
+      if (ref) {
+        ref.style.zIndex = `${theme.zIndex.appBar - 1}`;
+      }
+    },
+    [theme.zIndex.appBar],
+  );
 
   const navigationList: React.ReactNode = useMemo(
     () =>
       navigationItems
         .map((item: NavigationItem) => (
-          <NavListItem key={item.id} {...item} menuClosingAction={onRequestClose} />
+          <NavListItem
+            key={item.id}
+            {...item}
+            onRequestOpen={onRequestOpen}
+            onRequestClose={onRequestClose}
+            isDrawerOpen={open}
+          />
         ))
         .filter(Boolean),
-    [onRequestClose],
+    [onRequestClose, onRequestOpen, open],
   );
 
   const utilityList: React.ReactNode = useMemo(
@@ -162,24 +75,34 @@ const SlideMenu: React.FC<SlideMenuProps> = props => {
   );
 
   return (
-    <Drawer
-      open={open}
-      onClose={onRequestClose}
-      className={classes.drawer}
-      classes={{ paper: classes.drawer }}
-    >
-      <div className={classes.rainbowOffset} />
-      <div className={classes.toolbarOffset} />
-      <div className={classes.menuListContainer}>
-        <div className={classes.navListContainer}>
-          <List>{navigationList}</List>
+    <SlideMenuProvider>
+      <Drawer
+        open={isMobile ? open : true}
+        ref={updateRootStyles}
+        onClose={onRequestClose}
+        className={drawerClass}
+        classes={{ paper: drawerClass }}
+        BackdropProps={{ open: open }}
+        ModalProps={{
+          open: isMobile ? open : true,
+          disableAutoFocus: !open,
+          disableEnforceFocus: !open,
+        }}
+        PaperProps={open ? undefined : { elevation: 2 }}
+        transitionDuration={!isMobile ? 0 : undefined}
+      >
+        <div className={classes.toolbarOffset} />
+        <div className={classes.menuListContainer}>
+          <div className={navListClass}>
+            <List>{navigationList}</List>
+          </div>
+          <Divider variant={open ? 'middle' : 'fullWidth'} />
+          <div className={classes.utilityListContainer}>
+            <List dense>{utilityList}</List>
+          </div>
         </div>
-        <Divider variant="middle" />
-        <div className={classes.utilityListContainer}>
-          <List dense>{utilityList}</List>
-        </div>
-      </div>
-    </Drawer>
+      </Drawer>
+    </SlideMenuProvider>
   );
 };
 

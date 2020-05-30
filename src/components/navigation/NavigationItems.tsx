@@ -1,8 +1,11 @@
 import React from 'react';
 
-import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import GithubIcon from '@material-ui/icons/GitHub';
+import {
+  BusinessCenter as BusinessCenterIcon,
+  Feedback as FeedbackIcon,
+  Gavel as GavelIcon,
+  GitHub as GithubIcon,
+} from '@material-ui/icons';
 
 import { NavItemParents, NavigationItem, UtilityItem } from '../../types';
 
@@ -24,6 +27,12 @@ const navigationItems: NavigationItem[] = [
         ],
       },
     ],
+  },
+  {
+    id: 'jboards',
+    text: 'Jboards',
+    icon: <GavelIcon />,
+    path: '/path',
   },
 ];
 

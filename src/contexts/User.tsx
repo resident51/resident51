@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useMemo, useReducer } from
 import UserReducer, { UserAction } from '../reducers/User.Reducer';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
 import useUserCollection from '../hooks/useUserCollection';
-import { FetchedUser, User } from '../types/';
+import { FetchedUser, User } from '../types';
 import { logUser, usersCollection } from '../firebase/firebase';
 
 import { loggedOutUser } from './UserProps';

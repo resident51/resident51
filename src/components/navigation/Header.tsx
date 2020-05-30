@@ -11,14 +11,14 @@ import SlideMenu from './SlideMenu';
 
 import useStyles from './Header.jss';
 
-const Header: React.FC = ({ children }) => {
+const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = React.useState<(EventTarget & HTMLButtonElement) | null>(null);
-  // const modalContext: ModalCtx = useModal();
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const history = useHistory();
   const classes = useStyles();
 
-  const handleMenuButtonClick = useCallback(() => {
+  const handleMenuButtonClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
     setDrawerOpen(prevState => !prevState);
   }, []);
 
@@ -28,6 +28,10 @@ const Header: React.FC = ({ children }) => {
   );
   const handleProfileMenuClose = useCallback((): void => {
     setAnchorEl(null);
+  }, []);
+
+  const handleDrawerOpen = useCallback(() => {
+    setDrawerOpen(true);
   }, []);
 
   const handleDrawerClose = useCallback(() => {
@@ -40,8 +44,8 @@ const Header: React.FC = ({ children }) => {
   const isMenuOpen = Boolean(anchorEl);
 
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed" className={classes.overlayAppBar}>
+    <>
+      <AppBar position="fixed" className={classes.overlayAppBar} onClick={handleDrawerClose}>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} onClick={handleMenuButtonClick}>
             {drawerOpen ? <MenuOpenIcon /> : <MenuIcon />}
@@ -65,15 +69,13 @@ const Header: React.FC = ({ children }) => {
         </Menu>
       </AppBar>
       <div className={classes.toolbarOffset} />
-      <SlideMenu open={drawerOpen} onRequestClose={handleDrawerClose} />
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {children}
-      </main>
-    </div>
+      <SlideMenu
+        open={drawerOpen}
+        onRequestOpen={handleDrawerOpen}
+        onRequestClose={handleDrawerClose}
+      />
+    </>
   );
 };
 
 export default Header;
-
-// #TODO merge the two appbars that now exist in the app after fixing all merge conflicts.

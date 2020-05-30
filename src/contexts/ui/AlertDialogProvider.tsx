@@ -50,12 +50,6 @@ const AlertDialogProvider: React.FC = props => {
     setOptions(null);
   }, []);
 
-  const updateRootStyle = useCallback((ref?: HTMLElement) => {
-    if (ref) {
-      ref.style.zIndex = '1350';
-    }
-  }, []);
-
   const handleButtonClick = useCallback(
     (type: 'primary' | 'secondary') => {
       const callback =
@@ -144,7 +138,6 @@ const AlertDialogProvider: React.FC = props => {
         onExited={handleExited}
         aria-labelledby={`${alertId}-title`}
         aria-describedby={`${alertId}-content`}
-        ref={updateRootStyle}
       >
         <div className={classes.alertDialogTitle}>
           <DialogTitle id={`${alertId}-title`}>{options?.title ? options.title : ''}</DialogTitle>

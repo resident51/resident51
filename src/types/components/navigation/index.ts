@@ -24,3 +24,16 @@ export interface NavItemParents {
     parents: string[];
   };
 }
+
+export interface SlideMenuState {
+  expandedNavItems: string[];
+  activeNavItem?: {
+    id: string;
+    path: string;
+    parents: string[];
+  };
+  expandNavItem: (id: string) => void;
+  collapseNavItem: (id: string) => void;
+}
+
+export type SlideMenuCtx = SlideMenuState | null;

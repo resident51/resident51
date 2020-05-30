@@ -30,7 +30,7 @@ const LoadingOverlayProvider: React.FC = props => {
 
   const setLoaderStatus = useCallback((key: string, value: boolean) => {
     setRegisteredLoaders((loaders: LoadingOverlayConfig[]) => {
-      const dupLoaders = loaders;
+      const dupLoaders = [...loaders];
       const requestedLoader = dupLoaders.find((loader: LoadingOverlayConfig) => {
         return loader.key === key;
       });
@@ -43,7 +43,7 @@ const LoadingOverlayProvider: React.FC = props => {
 
   const deregisterLoader = useCallback((key: string) => {
     setRegisteredLoaders((loaders: LoadingOverlayConfig[]) => {
-      const dupLoaders = loaders;
+      const dupLoaders = [...loaders];
       const requestedLoaderIndex: number = dupLoaders.findIndex((loader: LoadingOverlayConfig) => {
         return loader.key === key;
       });

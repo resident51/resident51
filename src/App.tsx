@@ -1,12 +1,10 @@
 import React from 'react';
 
 import { CssBaseline } from '@material-ui/core';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Navigation from './components/navigation/Header';
+import Home from './components/Home';
 import Resident51Contexts from './contexts';
-import Routes from './components/Routes';
 
 const useStyles = makeStyles({
   '@global': {
@@ -23,13 +21,9 @@ const App: React.FC = () => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Router>
-        <Resident51Contexts>
-          <Navigation>
-            <Routes />
-          </Navigation>
-        </Resident51Contexts>
-      </Router>
+      <Resident51Contexts>
+        <Home />
+      </Resident51Contexts>
     </React.Fragment>
   );
 };

@@ -11,7 +11,7 @@ import React, {
 
 import clsx from 'clsx';
 import uniqid from 'uniqid';
-import { Backdrop, CircularProgress, Grow, LinearProgress, Modal, Paper } from '@material-ui/core';
+import { Grow, LinearProgress, Modal, Paper } from '@material-ui/core';
 
 import { ModalCtx, ModalOptions } from '../../types';
 
@@ -31,12 +31,6 @@ const ModalProvider: React.FC = props => {
   const dismissCallback = useRef<(() => void) | null>(null);
   const contentKey = useRef<string>();
   const classes = useStyles();
-
-  const updateRootStyle = useCallback((ref?: HTMLElement) => {
-    if (ref) {
-      ref.style.zIndex = '1325';
-    }
-  }, []);
 
   const disclose = useCallback((modalOptions: ModalOptions): void => {
     contentKey.current = uniqid('modal-');
@@ -66,6 +60,7 @@ const ModalProvider: React.FC = props => {
     setModalProps({});
     setTimeout(() => {
       setOpen(false);
+      setLoading(false);
       setContent(null);
     }, 400);
   }, []);
@@ -86,7 +81,6 @@ const ModalProvider: React.FC = props => {
   return (
     <ModalContext.Provider value={{ disclose, dismiss: dismissWithoutNotification }}>
       <Modal
-        ref={updateRootStyle}
         className={classes.modalRootContainer}
         open={open}
         onClose={handleClose}
