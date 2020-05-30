@@ -3,8 +3,8 @@ import React from 'react';
 import { CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Home from './components/Home';
-import Resident51Contexts from './contexts';
+import Home from '@app/components/Home';
+import Resident51Contexts from '@app/contexts';
 
 const useStyles = makeStyles({
   '@global': {

@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 
 import { useHistory } from 'react-router-dom';
 
-import { SlideMenuCtx } from '../../types';
+import { SlideMenuCtx } from '@app/types';
 
 import { navigationItemParentMap } from './NavigationItems';
 

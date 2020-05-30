@@ -4,8 +4,9 @@ import { Collapse, List, ListItem, ListItemIcon, ListItemText } from '@material-
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
-import { NavigationItem, UtilityItem } from '../../types';
-import { useModal } from '../../contexts/ui/ModalProvider';
+import { NavigationItem, UtilityItem } from '@app/types';
+
+import { useModal } from '@app/contexts/ui/ModalProvider';
 
 import { useSlideMenuState } from './SlideMenuContext';
 

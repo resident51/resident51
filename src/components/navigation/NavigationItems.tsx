@@ -7,7 +7,7 @@ import {
   GitHub as GithubIcon,
 } from '@material-ui/icons';
 
-import { NavItemParents, NavigationItem, UtilityItem } from '../../types';
+import { NavItemParents, NavigationItem, UtilityItem } from '@app/types';
 
 const navigationItems: NavigationItem[] = [
   {

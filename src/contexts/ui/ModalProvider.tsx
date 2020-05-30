@@ -13,7 +13,7 @@ import clsx from 'clsx';
 import uniqid from 'uniqid';
 import { Grow, LinearProgress, Modal, Paper } from '@material-ui/core';
 
-import { ModalCtx, ModalOptions } from '../../types';
+import { ModalCtx, ModalOptions } from '@app/types';
 
 import useStyles from './ModalProvider.jss';
 

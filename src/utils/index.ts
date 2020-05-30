@@ -1,4 +1,4 @@
-import { EventFormPublicType, Hall, User, VerifiedUser } from '../types';
+import { EventFormPublicType, Hall, User, VerifiedUser } from '@app/types';
 
 export const canUpdateEvent = (
   publicStatus: {

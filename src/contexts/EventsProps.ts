@@ -11,8 +11,9 @@ import {
   EventTypeFormats,
   Events,
   Hall,
-} from '../types/';
-import { EventAction } from '../reducers/Events.Reducer';
+} from '@app/types/';
+
+import { EventAction } from '@app/reducers/Events.Reducer';
 
 export const eventTypes: EventTypeFormats = {
   social: { formal: 'Social Event', color: 'green' },

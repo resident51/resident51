@@ -2,8 +2,8 @@ import React from 'react';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import { useEvents } from '../contexts/Events';
-import { useUser } from '../contexts/User';
+import { useEvents } from '@app/contexts/Events';
+import { useUser } from '@app/contexts/User';
 
 import Header from './navigation/Header';
 

@@ -13,7 +13,7 @@ import {
 import { Close as CloseIcon } from '@material-ui/icons';
 import { useSnackbar } from 'notistack';
 
-import { AlertDialogControls, AlertDialogCtx, AlertDialogOptions } from '../../types';
+import { AlertDialogControls, AlertDialogCtx, AlertDialogOptions } from '@app/types';
 
 import useStyles from './AlertDialogProvider.jss';
 

@@ -17,7 +17,7 @@ import {
   LoadingOverlayControls,
   LoadingOverlayCtx,
   LoadingOverlayInitializer,
-} from '../../types';
+} from '@app/types';
 
 import useStyles from './LoadingOverlayProvider.jss';
 

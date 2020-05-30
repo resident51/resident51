@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { Divider, Drawer, List, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
-import { NavigationItem, UtilityItem } from '../../types';
+import { NavigationItem, UtilityItem } from '@app/types';
 
 import SlideMenuProvider from './SlideMenuContext';
 import { NavListItem, UtilityListItem } from './SlideMenuItems';

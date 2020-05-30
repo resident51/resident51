@@ -5,10 +5,12 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import clsx from 'clsx';
 
+import { ModalCtx } from '@app/types';
+
+import { useModal } from '@app/contexts/ui/ModalProvider';
+import { useUser } from '@app/contexts/User';
+
 import Login from '../auth/Login';
-import { ModalCtx } from '../../types';
-import { useModal } from '../../contexts/ui/ModalProvider';
-import { useUser } from '../../contexts/User';
 
 import useStyles from './AuthActionButton.jss';
 

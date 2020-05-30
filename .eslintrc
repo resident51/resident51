@@ -34,7 +34,7 @@
             "position": "before"
           },
           {
-            "pattern": "types",
+            "pattern": "@app/types",
             "group": "internal",
             "position": "before"
           },
@@ -54,5 +54,15 @@
         "memberSyntaxSortOrder": ["all", "single", "multiple", "none"]
       }
     ]
+  },
+  "settings": {
+    "import/resolver": {
+      "eslint-import-resolver-custom-alias": {
+        "alias": {
+          "@app": "./src"
+        },
+        "extensions": [".ts", ".tsx"]
+      }
+    }
   }
 }
