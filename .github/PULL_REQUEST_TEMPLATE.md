@@ -17,8 +17,6 @@
 <!-- If not applicable, remove this section. -->
 
 
-# Future considerations:
-<!-- Describe necessary work related to this change that will not be included in this PR. -->
+# Discussion:
+<!-- Any other context or topics to be brought to attention. -->
 
-
-# Notes
