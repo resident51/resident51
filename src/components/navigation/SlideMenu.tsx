@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import clsx from 'clsx';
 import { Divider, Drawer, List, useMediaQuery } from '@material-ui/core';
@@ -35,13 +35,13 @@ const SlideMenu: React.FC<SlideMenuProps> = props => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const classes = useStyles();
-  const drawerClass: string = clsx(classes.drawer, {
+  const drawerClass = clsx(classes.drawer, {
     [classes.drawerOpen]: !isMobile && open,
     [classes.drawerClose]: !isMobile && !open,
   });
-  const navListClass: string = clsx(classes.navListContainer, { [classes.navListClose]: !open });
+  const navListClass = clsx(classes.navListContainer, { [classes.navListClose]: !open });
 
-  const updateRootStyles = useCallback(
+  const updateDrawerZIndex = useCallback(
     (ref: HTMLElement | null) => {
       if (ref) {
         ref.style.zIndex = `${theme.zIndex.appBar - 1}`;
@@ -78,7 +78,7 @@ const SlideMenu: React.FC<SlideMenuProps> = props => {
     <SlideMenuProvider>
       <Drawer
         open={isMobile ? open : true}
-        ref={updateRootStyles}
+        ref={updateDrawerZIndex}
         onClose={onRequestClose}
         className={drawerClass}
         classes={{ paper: drawerClass }}

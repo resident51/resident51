@@ -39,13 +39,16 @@ const NavListItem: React.FC<NavListItemProps> = props => {
   const hasSubList = !!subItemList?.length;
   const sublistOpen = !!menuState?.expandedNavItems.includes(id);
   const isSelected: boolean = ((): boolean => {
+    // If this is the active nav item return true
     if (menuState?.activeNavItem && menuState?.activeNavItem?.path === path) return true;
+    // If the drawer is open and this isn't the active nav item return false
     if (isDrawerOpen) return false;
+    // If the drawer is closed and this is the parent of the active nav item return true
     if (menuState?.activeNavItem?.parents.includes(id)) return true;
     return false;
   })();
 
-  const handleClick = useCallback((): void => {
+  const handleClick = (): void => {
     if (!isDrawerOpen) {
       onRequestOpen();
     } else if (hasSubList) {
@@ -58,17 +61,7 @@ const NavListItem: React.FC<NavListItemProps> = props => {
       history.push(path);
       onRequestClose();
     }
-  }, [
-    hasSubList,
-    path,
-    isDrawerOpen,
-    sublistOpen,
-    onRequestOpen,
-    menuState,
-    id,
-    history,
-    onRequestClose,
-  ]);
+  };
 
   const expandButton = isDrawerOpen && sublistOpen ? <ExpandLess /> : <ExpandMore />;
 

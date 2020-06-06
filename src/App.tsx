@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { BrowserRouter } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -19,12 +20,12 @@ const App: React.FC = () => {
   useStyles();
 
   return (
-    <React.Fragment>
+    <BrowserRouter>
       <CssBaseline />
       <Resident51Contexts>
         <Home />
       </Resident51Contexts>
-    </React.Fragment>
+    </BrowserRouter>
   );
 };
 

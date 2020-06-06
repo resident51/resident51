@@ -28,12 +28,6 @@ const navigationItems: NavigationItem[] = [
       },
     ],
   },
-  {
-    id: 'jboards',
-    text: 'Jboards',
-    icon: <GavelIcon />,
-    path: '/path',
-  },
 ];
 
 const utilityItems: UtilityItem[] = [

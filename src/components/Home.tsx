@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { BrowserRouter } from 'react-router-dom';
-
 import { useEvents } from '@app/contexts/Events';
 import { useUser } from '@app/contexts/User';
 
@@ -12,12 +10,12 @@ const Home: React.FC = () => {
   const { events } = useEvents();
 
   return (
-    <BrowserRouter>
+    <>
       <Header />
       <div>
         hey {user.displayName || 'pal'}, there's {events ? events.length : '(loading)'} events.
       </div>
-    </BrowserRouter>
+    </>
   );
 };
 
