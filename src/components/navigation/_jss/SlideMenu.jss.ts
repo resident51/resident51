@@ -38,6 +38,9 @@ export default makeStyles((theme: Theme) => ({
   navListClose: {
     overflowX: 'hidden',
   },
+  listItemText: {
+    flex: '1 1 auto',
+  },
   utilityListContainer: {
     flexShrink: 0,
     marginTop: theme.spacing(1),

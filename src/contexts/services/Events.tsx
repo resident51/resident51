@@ -33,11 +33,14 @@ export const useEvents = (): EventsCtx => useContext<EventsCtx>(EventsContext);
 const EventsProvider: React.FC = props => {
   const { user } = useUser();
   const [publicEvents, dispatchPublicEvents] = useReducer(EventsReducer, null);
-  const [privateEvents, dispatchPrivateEvents] = useReducer(EventsReducer, null);
+  const [
+    privateEvents,
+    // dispatchPrivateEvents
+  ] = useReducer(EventsReducer, null);
   const events = concatEvents(publicEvents, privateEvents);
 
-  const userHall = (user.uid && user.hall) || 'Miller'; // #TODO: this is fucking awful
-  const formatSubmittedEvent = formatSubmittedEventByHall(userHall);
+  const userHall = (user?.uid && user?.hall) || 'Miller'; // #TODO: this is fucking awful
+  const formatSubmittedEvent = formatSubmittedEventByHall(userHall as Hall);
 
   // Query all public events.
   useEffect(() => {
@@ -46,15 +49,15 @@ const EventsProvider: React.FC = props => {
   }, []);
 
   // Query all private events available to the user.
-  useEffect(() => {
-    const query = currentEvents.where('publicStatus.type', '==', 'private');
-    if (user.permissions === 1) {
-      const privateHallEvents = query.where('publicStatus.halls', 'array-contains', userHall);
-      return querySnapshot(dispatchPrivateEvents, privateHallEvents);
-    } else if (user.permissions > 1) {
-      return querySnapshot(dispatchPrivateEvents, query);
-    }
-  }, [userHall, user.permissions]);
+  // useEffect(() => {
+  //   const query = currentEvents.where('publicStatus.type', '==', 'private');
+  //   if (user?.permissions === 1) {
+  //     const privateHallEvents = query.where('publicStatus.halls', 'array-contains', userHall);
+  //     return querySnapshot(dispatchPrivateEvents, privateHallEvents);
+  //   } else if (user?.permissions > 1) {
+  //   return querySnapshot(dispatchPrivateEvents, query);
+  //   }
+  // }, [user, userHall]);
 
   return (
     <EventsContext.Provider value={{ events, formatSubmittedEvent, eventTypes, halls }}>

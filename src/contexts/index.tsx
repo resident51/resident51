@@ -1,6 +1,7 @@
 import React from 'react';
 
 import EventsProvider from './services/Events';
+import LoadingOverlayProvider from './ui/LoadingOverlay';
 import ModalProvider from './ui/Modal';
 import SnackbarProvider from './ui/Snackbar';
 import ThemeProvider from './ui/Theme';
@@ -14,8 +15,9 @@ import UserProvider from './services/User';
 const contextProviders: React.FC[] = [
   UserProvider,
   EventsProvider,
-  SnackbarProvider,
   ThemeProvider,
+  LoadingOverlayProvider,
+  SnackbarProvider,
   ModalProvider,
 ];
 

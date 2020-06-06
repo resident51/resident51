@@ -9,7 +9,7 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      hey {user.displayName || 'pal'}, there's {events ? events.length : '(loading)'} events.
+      hey {user?.displayName || 'pal'}, there's {events ? events.length : '(loading)'} events.
     </div>
   );
 };

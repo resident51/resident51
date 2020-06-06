@@ -1,18 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { Menu as MenuIcon, MenuOpen as MenuOpenIcon } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
-import AuthAction from './AuthActionButton';
+import AuthAction from '../auth/AuthActionButton';
+
 import SlideMenu from './SlideMenu';
 
 import useStyles from './_jss/Navigation.jss';
 
 const Header: React.FC = ({ children }) => {
-  const [anchorEl, setAnchorEl] = React.useState<(EventTarget & HTMLButtonElement) | null>(null);
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const history = useHistory();
   const classes = useStyles();
@@ -20,14 +18,6 @@ const Header: React.FC = ({ children }) => {
   const handleMenuButtonClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     setDrawerOpen(prevState => !prevState);
-  }, []);
-
-  const handleProfileMenuOpen = useCallback(
-    (target: EventTarget & HTMLButtonElement) => setAnchorEl(target),
-    [],
-  );
-  const handleProfileMenuClose = useCallback((): void => {
-    setAnchorEl(null);
   }, []);
 
   const handleDrawerOpen = useCallback(() => {
@@ -39,9 +29,6 @@ const Header: React.FC = ({ children }) => {
   }, []);
 
   useEffect(() => history.listen(handleDrawerClose), [history, handleDrawerClose]);
-
-  const menuId = 'primary-search-account-menu';
-  const isMenuOpen = Boolean(anchorEl);
 
   return (
     <div className={classes.root}>
@@ -58,20 +45,8 @@ const Header: React.FC = ({ children }) => {
           >
             Resident51
           </Typography>
-          <AuthAction handleProfileMenuOpen={handleProfileMenuOpen} menuId={menuId} />
+          <AuthAction />
         </Toolbar>
-        <Menu
-          anchorEl={anchorEl}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          id={menuId}
-          keepMounted
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={isMenuOpen}
-          onClose={handleProfileMenuClose}
-        >
-          <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
-          <MenuItem onClick={handleProfileMenuClose}>My account</MenuItem>
-        </Menu>
       </AppBar>
       <div className={classes.toolbarOffset} />
       <SlideMenu

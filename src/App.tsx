@@ -1,31 +1,17 @@
 import React from 'react';
 
 import { BrowserRouter } from 'react-router-dom';
-import { CssBaseline } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
+import Base from '@app/components/Base';
 import Navigation from '@app/components/navigation/Navigation';
 import Resident51Contexts from '@app/contexts';
-import Routes from '@app/components/Routes';
-
-const useStyles = makeStyles({
-  '@global': {
-    'html, body, #root': {
-      height: '100%',
-      width: '100%',
-    },
-  },
-});
 
 const App: React.FC = () => {
-  useStyles();
-
   return (
     <BrowserRouter>
-      <CssBaseline />
       <Resident51Contexts>
         <Navigation>
-          <Routes />
+          <Base />
         </Navigation>
       </Resident51Contexts>
     </BrowserRouter>

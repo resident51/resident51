@@ -1,13 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import clsx from 'clsx';
 import { Grow, LinearProgress, Modal as MaterialModal, Paper } from '@material-ui/core';
 
-import { ModalOptions, useModal } from '@app/contexts/ui/Modal';
+import { ModalProps, useModal } from '@app/contexts/ui/Modal';
 
 import useStyles from './_jss/Modal.jss';
-
-type ModalProps = Pick<ModalOptions, 'disablePaper' | 'disableIndirectDismissal'>;
 
 interface ModalViewProps {
   isLoading: boolean;
@@ -25,18 +23,25 @@ const ModalView: React.FC<ModalViewProps> = ({ children, isLoading, modalProps }
     }
   }, [children, isOpen]);
 
-  const modalContent = useMemo(() => {
+  const modalContent = ((): React.ReactNode => {
     if (modalProps.disablePaper) {
       return content;
     } else {
       const className = clsx(classes.paper, { [classes.loadingPaper]: isLoading });
       return (
-        <Paper className={className} elevation={10}>
-          {content}
-        </Paper>
+        <>
+          {isLoading ? (
+            <div className={classes.loadingIndicator}>
+              <LinearProgress variant="query" />
+            </div>
+          ) : null}
+          <Paper className={className} elevation={10}>
+            {content}
+          </Paper>
+        </>
       );
     }
-  }, [isLoading, content, modalProps.disablePaper, classes.paper, classes.loadingPaper]);
+  })();
 
   return (
     <MaterialModal
@@ -48,15 +53,12 @@ const ModalView: React.FC<ModalViewProps> = ({ children, isLoading, modalProps }
       closeAfterTransition
       disableRestoreFocus
     >
-      <Grow in={isOpen} onExited={(): void => setContent(null)}>
-        <div className={classes.modalContentContainer}>
-          {isLoading ? (
-            <div className={classes.loadingIndicator}>
-              <LinearProgress variant="query" />
-            </div>
-          ) : null}
-          {modalContent}
-        </div>
+      <Grow
+        in={isOpen}
+        timeout={modalProps.disableTransition ? 0 : undefined}
+        onExited={(): void => setContent(null)}
+      >
+        <div className={classes.modalContentContainer}>{modalContent}</div>
       </Grow>
     </MaterialModal>
   );

@@ -1,4 +1,3 @@
-import * as firebaseui from 'firebaseui';
 import firebase from 'firebase/app';
 
 import 'firebase/auth';
@@ -26,10 +25,7 @@ export const currentEvents = eventsCollection
 export const feedbackCollection = store.collection('feedback');
 
 // Authentication objects
-export const auth = firebase.auth();
-export const GoogleAuthProvider = firebase.auth.GoogleAuthProvider.PROVIDER_ID;
-export const FacebookAuthProvider = firebase.auth.FacebookAuthProvider.PROVIDER_ID;
-export const ui = new firebaseui.auth.AuthUI(auth);
+export const auth = firebase.auth;
 
 // Function objects
 export const functions = firebase.functions();
@@ -39,3 +35,6 @@ export const verifyUserAsEditor = functions.httpsCallable('verifyUserAsEditor');
 export const verifyUserAsAdmin = functions.httpsCallable('verifyUserAsAdmin');
 export const logUser = functions.httpsCallable('logUser');
 export const logError = functions.httpsCallable('logError');
+export const createUserWithData = functions.httpsCallable('createUserWithData');
+export const sendAccountVerificationEmail = functions.httpsCallable('sendAccountVerificationEmail');
+export const sendPasswordResetEmail = functions.httpsCallable('sendPasswordResetEmail');
