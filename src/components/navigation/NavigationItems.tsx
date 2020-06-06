@@ -3,7 +3,6 @@ import React from 'react';
 import {
   BusinessCenter as BusinessCenterIcon,
   Feedback as FeedbackIcon,
-  Gavel as GavelIcon,
   GitHub as GithubIcon,
 } from '@material-ui/icons';
 
