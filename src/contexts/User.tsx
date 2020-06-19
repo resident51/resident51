@@ -22,7 +22,7 @@ export interface UserCtx {
 export const UserContext = createContext({} as UserCtx);
 export const useUser = (): UserCtx => useContext<UserCtx>(UserContext);
 
-export const UserProvider: React.FC = props => {
+const UserProvider: React.FC = props => {
   const [user, userDispatch] = useReducer(UserReducer, loggedOutUser);
   const [userAuth, loginState] = useFirebaseAuth(user, userDispatch);
 

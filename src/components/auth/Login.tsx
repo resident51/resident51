@@ -15,7 +15,7 @@ import useStyles from './_jss/Login.jss';
 interface LoginProps {
   onClose: () => void;
   setLoadingIndicator?: (value: boolean) => void;
-};
+}
 
 const Login: React.FC<LoginProps> = ({ onClose, setLoadingIndicator }) => {
   const [disabled, setDisabled] = useState<boolean>(false);

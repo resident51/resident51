@@ -29,18 +29,18 @@ export const useModal = (): ModalCtx => useContext(ModalContext);
 const ModalProvider: React.FC = props => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [content, setContent] = useState<ReactNode>(null);
+  const [modalContent, setModalContent] = useState<ReactNode>(null);
   const [modalProps, setModalProps] = useState<ModalProps>({});
   const dismissCallback = useRef<(() => void) | null>(null);
 
   const disclose = useCallback((content: ReactElement, modalOptions: ModalOptions = {}): void => {
     if (content.props) {
-      const clonedContent = React.cloneElement(content as ReactElement, {
+      const clonedContent = React.cloneElement(content, {
         setLoadingIndicator: setLoading,
       });
-      setContent(clonedContent);
+      setModalContent(clonedContent);
     } else {
-      setContent(content);
+      setModalContent(content);
     }
     dismissCallback.current = modalOptions.onDismiss ?? null;
 
@@ -57,13 +57,13 @@ const ModalProvider: React.FC = props => {
     setModalProps({});
     setIsOpen(false);
     setLoading(false);
-    setContent(null);
+    setModalContent(null);
   }, []);
 
   return (
     <ModalContext.Provider value={{ isOpen, disclose, dismiss }}>
       <Modal isLoading={isLoading} modalProps={modalProps}>
-        {content}
+        {modalContent}
       </Modal>
       {props.children}
     </ModalContext.Provider>

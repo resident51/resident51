@@ -51,7 +51,7 @@ const SlideMenu: React.FC<SlideMenuProps> = props => {
   const navigationList: React.ReactNode = useMemo(
     () =>
       navigationItems
-        .map((item) => (
+        .map(item => (
           <NavListItem
             key={item.id}
             {...item}
@@ -66,7 +66,7 @@ const SlideMenu: React.FC<SlideMenuProps> = props => {
 
   const utilityList: React.ReactNode = useMemo(
     () =>
-      utilityItems.map((item) => (
+      utilityItems.map(item => (
         <UtilityListItem key={item.id} {...item} menuClosingAction={onRequestClose} />
       )),
     [onRequestClose],

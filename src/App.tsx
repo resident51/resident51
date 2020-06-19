@@ -5,8 +5,8 @@ import { CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Navigation from '@app/components/navigation/Navigation';
-import Routes from '@app/components/Routes';
 import Resident51Contexts from '@app/contexts';
+import Routes from '@app/components/Routes';
 
 const useStyles = makeStyles({
   '@global': {

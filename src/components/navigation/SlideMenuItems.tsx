@@ -71,7 +71,7 @@ const NavListItem: React.FC<NavListItemProps> = props => {
         <Collapse in={isDrawerOpen ? sublistOpen : false} timeout="auto">
           <List className={classes.nestedListItem} disablePadding>
             {subItemList
-              ?.map((item) => (
+              ?.map(item => (
                 <NavListItem
                   key={item.id}
                   {...item}

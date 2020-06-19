@@ -2,9 +2,9 @@ import React from 'react';
 
 import {
   BusinessCenter as BusinessCenterIcon,
+  CalendarTodayOutlined,
   Feedback as FeedbackIcon,
   GitHub as GithubIcon,
-  CalendarTodayOutlined,
 } from '@material-ui/icons';
 
 import { NavItemParents, NavigationItem, UtilityItem } from '@app/types';
