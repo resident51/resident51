@@ -4,7 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Home from '@app/components/Home';
+import Navigation from '@app/components/navigation/Navigation';
+import Routes from '@app/components/Routes';
 import Resident51Contexts from '@app/contexts';
 
 const useStyles = makeStyles({
@@ -23,7 +24,9 @@ const App: React.FC = () => {
     <BrowserRouter>
       <CssBaseline />
       <Resident51Contexts>
-        <Home />
+        <Navigation>
+          <Routes />
+        </Navigation>
       </Resident51Contexts>
     </BrowserRouter>
   );

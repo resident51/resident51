@@ -5,14 +5,12 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import clsx from 'clsx';
 
-import { ModalCtx } from '@app/types';
-
-import { useModal } from '@app/contexts/ui/ModalProvider';
+import { useModal } from '@app/contexts/Modal';
 import { useUser } from '@app/contexts/User';
 
 import Login from '../auth/Login';
 
-import useStyles from './AuthActionButton.jss';
+import useStyles from './_jss/AuthActionButton.jss';
 
 interface AuthActionButtonProps {
   menuId: string;
@@ -20,14 +18,12 @@ interface AuthActionButtonProps {
 }
 const AuthActionButton: React.FC<AuthActionButtonProps> = ({ menuId, handleProfileMenuOpen }) => {
   const classes = useStyles();
-  const modalContext: ModalCtx = useModal();
+  const { disclose, dismiss } = useModal();
   const { user, isLoggingIn } = useUser();
 
   const handleLoginClick = useCallback(() => {
-    modalContext?.disclose({
-      content: <Login onClose={modalContext.dismiss} />,
-    });
-  }, [modalContext]);
+    disclose(<Login onClose={dismiss} />);
+  }, [disclose, dismiss]);
 
   const handleProfileClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {

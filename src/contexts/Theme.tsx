@@ -13,3 +13,5 @@ const theme = createMuiTheme({
 export const ThemeProvider: React.FC = ({ children }) => {
   return <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>;
 };
+
+export default ThemeProvider;

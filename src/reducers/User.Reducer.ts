@@ -4,7 +4,7 @@ import {
   initializeLoggedInUserState,
   loggedOutUser,
   shouldUpdateUserState,
-} from '@app/contexts/UserProps';
+} from '@app/contexts/User';
 
 export type UserActionType = 'LOGGED_IN' | 'USER_FOUND' | 'LOGGED_OUT';
 export type UserAction =

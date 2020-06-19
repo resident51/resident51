@@ -4,11 +4,29 @@ import {
   BusinessCenter as BusinessCenterIcon,
   Feedback as FeedbackIcon,
   GitHub as GithubIcon,
+  CalendarTodayOutlined,
 } from '@material-ui/icons';
 
 import { NavItemParents, NavigationItem, UtilityItem } from '@app/types';
 
 const navigationItems: NavigationItem[] = [
+  {
+    id: 'events',
+    text: 'Events',
+    icon: <CalendarTodayOutlined />,
+    subItemList: [
+      {
+        id: 'events-view',
+        text: 'View Events',
+        path: '/events',
+      },
+      {
+        id: 'events-create',
+        text: 'Create an Event',
+        path: '/events/create',
+      },
+    ],
+  },
   {
     id: 'hall-admin',
     text: 'Manage your Hall',

@@ -3,15 +3,15 @@ import React from 'react';
 import { useEvents } from '@app/contexts/Events';
 import { useUser } from '@app/contexts/User';
 
-const Home: React.FC = () => {
+const Events: React.FC = () => {
   const { user } = useUser();
   const { events } = useEvents();
 
   return (
     <div>
-      hey {user.displayName || 'pal'}, there's {events ? events.length : '(loading)'} events.
+      Howdy, {user.displayName || 'pal'}, this is the events page. Also, there are {events ? events.length : '(loading)'} events.
     </div>
   );
 };
 
-export default Home;
+export default Events;

@@ -6,11 +6,11 @@ import { useHistory } from 'react-router-dom';
 
 import { NavigationItem, UtilityItem } from '@app/types';
 
-import { useModal } from '@app/contexts/ui/ModalProvider';
+import { useModal } from '@app/contexts/Modal';
 
 import { useSlideMenuState } from './SlideMenuContext';
 
-import useStyles from './SlideMenu.jss';
+import useStyles from './_jss/SlideMenu.jss';
 
 /**
  * List item for the navigation list in the slide menu
@@ -71,7 +71,7 @@ const NavListItem: React.FC<NavListItemProps> = props => {
         <Collapse in={isDrawerOpen ? sublistOpen : false} timeout="auto">
           <List className={classes.nestedListItem} disablePadding>
             {subItemList
-              ?.map((item: NavigationItem) => (
+              ?.map((item) => (
                 <NavListItem
                   key={item.id}
                   {...item}
@@ -119,7 +119,7 @@ const NavListItem: React.FC<NavListItemProps> = props => {
 };
 
 /**
- * List item for the utiltiy list in the slide menu
+ * List item for the utility list in the slide menu
  */
 interface UtilityListItemProps extends UtilityItem {
   menuClosingAction: () => void;
@@ -131,9 +131,7 @@ const UtilityListItem: React.FC<UtilityListItemProps> = props => {
     if (props.clickBehavior === 'disclose') {
       if (props.disclosureComponent) {
         props.menuClosingAction();
-        modalContext?.disclose({
-          content: props.disclosureComponent,
-        });
+        modalContext.disclose(props.disclosureComponent);
       }
     } else if (props.clickBehavior === 'link') {
       if (props.url) {

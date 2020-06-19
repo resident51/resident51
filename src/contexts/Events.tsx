@@ -18,7 +18,7 @@ import {
   formatSubmittedEventByHall,
   halls,
   querySnapshot,
-} from './EventsProps';
+} from './utils/EventsProps';
 import { useUser } from './User';
 
 interface EventsCtx {
@@ -62,3 +62,5 @@ export const EventsProvider: React.FC = props => {
     </EventsContext.Provider>
   );
 };
+
+export default EventsProvider;

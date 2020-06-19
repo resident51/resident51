@@ -12,8 +12,13 @@ interface ActiveNavItem {
   parents: string[];
 }
 
-const SlideMenuContext = createContext<SlideMenuCtx>(null);
-const useSlideMenuState = (): SlideMenuCtx => useContext(SlideMenuContext);
+const defaultSlideMenuContext = {
+  expandedNavItems: [],
+  expandNavItem: (id: string) => {},
+  collapseNavItem: (id: string) => {},
+}
+export const SlideMenuContext = createContext<SlideMenuCtx>(defaultSlideMenuContext);
+export const useSlideMenuState = (): SlideMenuCtx => useContext(SlideMenuContext);
 
 const SlideMenuProvider: React.FC = props => {
   const [expandedNavItems, setExpandedNavItems] = useState<string[]>([]);
@@ -71,5 +76,4 @@ const SlideMenuProvider: React.FC = props => {
   );
 };
 
-export { SlideMenuContext, useSlideMenuState };
 export default SlideMenuProvider;
