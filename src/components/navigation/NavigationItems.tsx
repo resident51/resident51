@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   BusinessCenter as BusinessCenterIcon,
-  CalendarTodayOutlined,
+  CalendarToday,
   Feedback as FeedbackIcon,
   GitHub as GithubIcon,
 } from '@material-ui/icons';
@@ -13,7 +13,7 @@ const navigationItems: NavigationItem[] = [
   {
     id: 'events',
     text: 'Events',
-    icon: <CalendarTodayOutlined />,
+    icon: <CalendarToday />,
     subItemList: [
       {
         id: 'events-view',
