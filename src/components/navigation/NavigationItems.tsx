@@ -1,10 +1,12 @@
 import React from 'react';
 
-import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
-import FeedbackIcon from '@material-ui/icons/Feedback';
-import GithubIcon from '@material-ui/icons/GitHub';
+import {
+  BusinessCenter as BusinessCenterIcon,
+  Feedback as FeedbackIcon,
+  GitHub as GithubIcon,
+} from '@material-ui/icons';
 
-import { NavItemParents, NavigationItem, UtilityItem } from '../../types';
+import { NavItemParents, NavigationItem, UtilityItem } from '@app/types';
 
 const navigationItems: NavigationItem[] = [
   {

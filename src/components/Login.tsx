@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 
 import 'firebaseui/dist/firebaseui.css';
 
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import { FacebookAuthProvider, GoogleAuthProvider, logError, ui } from '../firebase/firebase';
-import { UserContext } from '../contexts/User';
+import useDocumentTitle from '@app/hooks/useDocumentTitle';
+import { FacebookAuthProvider, GoogleAuthProvider, logError, ui } from '@app/firebase/firebase';
+import { UserContext } from '@app/contexts/User';
 
 const Login: React.FC = () => {
   useDocumentTitle('Log In');

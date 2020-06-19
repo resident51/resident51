@@ -13,7 +13,7 @@ import {
 import { Close as CloseIcon } from '@material-ui/icons';
 import { useSnackbar } from 'notistack';
 
-import { AlertDialogControls, AlertDialogCtx, AlertDialogOptions } from '../../types';
+import { AlertDialogControls, AlertDialogCtx, AlertDialogOptions } from '@app/types';
 
 import useStyles from './AlertDialogProvider.jss';
 
@@ -48,12 +48,6 @@ const AlertDialogProvider: React.FC = props => {
 
   const handleExited = useCallback((): void => {
     setOptions(null);
-  }, []);
-
-  const updateRootStyle = useCallback((ref?: HTMLElement) => {
-    if (ref) {
-      ref.style.zIndex = '1350';
-    }
   }, []);
 
   const handleButtonClick = useCallback(
@@ -144,7 +138,6 @@ const AlertDialogProvider: React.FC = props => {
         onExited={handleExited}
         aria-labelledby={`${alertId}-title`}
         aria-describedby={`${alertId}-content`}
-        ref={updateRootStyle}
       >
         <div className={classes.alertDialogTitle}>
           <DialogTitle id={`${alertId}-title`}>{options?.title ? options.title : ''}</DialogTitle>
