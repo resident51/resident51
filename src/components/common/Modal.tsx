@@ -1,11 +1,12 @@
-import React, { useCallback, useMemo, useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import clsx from 'clsx';
 import { Grow, LinearProgress, Modal as MaterialModal, Paper } from '@material-ui/core';
 
-import useStyles from './_jss/Modal.jss';
-import { useModal, ModalOptions } from '@app/contexts/Modal';
 import usePrevious from '@app/hooks/usePrevious';
+import { ModalOptions, useModal } from '@app/contexts/Modal';
+
+import useStyles from './_jss/Modal.jss';
 
 type ModalProps = Pick<ModalOptions, 'disablePaper' | 'disableIndirectDismissal'>;
 

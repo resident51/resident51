@@ -9,7 +9,8 @@ const Events: React.FC = () => {
 
   return (
     <div>
-      Howdy, {user.displayName || 'pal'}, this is the events page. Also, there are {events ? events.length : '(loading)'} events.
+      <p>Howdy, {user.displayName || 'pal'}, this is the events page.</p>
+      <p>Also, there are {events ? events.length : '(loading)'} events.</p>
     </div>
   );
 };
