@@ -79,10 +79,7 @@ const Header: React.FC = ({ children }) => {
         onRequestOpen={handleDrawerOpen}
         onRequestClose={handleDrawerClose}
       />
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {children}
-      </main>
+      <main className={classes.content}>{children}</main>
     </div>
   );
 };

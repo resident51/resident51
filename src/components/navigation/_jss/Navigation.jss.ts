@@ -11,6 +11,7 @@ export default makeStyles((theme: Theme) => ({
   },
   root: {
     display: 'flex',
+    flexFlow: 'column',
   },
   title: {
     cursor: 'pointer',
@@ -19,14 +20,7 @@ export default makeStyles((theme: Theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(6),
+      marginLeft: theme.spacing(7),
     },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar, // necessary for content to be below app bar
   },
 }));
