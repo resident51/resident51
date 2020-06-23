@@ -18,21 +18,23 @@ interface ModalViewProps {
 const ModalView: React.FC<ModalViewProps> = ({ children, isLoading, modalProps }) => {
   const { dismiss, isOpen } = useModal();
   const [isVisible, setIsVisible] = useState(isOpen);
-  const lastChildren = usePrevious(children);
   const classes = useStyles();
 
   const handleClose = useCallback(() => dismiss(true), [dismiss]);
 
-  const isClosing = usePrevious(isOpen) && !isOpen;
-
+  // On change to isOpen, transition modal in/out.
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
     } else {
+      // Delay to give <Grow /> time to transition.
       setTimeout(() => setIsVisible(false), 400);
     }
   }, [isOpen]);
 
+  // Keep child content one extra render while <Grow /> transitions out on close.
+  const isClosing = usePrevious(isOpen) && !isOpen;
+  const lastChildren = usePrevious(children);
   const content = isClosing ? lastChildren : children;
   const modalContent = useMemo(() => {
     if (modalProps.disablePaper) {
