@@ -17,26 +17,21 @@ interface ModalViewProps {
 
 const ModalView: React.FC<ModalViewProps> = ({ children, isLoading, modalProps }) => {
   const { dismiss, isOpen } = useModal();
-  const [transitionIn, setTransitionIn] = useState(false);
   const [isVisible, setIsVisible] = useState(isOpen);
-  const lastIsOpen = usePrevious(isOpen);
   const lastChildren = usePrevious(children);
   const classes = useStyles();
 
   const handleClose = useCallback(() => dismiss(true), [dismiss]);
 
-  const isOpening = isOpen && !lastIsOpen;
-  const isClosing = !isOpen && lastIsOpen;
+  const isClosing = usePrevious(isOpen) && !isOpen;
 
   useEffect(() => {
-    if (isOpening) {
+    if (isOpen) {
       setIsVisible(true);
-      setTransitionIn(true);
-    } else if (isClosing) {
-      setTransitionIn(false);
+    } else {
       setTimeout(() => setIsVisible(false), 400);
     }
-  }, [isOpening, isClosing]);
+  }, [isOpen]);
 
   const content = isClosing ? lastChildren : children;
   const modalContent = useMemo(() => {
@@ -61,7 +56,7 @@ const ModalView: React.FC<ModalViewProps> = ({ children, isLoading, modalProps }
       disableBackdropClick={!!(modalProps.disableIndirectDismissal ?? true)}
       closeAfterTransition
     >
-      <Grow in={transitionIn} timeout={{ enter: 300, exit: 300 }}>
+      <Grow in={isOpen} timeout={{ enter: 300, exit: 300 }}>
         <div className={classes.modalContentContainer}>
           {isLoading ? (
             <div className={classes.loadingIndicator}>
