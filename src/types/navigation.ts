@@ -35,3 +35,14 @@ export interface SlideMenuCtx {
   expandNavItem: (id: string) => void;
   collapseNavItem: (id: string) => void;
 }
+
+export interface NavigationCtx {
+  expandedNavItems: string[];
+  activeNavItem?: {
+    id: string;
+    path: string;
+    parents: string[];
+  };
+  expandNavItem: (id: string) => void;
+  collapseNavItem: (id: string) => void;
+}

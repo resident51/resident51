@@ -37,14 +37,14 @@ const NavListItem: React.FC<NavListItemProps> = props => {
   const menuState = useSlideMenuState();
   const classes = useStyles();
   const hasSubList = !!subItemList?.length;
-  const sublistOpen = !!menuState?.expandedNavItems.includes(id);
+  const sublistOpen = !!menuState.expandedNavItems.includes(id);
   const isSelected: boolean = ((): boolean => {
     // If this is the active nav item return true
-    if (menuState?.activeNavItem && menuState?.activeNavItem?.path === path) return true;
+    if (menuState.activeNavItem && menuState.activeNavItem?.path === path) return true;
     // If the drawer is open and this isn't the active nav item return false
     if (isDrawerOpen) return false;
     // If the drawer is closed and this is the parent of the active nav item return true
-    if (menuState?.activeNavItem?.parents.includes(id)) return true;
+    if (menuState.activeNavItem?.parents.includes(id)) return true;
     return false;
   })();
 
@@ -53,9 +53,9 @@ const NavListItem: React.FC<NavListItemProps> = props => {
       onRequestOpen();
     } else if (hasSubList) {
       if (sublistOpen) {
-        menuState?.collapseNavItem(id);
+        menuState.collapseNavItem(id);
       } else {
-        menuState?.expandNavItem(id);
+        menuState.expandNavItem(id);
       }
     } else if (path) {
       history.push(path);
@@ -96,7 +96,7 @@ const NavListItem: React.FC<NavListItemProps> = props => {
   );
 
   useEffect(() => {
-    if (isDrawerOpen && menuState?.activeNavItem?.parents.includes(id)) {
+    if (isDrawerOpen && menuState.activeNavItem?.parents.includes(id)) {
       menuState.expandNavItem(id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

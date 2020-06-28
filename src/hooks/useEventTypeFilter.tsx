@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 // import { EventType } from 'types'; // tried coercing type below to EventType...
 
-export type Statuple = [boolean, (next: boolean) => void];
+export type Statuple = [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 export interface EventTypeFilterState {
   // tried with just [type: string]: ReturnType<typeof useState>;
   [type: string]: Statuple;

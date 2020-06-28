@@ -1,3 +1,5 @@
+import { useCallback, useMemo, useState } from 'react';
+
 import moment from 'moment';
 import { firestore } from 'firebase/app';
 
@@ -126,4 +128,54 @@ export const concatEvents = (publicEvents: Events, privateEvents: Events): Event
   } else {
     return publicEvents.concat(privateEvents);
   }
+};
+
+export interface Filters {
+  searchFilter: string;
+  onSearchFilterChange: (input: { filter: string }) => void;
+  showPublicEvents: boolean;
+  togglePublicEvents: () => void;
+  showPrivateEvents: boolean;
+  togglePrivateEvents: () => void;
+}
+
+export const useEventFilters = (eventsUnfiltered: Events): { events: Events; filters: Filters } => {
+  const [searchFilter, setSearchFilter] = useState('');
+  const [showPublicEvents, setShowPublicEvents] = useState(true);
+  const [showPrivateEvents, setShowPrivateEvents] = useState(true);
+
+  const onSearchFilterChange = useCallback((input: { filter: string }): void => {
+    setSearchFilter(input.filter.toLowerCase());
+  }, []);
+
+  const filters = useMemo(
+    () => ({
+      searchFilter,
+      onSearchFilterChange,
+      showPublicEvents,
+      togglePublicEvents: (): void => setShowPublicEvents(current => !current),
+      showPrivateEvents,
+      togglePrivateEvents: (): void => setShowPrivateEvents(current => !current),
+    }),
+    [searchFilter, onSearchFilterChange, showPublicEvents, showPrivateEvents],
+  );
+
+  const eventsFiltered = useMemo(
+    () =>
+      eventsUnfiltered &&
+      eventsUnfiltered?.filter(({ name, description, publicStatus }) => {
+        const textFound =
+          searchFilter.length === 0 ||
+          name.toLowerCase().includes(searchFilter) ||
+          description.toLowerCase().includes(searchFilter);
+
+        const passesPublicFilter =
+          publicStatus.type === 'public' ? showPublicEvents : showPrivateEvents;
+
+        return textFound && passesPublicFilter;
+      }),
+    [eventsUnfiltered, searchFilter, showPublicEvents, showPrivateEvents],
+  );
+
+  return { events: eventsFiltered, filters };
 };

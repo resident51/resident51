@@ -6,8 +6,8 @@ import { Avatar, Button, Divider, IconButton, Typography } from '@material-ui/co
 import { Close as CloseIcon, LockOutlined as LockIcon } from '@material-ui/icons';
 import { Form, Formik } from 'formik';
 
+import FormikTextField from '../common/FormFields';
 import { ReactComponent as FacebookLogo } from '../../resources/img/facebook-logo.svg';
-import { FormikTextField } from '../common/FormFields';
 import { ReactComponent as GoogleLogo } from '../../resources/img/google-logo.svg';
 
 import useStyles from './_jss/Login.jss';

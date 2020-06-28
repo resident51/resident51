@@ -9,7 +9,7 @@ import {
 
 import { NavItemParents, NavigationItem, UtilityItem } from '@app/types';
 
-const navigationItems: NavigationItem[] = [
+export const navigationItems: NavigationItem[] = [
   {
     id: 'events',
     text: 'Events',
@@ -47,7 +47,7 @@ const navigationItems: NavigationItem[] = [
   },
 ];
 
-const utilityItems: UtilityItem[] = [
+export const utilityItems: UtilityItem[] = [
   {
     id: 'feedback',
     text: 'Feedback',
@@ -64,16 +64,19 @@ const utilityItems: UtilityItem[] = [
   },
 ];
 
-const navigationItemParentMap: NavItemParents = {};
-const collectParents = (item: NavigationItem, parents: string[]): void => {
+const collectParents = (item: NavigationItem, parents: string[] = []): NavItemParents => {
+  const okay: NavItemParents = {};
   if ((!item.subItemList || !item.subItemList?.length) && item.path) {
-    navigationItemParentMap[item.id] = { path: item.path, parents };
+    okay[item.id] = { path: item.path, parents };
   } else {
     item.subItemList?.forEach((_item: NavigationItem) =>
-      collectParents(_item, [...parents, item.id]),
+      Object.assign(okay, collectParents(_item, [...parents, item.id])),
     );
   }
+  return okay;
 };
-navigationItems.forEach((item: NavigationItem): void => collectParents(item, []));
 
-export { navigationItems, navigationItemParentMap, utilityItems };
+export const navigationItemParentMap = navigationItems.reduce<NavItemParents>(
+  (navItemParentMap, item) => Object.assign(navItemParentMap, collectParents(item)),
+  {},
+);
