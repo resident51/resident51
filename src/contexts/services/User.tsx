@@ -7,7 +7,7 @@ import useFirebaseAuth from '@app/hooks/useFirebaseAuth';
 import useUserCollection from '@app/hooks/useUserCollection';
 import { logUser, usersCollection } from '@app/firebase/firebase';
 
-import { loggedOutUser } from '../utils/UserProps';
+import { loggedOutUser } from './utils/UserProps';
 
 export interface UserCtx {
   user: User;
@@ -63,6 +63,6 @@ export {
   initializeLoggedInUserState,
   loggedOutUser,
   shouldUpdateUserState,
-} from '../utils/UserProps';
+} from './utils/UserProps';
 
 export default UserProvider;
