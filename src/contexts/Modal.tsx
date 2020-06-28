@@ -4,6 +4,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -60,8 +61,14 @@ const ModalProvider: React.FC = props => {
     setModalContent(null);
   }, []);
 
+  const modalContextValue = useMemo(() => ({ isOpen, disclose, dismiss }), [
+    isOpen,
+    disclose,
+    dismiss,
+  ]);
+
   return (
-    <ModalContext.Provider value={{ isOpen, disclose, dismiss }}>
+    <ModalContext.Provider value={modalContextValue}>
       <Modal isLoading={isLoading} modalProps={modalProps}>
         {modalContent}
       </Modal>
