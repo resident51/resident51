@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { Grow, LinearProgress, Modal as MaterialModal, Paper } from '@material-ui/core';
 
-import usePrevious from '@app/hooks/usePrevious';
 import { ModalOptions, useModal } from '@app/contexts/Modal';
 
 import useStyles from './_jss/Modal.jss';
@@ -17,25 +16,17 @@ interface ModalViewProps {
 
 const ModalView: React.FC<ModalViewProps> = ({ children, isLoading, modalProps }) => {
   const { dismiss, isOpen } = useModal();
-  const [isVisible, setIsVisible] = useState(isOpen);
+  const [content, setContent] = useState<React.ReactNode>(null);
   const classes = useStyles();
 
   const handleClose = useCallback(() => dismiss(true), [dismiss]);
 
-  // On change to isOpen, transition modal in/out.
   useEffect(() => {
     if (isOpen) {
-      setIsVisible(true);
-    } else {
-      // Delay to give <Grow /> time to transition.
-      setTimeout(() => setIsVisible(false), 400);
+      setContent(children);
     }
-  }, [isOpen]);
+  }, [children, isOpen]);
 
-  // Keep child content one extra render while <Grow /> transitions out on close.
-  const isClosing = usePrevious(isOpen) && !isOpen;
-  const lastChildren = usePrevious(children);
-  const content = isClosing ? lastChildren : children;
   const modalContent = useMemo(() => {
     if (modalProps.disablePaper) {
       return content;
@@ -52,13 +43,14 @@ const ModalView: React.FC<ModalViewProps> = ({ children, isLoading, modalProps }
   return (
     <MaterialModal
       className={classes.modalRootContainer}
-      open={isVisible}
+      open={isOpen}
       onClose={handleClose}
       disableEscapeKeyDown={!!(modalProps.disableIndirectDismissal ?? true)}
       disableBackdropClick={!!(modalProps.disableIndirectDismissal ?? true)}
       closeAfterTransition
+      disableRestoreFocus
     >
-      <Grow in={isOpen} timeout={{ enter: 300, exit: 300 }}>
+      <Grow in={isOpen} onExited={(): void => setContent(null)}>
         <div className={classes.modalContentContainer}>
           {isLoading ? (
             <div className={classes.loadingIndicator}>
