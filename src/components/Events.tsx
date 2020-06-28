@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useEvents } from '@app/contexts/Events';
-import { useUser } from '@app/contexts/User';
+import { useEvents } from '@app/contexts/services/Events';
+import { useUser } from '@app/contexts/services/User';
 
 const Events: React.FC = () => {
   const { user } = useUser();

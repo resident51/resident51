@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { Grow, LinearProgress, Modal as MaterialModal, Paper } from '@material-ui/core';
 
-import { ModalOptions, useModal } from '@app/contexts/Modal';
+import { ModalOptions, useModal } from '@app/contexts/ui/Modal';
 
 import useStyles from './_jss/Modal.jss';
 

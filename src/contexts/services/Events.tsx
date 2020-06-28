@@ -18,7 +18,8 @@ import {
   formatSubmittedEventByHall,
   halls,
   querySnapshot,
-} from './utils/EventsProps';
+} from '../utils/EventsProps';
+
 import { useUser } from './User';
 
 interface EventsCtx {

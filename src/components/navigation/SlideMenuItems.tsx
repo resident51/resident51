@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { NavigationItem, UtilityItem } from '@app/types';
 
-import { useModal } from '@app/contexts/Modal';
+import { useModal } from '@app/contexts/ui/Modal';
 
 import { useSlideMenuState } from './SlideMenuContext';
 

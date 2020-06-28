@@ -1,10 +1,10 @@
 import React from 'react';
 
-import EventsProvider from './Events';
-import ModalProvider from './Modal';
-import SnackbarProvider from './Snackbar';
-import ThemeProvider from './Theme';
-import UserProvider from './User';
+import EventsProvider from './services/Events';
+import ModalProvider from './ui/Modal';
+import SnackbarProvider from './ui/Snackbar';
+import ThemeProvider from './ui/Theme';
+import UserProvider from './services/User';
 
 /**
  * Contexts are wrapped in the order they are added to the following context array.

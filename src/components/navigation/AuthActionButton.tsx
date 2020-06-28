@@ -5,8 +5,8 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import clsx from 'clsx';
 
-import { useModal } from '@app/contexts/Modal';
-import { useUser } from '@app/contexts/User';
+import { useModal } from '@app/contexts/ui/Modal';
+import { useUser } from '@app/contexts/services/User';
 
 import Login from '../auth/Login';
 
