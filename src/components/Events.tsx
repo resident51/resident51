@@ -1,31 +1,36 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
 import {
   Box,
   Divider,
   FormControlLabel,
   Grid,
-  List,
   Paper,
   Switch,
+  Tab,
+  Tabs,
   Typography,
 } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 
 import useDocumentTitle from '@app/hooks/useDocumentTitle';
 import { useEvents } from '@app/contexts/Events';
-import { useUser } from '@app/contexts/User';
 
-import Event from './events/Event';
+import EventList, { EventSortMethod, eventSortMethods } from './events/EventList';
 import FormikTextField from './common/FormFields';
 
 import useStyles from './_jss/Events.jss';
 
 const Events: React.FC = () => {
   useDocumentTitle('Events');
-  const { user } = useUser();
   const { events, filters } = useEvents();
   const classes = useStyles();
+
+  const [sortMethod, setSortMethod] = useState<EventSortMethod>('date');
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleSortMethodChange = useCallback((_: Record<string, any>, method: EventSortMethod) => {
+    setSortMethod(method);
+  }, []);
 
   const {
     searchFilter,
@@ -47,15 +52,16 @@ const Events: React.FC = () => {
     <Grid container spacing={3} className={classes.eventsRoot}>
       <Grid item xs={12} className={classes.eventsListContainer}>
         <Paper>
-          <p>Howdy, {user.displayName || 'pal'}, this is the events page.</p>
-          <p>Also, there are {events ? events.length : '(loading)'} events.</p>
+          <Typography variant="h2" component="h2">
+            Schol-Hall Events
+          </Typography>
         </Paper>
       </Grid>
       <Grid item container spacing={3}>
-        <Grid item xs={12} sm={5} md={4} className={classes.eventsListOptions}>
+        <Grid item xs={12} sm={6} md={5} className={classes.eventsListOptions}>
           <Paper>
             <Typography className={classes.eventOptionsTitle} variant="h4" component="h1">
-              Search Events
+              Find an Event
             </Typography>
             {/* <Divider /> */}
             <Box className={classes.eventOptions}>
@@ -110,17 +116,45 @@ const Events: React.FC = () => {
             </Box>
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={7} md={8} className={classes.eventsListContainer}>
-          {events ? (
-            <List className={classes.eventList}>
-              {events?.map((event, index, arr) => (
-                <React.Fragment key={event.id}>
-                  <Event event={event} />
-                  {index === arr.length - 1 ? null : <Divider variant="inset" component="li" />}
-                </React.Fragment>
-              ))}
-            </List>
-          ) : null}
+        <Grid
+          item
+          container
+          direction="column"
+          xs={12}
+          sm={6}
+          md={7}
+          justify="flex-start"
+          alignItems="stretch"
+        >
+          <Grid item>
+            <Paper className={classes.sortMethods}>
+              {/* <Typography variant="h6" component="h4">
+                Sort by
+              </Typography> */}
+              <Tabs
+                value={sortMethod}
+                indicatorColor="primary"
+                textColor="primary"
+                onChange={handleSortMethodChange}
+                aria-label="event sort method tabs"
+                centered
+              >
+                {eventSortMethods.map(method => {
+                  const label = ((): string => {
+                    const labelPrefix = sortMethod === method ? 'Sort by ' : '';
+                    const methodFormal = method[0].toUpperCase() + method.slice(1);
+                    return `${labelPrefix}${methodFormal}`;
+                  })();
+                  return (
+                    <Tab key={method} className={classes.sortTab} value={method} label={label} />
+                  );
+                })}
+              </Tabs>
+            </Paper>
+          </Grid>
+          <Grid item>
+            <EventList events={events} sortMethod={sortMethod} />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

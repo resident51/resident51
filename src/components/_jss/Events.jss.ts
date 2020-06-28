@@ -3,13 +3,10 @@ import { Theme, makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme: Theme) => ({
   eventsRoot: {
     display: 'flex',
-    zIndex: 10,
     flexDirection: 'column',
     [theme.breakpoints.up('sm')]: {
       flexDirection: 'row',
     },
-    alignItems: 'center',
-    width: '100%',
   },
   eventsListContainer: {
     flex: '2 1 0px',
@@ -49,15 +46,16 @@ export default makeStyles((theme: Theme) => ({
     flexFlow: 'row',
     flexGrow: 1,
   },
-  eventList: {
-    borderRadius: '4px',
-    backgroundColor: theme.palette.background.paper,
-    width: '100%',
-  },
   secondaryText: {
     display: '-webkit-box',
     overflow: 'hidden',
     '-webkit-line-clamp': 2,
     '-webkit-box-orient': 'vertical',
+  },
+  sortMethods: {
+    marginBottom: theme.spacing(2),
+  },
+  sortTab: {
+    cursor: 'pointer',
   },
 }));
