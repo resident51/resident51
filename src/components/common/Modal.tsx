@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import clsx from 'clsx';
 import { Grow, LinearProgress, Modal as MaterialModal, Paper } from '@material-ui/core';
@@ -18,8 +18,6 @@ const ModalView: React.FC<ModalViewProps> = ({ children, isLoading, modalProps }
   const { dismiss, isOpen } = useModal();
   const [content, setContent] = useState<React.ReactNode>(null);
   const classes = useStyles();
-
-  const handleClose = useCallback(() => dismiss(true), [dismiss]);
 
   useEffect(() => {
     if (isOpen) {
@@ -44,7 +42,7 @@ const ModalView: React.FC<ModalViewProps> = ({ children, isLoading, modalProps }
     <MaterialModal
       className={classes.modalRootContainer}
       open={isOpen}
-      onClose={handleClose}
+      onClose={dismiss}
       disableEscapeKeyDown={!!(modalProps.disableIndirectDismissal ?? true)}
       disableBackdropClick={!!(modalProps.disableIndirectDismissal ?? true)}
       closeAfterTransition

@@ -18,7 +18,7 @@ export interface ModalOptions {
 export interface ModalCtx {
   isOpen: boolean;
   disclose: (content: ReactElement, options?: ModalOptions) => void;
-  dismiss: (skipDismissNotification?: boolean) => void;
+  dismiss: () => void;
 }
 
 type ModalProps = Pick<ModalOptions, 'disablePaper' | 'disableIndirectDismissal'>;
@@ -49,8 +49,8 @@ const ModalProvider: React.FC = props => {
     setIsOpen(true);
   }, []);
 
-  const dismiss = useCallback((skipDismissNotification?: boolean) => {
-    if (!skipDismissNotification && dismissCallback.current) {
+  const dismiss = useCallback(() => {
+    if (dismissCallback.current) {
       dismissCallback.current();
     }
     dismissCallback.current = null;
