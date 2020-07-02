@@ -4,13 +4,11 @@ import clsx from 'clsx';
 import { Divider, Drawer, List, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
-import { NavigationItem, UtilityItem } from '@app/types';
-
 import SlideMenuProvider from './SlideMenuContext';
 import { NavListItem, UtilityListItem } from './SlideMenuItems';
 import { navigationItems, utilityItems } from './NavigationItems';
 
-import useStyles from './SlideMenu.jss';
+import useStyles from './_jss/SlideMenu.jss';
 
 /**
  * Slide menu disclosed in the drawer. Contains navigation and utility lists.
@@ -53,7 +51,7 @@ const SlideMenu: React.FC<SlideMenuProps> = props => {
   const navigationList: React.ReactNode = useMemo(
     () =>
       navigationItems
-        .map((item: NavigationItem) => (
+        .map(item => (
           <NavListItem
             key={item.id}
             {...item}
@@ -68,7 +66,7 @@ const SlideMenu: React.FC<SlideMenuProps> = props => {
 
   const utilityList: React.ReactNode = useMemo(
     () =>
-      utilityItems.map((item: UtilityItem) => (
+      utilityItems.map(item => (
         <UtilityListItem key={item.id} {...item} menuClosingAction={onRequestClose} />
       )),
     [onRequestClose],

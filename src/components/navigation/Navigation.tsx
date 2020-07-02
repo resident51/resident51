@@ -9,9 +9,9 @@ import { useHistory } from 'react-router-dom';
 import AuthAction from './AuthActionButton';
 import SlideMenu from './SlideMenu';
 
-import useStyles from './Header.jss';
+import useStyles from './_jss/Navigation.jss';
 
-const Header: React.FC = () => {
+const Header: React.FC = ({ children }) => {
   const [anchorEl, setAnchorEl] = React.useState<(EventTarget & HTMLButtonElement) | null>(null);
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const history = useHistory();
@@ -44,13 +44,18 @@ const Header: React.FC = () => {
   const isMenuOpen = Boolean(anchorEl);
 
   return (
-    <>
+    <div className={classes.root}>
       <AppBar position="fixed" className={classes.overlayAppBar} onClick={handleDrawerClose}>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} onClick={handleMenuButtonClick}>
             {drawerOpen ? <MenuOpenIcon /> : <MenuIcon />}
           </IconButton>
-          <Typography component="h1" variant="h6" onClick={(): void => history.push('/')}>
+          <Typography
+            component="h1"
+            variant="h6"
+            className={classes.title}
+            onClick={(): void => history.push('/')}
+          >
             Resident51
           </Typography>
           <AuthAction handleProfileMenuOpen={handleProfileMenuOpen} menuId={menuId} />
@@ -74,7 +79,8 @@ const Header: React.FC = () => {
         onRequestOpen={handleDrawerOpen}
         onRequestClose={handleDrawerClose}
       />
-    </>
+      <main className={classes.content}>{children}</main>
+    </div>
   );
 };
 

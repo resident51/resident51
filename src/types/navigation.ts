@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 
 export interface NavigationItem {
   id: string;
   text: string;
-  icon?: ReactNode;
+  icon?: ReactElement;
   path?: string;
   isVisible?: () => boolean;
   subItemList?: NavigationItem[];
@@ -12,9 +12,9 @@ export interface NavigationItem {
 export interface UtilityItem {
   id: string;
   text: string;
-  icon?: ReactNode;
+  icon?: ReactElement;
   clickBehavior: 'disclose' | 'link';
-  disclosureComponent?: ReactNode;
+  disclosureComponent?: ReactElement;
   url?: string;
 }
 
@@ -25,7 +25,7 @@ export interface NavItemParents {
   };
 }
 
-export interface SlideMenuState {
+export interface SlideMenuCtx {
   expandedNavItems: string[];
   activeNavItem?: {
     id: string;
@@ -35,5 +35,3 @@ export interface SlideMenuState {
   expandNavItem: (id: string) => void;
   collapseNavItem: (id: string) => void;
 }
-
-export type SlideMenuCtx = SlideMenuState | null;

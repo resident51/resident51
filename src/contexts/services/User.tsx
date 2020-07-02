@@ -7,7 +7,7 @@ import useFirebaseAuth from '@app/hooks/useFirebaseAuth';
 import useUserCollection from '@app/hooks/useUserCollection';
 import { logUser, usersCollection } from '@app/firebase/firebase';
 
-import { loggedOutUser } from './UserProps';
+import { loggedOutUser } from './utils/UserProps';
 
 export interface UserCtx {
   user: User;
@@ -22,7 +22,7 @@ export interface UserCtx {
 export const UserContext = createContext({} as UserCtx);
 export const useUser = (): UserCtx => useContext<UserCtx>(UserContext);
 
-export const UserProvider: React.FC = props => {
+const UserProvider: React.FC = props => {
   const [user, userDispatch] = useReducer(UserReducer, loggedOutUser);
   const [userAuth, loginState] = useFirebaseAuth(user, userDispatch);
 
@@ -58,3 +58,11 @@ export const UserProvider: React.FC = props => {
     </UserContext.Provider>
   );
 };
+
+export {
+  initializeLoggedInUserState,
+  loggedOutUser,
+  shouldUpdateUserState,
+} from './utils/UserProps';
+
+export default UserProvider;

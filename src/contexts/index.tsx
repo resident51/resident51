@@ -1,12 +1,10 @@
 import React from 'react';
 
-import AlertDialogProvider from './ui/AlertDialogProvider';
-import LoadingOverlayProvider from './ui/LoadingOverlayProvider';
-import ModalProvider from './ui/ModalProvider';
-import SnackbarProvider from './ui/SnackProvider';
-import { EventsProvider } from './Events';
-import { ThemeProvider } from './Theme';
-import { UserProvider } from './User';
+import EventsProvider from './services/Events';
+import ModalProvider from './ui/Modal';
+import SnackbarProvider from './ui/Snackbar';
+import ThemeProvider from './ui/Theme';
+import UserProvider from './services/User';
 
 /**
  * Contexts are wrapped in the order they are added to the following context array.
@@ -18,8 +16,6 @@ const contextProviders: React.FC[] = [
   EventsProvider,
   SnackbarProvider,
   ThemeProvider,
-  LoadingOverlayProvider,
-  AlertDialogProvider,
   ModalProvider,
 ];
 

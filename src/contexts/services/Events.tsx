@@ -18,7 +18,7 @@ import {
   formatSubmittedEventByHall,
   halls,
   querySnapshot,
-} from './EventsProps';
+} from './utils/EventsProps';
 import { useUser } from './User';
 
 interface EventsCtx {
@@ -30,7 +30,7 @@ interface EventsCtx {
 export const EventsContext = createContext({} as EventsCtx);
 export const useEvents = (): EventsCtx => useContext<EventsCtx>(EventsContext);
 
-export const EventsProvider: React.FC = props => {
+const EventsProvider: React.FC = props => {
   const { user } = useUser();
   const [publicEvents, dispatchPublicEvents] = useReducer(EventsReducer, null);
   const [privateEvents, dispatchPrivateEvents] = useReducer(EventsReducer, null);
@@ -62,3 +62,5 @@ export const EventsProvider: React.FC = props => {
     </EventsContext.Provider>
   );
 };
+
+export default EventsProvider;

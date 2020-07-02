@@ -1,4 +1,3 @@
-import PropTypes, { InferProps } from 'prop-types';
 import React, { useCallback, useState } from 'react';
 
 import * as Yup from 'yup';
@@ -11,22 +10,14 @@ import { ReactComponent as FacebookLogo } from '../../resources/img/facebook-log
 import { FormikTextField } from '../common/FormFields';
 import { ReactComponent as GoogleLogo } from '../../resources/img/google-logo.svg';
 
-import useStyles from './Login.jss';
+import useStyles from './_jss/Login.jss';
 
-interface LoginFormValues {
-  email: string;
-  password: string;
+interface LoginProps {
+  onClose: () => void;
+  setLoadingIndicator?: (value: boolean) => void;
 }
 
-const LoginProps = {
-  onClose: PropTypes.func.isRequired,
-  setLoadingIndicator: PropTypes.func,
-};
-
-const Login: React.FC<InferProps<typeof LoginProps>> = props => {
-  const onClose: () => void = props.onClose;
-  const setLoadingIndicator: ((value: boolean) => void) | null | undefined =
-    props.setLoadingIndicator;
+const Login: React.FC<LoginProps> = ({ onClose, setLoadingIndicator }) => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const classes = useStyles();
 

@@ -9,4 +9,18 @@ export default makeStyles((theme: Theme) => ({
     marginRight: theme.spacing(2),
     color: theme.palette.primary.contrastText,
   },
+  root: {
+    display: 'flex',
+    flexFlow: 'column',
+  },
+  title: {
+    cursor: 'pointer',
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(7),
+    },
+  },
 }));

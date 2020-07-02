@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   BusinessCenter as BusinessCenterIcon,
+  CalendarToday,
   Feedback as FeedbackIcon,
   GitHub as GithubIcon,
 } from '@material-ui/icons';
@@ -9,6 +10,23 @@ import {
 import { NavItemParents, NavigationItem, UtilityItem } from '@app/types';
 
 const navigationItems: NavigationItem[] = [
+  {
+    id: 'events',
+    text: 'Events',
+    icon: <CalendarToday />,
+    subItemList: [
+      {
+        id: 'events-view',
+        text: 'View Events',
+        path: '/events',
+      },
+      {
+        id: 'events-create',
+        text: 'Create an Event',
+        path: '/events/create',
+      },
+    ],
+  },
   {
     id: 'hall-admin',
     text: 'Manage your Hall',
