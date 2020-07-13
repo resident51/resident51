@@ -3,10 +3,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { AccountCircle, MoreVert } from '@material-ui/icons';
 import { Button, useMediaQuery } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 
 import { LoadingOverlay } from '@app/contexts/ui/LoadingOverlay';
 import { useModal } from '@app/contexts/ui/Modal';
+import { useSnackbar } from '@app/contexts/ui/Snackbar';
 import { useUser } from '@app/contexts/services/User';
 
 import AuthModal from '../auth/AuthModal';
@@ -20,7 +20,7 @@ const AuthActionButton: React.FC = () => {
   const isMobile = useMediaQuery('(max-width:400px)');
   const modalContext = useModal();
   const { user, signOut } = useUser();
-  const snackbarContext = useSnackbar();
+  const enqueueSnackbar = useSnackbar();
   const history = useHistory();
 
   const discloseAuthModal = useCallback(
@@ -41,12 +41,12 @@ const AuthActionButton: React.FC = () => {
     try {
       await signOut();
     } catch (e) {
-      snackbarContext.enqueueSnackbar(e.message, {
+      enqueueSnackbar(e.message, {
         variant: 'error',
       });
     }
     setLoading(false);
-  }, [signOut, snackbarContext]);
+  }, [signOut, enqueueSnackbar]);
 
   useEffect(() => {
     const {

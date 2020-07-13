@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { Alert } from '@material-ui/lab';
 import { Collapse } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
-import { useSnackbar } from 'notistack';
 
 import { LoadingOverlay } from '@app/contexts/ui/LoadingOverlay';
 import { sendAccountVerificationEmail } from '@app/firebase/firebase';
+import { useSnackbar } from '@app/contexts/ui/Snackbar';
 import { useUser } from '@app/contexts/services/User';
 
 import Link from '../common/Link';
@@ -16,7 +16,7 @@ import useStyles from './_jss/VerificationBanner.jss';
 const VerificationBanner: React.FC = () => {
   const [isLoading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const snackbarContext = useSnackbar();
+  const enqueueSnackbar = useSnackbar();
   const { user } = useUser();
   const classes = useStyles();
 
@@ -28,9 +28,9 @@ const VerificationBanner: React.FC = () => {
     try {
       setLoading(true);
       await sendAccountVerificationEmail({ email: user?.email });
-      snackbarContext.enqueueSnackbar('Verification email sent.', { variant: 'success' });
+      enqueueSnackbar('Verification email sent.', { variant: 'success' });
     } catch {
-      snackbarContext.enqueueSnackbar('Unable to send verification email. Please try again', {
+      enqueueSnackbar('Unable to send verification email. Please try again', {
         variant: 'error',
       });
     } finally {

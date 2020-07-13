@@ -3,10 +3,10 @@ import React, { useCallback, useState } from 'react';
 import * as Yup from 'yup';
 import { Button } from '@material-ui/core';
 import { Form, Formik } from 'formik';
-import { useSnackbar } from 'notistack';
 
 import { KU_EMAIL_REGEX } from '@app/constants';
 import { sendPasswordResetEmail } from '@app/firebase/firebase';
+import { useSnackbar } from '@app/contexts/ui/Snackbar';
 
 import { FormikTextField } from '../common/FormFields';
 import { LockQuestion as LockQuestionIcon } from '../common/Icons';
@@ -29,7 +29,7 @@ const ForgotPassword: React.ForwardRefExoticComponent<ForgotPasswordProps> = Rea
     const { onClose, onSignInRedirect, ...domProps } = props;
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState<string | undefined>();
-    const snackbarProvider = useSnackbar();
+    const enqueueSnackbar = useSnackbar();
 
     const handleSubmit = useCallback(
       async values => {
@@ -37,7 +37,7 @@ const ForgotPassword: React.ForwardRefExoticComponent<ForgotPasswordProps> = Rea
           setLoading(true);
           await sendPasswordResetEmail(values);
           onClose();
-          snackbarProvider.enqueueSnackbar(
+          enqueueSnackbar(
             'If you have an account with that email, check your inbox for instructions',
             { variant: 'success' },
           );
@@ -47,7 +47,7 @@ const ForgotPassword: React.ForwardRefExoticComponent<ForgotPasswordProps> = Rea
           setLoading(false);
         }
       },
-      [onClose, snackbarProvider],
+      [onClose, enqueueSnackbar],
     );
 
     return (
