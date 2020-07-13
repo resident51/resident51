@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { AccountCircle, MoreVert } from '@material-ui/icons';
 import { Button, useMediaQuery } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
-import { LoadingOverlay } from '@app/contexts/ui/LoadingOverlay';
+import { useLoadingOverlay } from '@app/contexts/ui/LoadingOverlay';
 import { useModal } from '@app/contexts/ui/Modal';
 import { useSnackbar } from '@app/contexts/ui/Snackbar';
 import { useUser } from '@app/contexts/services/User';
@@ -15,12 +15,12 @@ import IconButtonMenu from '../common/IconButtonMenu';
 import useStyles from './_jss/AuthActionButton.jss';
 
 const AuthActionButton: React.FC = () => {
-  const [isLoading, setLoading] = useState(false);
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width:400px)');
   const modalContext = useModal();
   const { user, signOut } = useUser();
   const enqueueSnackbar = useSnackbar();
+  const { openOverlay, closeOverlay } = useLoadingOverlay();
   const history = useHistory();
 
   const discloseAuthModal = useCallback(
@@ -37,7 +37,7 @@ const AuthActionButton: React.FC = () => {
   const handleSignUp = useCallback(() => discloseAuthModal('sign-up'), [discloseAuthModal]);
 
   const handleSignOut = useCallback(async () => {
-    setLoading(true);
+    openOverlay();
     try {
       await signOut();
     } catch (e) {
@@ -45,8 +45,8 @@ const AuthActionButton: React.FC = () => {
         variant: 'error',
       });
     }
-    setLoading(false);
-  }, [signOut, enqueueSnackbar]);
+    closeOverlay();
+  }, [signOut, enqueueSnackbar, openOverlay, closeOverlay]);
 
   useEffect(() => {
     const {
@@ -62,56 +62,49 @@ const AuthActionButton: React.FC = () => {
     }
   }, [discloseAuthModal, handleSignIn, history, user]);
 
-  return (
-    <>
-      <LoadingOverlay open={isLoading} />
-      {((): React.ReactNode => {
-        if (user === undefined) {
-          // Don't show a button until we know if the user is or isn't logged in.
-          return null;
-        } else if (user) {
-          return (
-            <IconButtonMenu
-              className={classes.authActionButton}
-              icon={<AccountCircle />}
-              label="User menu"
-              MenuProps={{ classes: { list: classes.floatingMenuList } }}
-              edge="end"
-            >
-              <IconButtonMenu.Item>Profile</IconButtonMenu.Item>
-              <IconButtonMenu.Item>My Account</IconButtonMenu.Item>
-              <IconButtonMenu.Item onClick={handleSignOut}>Sign Out</IconButtonMenu.Item>
-            </IconButtonMenu>
-          );
-        } else {
-          if (isMobile) {
-            return (
-              <IconButtonMenu
-                className={classes.authActionButton}
-                icon={<MoreVert />}
-                label="Sign In/Sign Up"
-                MenuProps={{ classes: { list: classes.floatingMenuList } }}
-                edge="end"
-              >
-                <IconButtonMenu.Item onClick={handleSignIn}>Sign In</IconButtonMenu.Item>
-                <IconButtonMenu.Item onClick={handleSignUp}>Sign Up</IconButtonMenu.Item>
-              </IconButtonMenu>
-            );
-          }
-          return (
-            <div className={classes.authActionButton}>
-              <Button color="inherit" onClick={handleSignIn}>
-                Sign In
-              </Button>
-              <Button variant="outlined" color="inherit" onClick={handleSignUp}>
-                Sign Up
-              </Button>
-            </div>
-          );
-        }
-      })()}
-    </>
-  );
+  if (user === undefined) {
+    // Don't show a button until we know if the user is or isn't logged in.
+    return null;
+  } else if (user) {
+    return (
+      <IconButtonMenu
+        className={classes.authActionButton}
+        icon={<AccountCircle />}
+        label="User menu"
+        MenuProps={{ classes: { list: classes.floatingMenuList } }}
+        edge="end"
+      >
+        <IconButtonMenu.Item>Profile</IconButtonMenu.Item>
+        <IconButtonMenu.Item>My Account</IconButtonMenu.Item>
+        <IconButtonMenu.Item onClick={handleSignOut}>Sign Out</IconButtonMenu.Item>
+      </IconButtonMenu>
+    );
+  } else {
+    if (isMobile) {
+      return (
+        <IconButtonMenu
+          className={classes.authActionButton}
+          icon={<MoreVert />}
+          label="Sign In/Sign Up"
+          MenuProps={{ classes: { list: classes.floatingMenuList } }}
+          edge="end"
+        >
+          <IconButtonMenu.Item onClick={handleSignIn}>Sign In</IconButtonMenu.Item>
+          <IconButtonMenu.Item onClick={handleSignUp}>Sign Up</IconButtonMenu.Item>
+        </IconButtonMenu>
+      );
+    }
+    return (
+      <div className={classes.authActionButton}>
+        <Button color="inherit" onClick={handleSignIn}>
+          Sign In
+        </Button>
+        <Button variant="outlined" color="inherit" onClick={handleSignUp}>
+          Sign Up
+        </Button>
+      </div>
+    );
+  }
 };
 
 export default AuthActionButton;

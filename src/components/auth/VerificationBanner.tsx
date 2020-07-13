@@ -4,8 +4,8 @@ import { Alert } from '@material-ui/lab';
 import { Collapse } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
 
-import { LoadingOverlay } from '@app/contexts/ui/LoadingOverlay';
 import { sendAccountVerificationEmail } from '@app/firebase/firebase';
+import { useLoadingOverlay } from '@app/contexts/ui/LoadingOverlay';
 import { useSnackbar } from '@app/contexts/ui/Snackbar';
 import { useUser } from '@app/contexts/services/User';
 
@@ -14,9 +14,9 @@ import Link from '../common/Link';
 import useStyles from './_jss/VerificationBanner.jss';
 
 const VerificationBanner: React.FC = () => {
-  const [isLoading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const enqueueSnackbar = useSnackbar();
+  const { openOverlay, closeOverlay } = useLoadingOverlay();
   const { user } = useUser();
   const classes = useStyles();
 
@@ -26,7 +26,7 @@ const VerificationBanner: React.FC = () => {
 
   const handleVerificationLink = async (): Promise<void> => {
     try {
-      setLoading(true);
+      openOverlay();
       await sendAccountVerificationEmail({ email: user?.email });
       enqueueSnackbar('Verification email sent.', { variant: 'success' });
     } catch {
@@ -34,7 +34,7 @@ const VerificationBanner: React.FC = () => {
         variant: 'error',
       });
     } finally {
-      setLoading(false);
+      closeOverlay();
     }
   };
 
@@ -84,7 +84,6 @@ const VerificationBanner: React.FC = () => {
           )}
         </Link>
       )}
-      <LoadingOverlay open={isLoading} />
     </div>
   );
 };

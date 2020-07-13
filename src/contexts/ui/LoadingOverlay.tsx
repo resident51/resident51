@@ -1,4 +1,3 @@
-import PropTypes, { InferProps } from 'prop-types';
 import React, {
   createContext,
   useCallback,
@@ -78,12 +77,14 @@ const LoadingOverlayProvider: React.FC = props => {
   );
 };
 
-const LoadingOverlayProps = {
-  open: PropTypes.bool,
-};
+interface LoadingOverlayActions {
+  openOverlay: () => void;
+  closeOverlay: () => void;
+}
 
-const LoadingOverlay: React.FC<InferProps<typeof LoadingOverlayProps>> = props => {
-  const loadingOverlayContext: LoadingOverlayCtx = useContext(LoadingOverlayContext);
+export const useLoadingOverlay = (): LoadingOverlayActions => {
+  const [isOpen, setIsOpen] = useState(false);
+  const loadingOverlayContext = useContext(LoadingOverlayContext);
   const loadingControls = useRef<LoadingOverlayControls | null>(null);
 
   useEffect(() => {
@@ -97,16 +98,18 @@ const LoadingOverlay: React.FC<InferProps<typeof LoadingOverlayProps>> = props =
 
   useEffect(() => {
     if (loadingControls.current) {
-      if (props.open) {
+      if (isOpen) {
         loadingControls.current.activate();
       } else {
         loadingControls.current.deactivate();
       }
     }
-  }, [props.open]);
+  }, [isOpen]);
 
-  return null;
+  const openOverlay = useCallback(() => setIsOpen(true), []);
+  const closeOverlay = useCallback(() => setIsOpen(false), []);
+
+  return { openOverlay, closeOverlay };
 };
 
-export { LoadingOverlay };
 export default LoadingOverlayProvider;
