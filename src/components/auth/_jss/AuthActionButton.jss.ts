@@ -4,6 +4,9 @@ export default makeStyles((theme: Theme) => ({
   authActionButton: {
     marginLeft: 'auto',
     color: theme.palette.primary.contrastText,
+    '& > button': {
+      marginLeft: theme.spacing(2),
+    },
   },
   floatingMenuList: {
     padding: 0,
