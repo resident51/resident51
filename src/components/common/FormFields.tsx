@@ -4,7 +4,7 @@ import { TextField, TextFieldProps } from '@material-ui/core';
 import { useField } from 'formik';
 
 type FormikTextFieldProps = TextFieldProps & { name: string }; // make name a required prop since formik needs it
-const FormikTextField: React.FC<FormikTextFieldProps> = props => {
+export const FormikTextField: React.FC<FormikTextFieldProps> = props => {
   const { required, label } = props;
   const [field, meta] = useField(props.name);
   const formattedLabel: ReactNode | undefined =
@@ -24,5 +24,3 @@ const FormikTextField: React.FC<FormikTextFieldProps> = props => {
     />
   );
 };
-
-export { FormikTextField };

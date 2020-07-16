@@ -6,18 +6,18 @@ import {
   EventToCFSSubmission,
   EventTypeFormats,
   Events,
-  Hall,
 } from '@app/types/';
 
 import EventsReducer from '@app/reducers/Events.Reducer';
 import { currentEvents } from '@app/firebase/firebase';
 
 import {
+  Filters,
   concatEvents,
   eventTypes,
   formatSubmittedEventByHall,
-  halls,
   querySnapshot,
+  useEventFilters,
 } from './utils/EventsProps';
 import { useUser } from './User';
 
@@ -25,7 +25,7 @@ interface EventsCtx {
   events: Events;
   formatSubmittedEvent: (event: EventFormType, submission: EventToCFSSubmission) => EventToCFS;
   eventTypes: EventTypeFormats;
-  halls: Hall[];
+  filters: Filters;
 }
 export const EventsContext = createContext({} as EventsCtx);
 export const useEvents = (): EventsCtx => useContext<EventsCtx>(EventsContext);
@@ -34,7 +34,8 @@ const EventsProvider: React.FC = props => {
   const { user } = useUser();
   const [publicEvents, dispatchPublicEvents] = useReducer(EventsReducer, null);
   const [privateEvents, dispatchPrivateEvents] = useReducer(EventsReducer, null);
-  const events = concatEvents(publicEvents, privateEvents);
+  const eventsUnfiltered = concatEvents(publicEvents, privateEvents);
+  const { events, filters } = useEventFilters(eventsUnfiltered);
 
   const userHall = (user.uid && user.hall) || 'Miller'; // #TODO: this is fucking awful
   const formatSubmittedEvent = formatSubmittedEventByHall(userHall);
@@ -57,7 +58,14 @@ const EventsProvider: React.FC = props => {
   }, [userHall, user.permissions]);
 
   return (
-    <EventsContext.Provider value={{ events, formatSubmittedEvent, eventTypes, halls }}>
+    <EventsContext.Provider
+      value={{
+        events,
+        formatSubmittedEvent,
+        eventTypes,
+        filters,
+      }}
+    >
       {props.children}
     </EventsContext.Provider>
   );
