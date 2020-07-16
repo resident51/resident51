@@ -80,11 +80,12 @@ const SlideMenu: React.FC<SlideMenuProps> = props => {
         onClose={onRequestClose}
         className={drawerClass}
         classes={{ paper: drawerClass }}
-        BackdropProps={{ open: open }}
+        BackdropProps={{ open }}
         ModalProps={{
           open: isMobile ? open : true,
           disableAutoFocus: !open,
           disableEnforceFocus: !open,
+          disableScrollLock: !open,
         }}
         PaperProps={open ? undefined : { elevation: 2 }}
       >

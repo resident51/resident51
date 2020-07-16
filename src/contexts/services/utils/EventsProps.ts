@@ -1,3 +1,5 @@
+import { useCallback, useMemo, useState } from 'react';
+
 import moment from 'moment';
 import { firestore } from 'firebase/app';
 
@@ -8,36 +10,12 @@ import {
   EventR51,
   EventToCFS,
   EventToCFSSubmission,
-  EventTypeFormats,
   Events,
   Hall,
 } from '@app/types/';
 
 import { EventAction } from '@app/reducers/Events.Reducer';
-
-export const eventTypes: EventTypeFormats = {
-  social: { formal: 'Social Event', color: 'green' },
-  meeting: { formal: 'Meeting', color: 'orange' },
-  community: { formal: 'Community Event', color: 'plum' },
-  meal: { formal: 'Co-Hall Meal', color: 'lightcoral' },
-  alumni: { formal: 'Alumni Event', color: 'maroon' },
-  campus: { formal: 'Campus Event', color: 'lightseagreen' },
-};
-
-export const halls: Hall[] = [
-  'Battenfeld',
-  'Douthart',
-  'Grace Pearson',
-  'KK Amini',
-  'Krehbiel',
-  'Margaret Amini',
-  'Miller',
-  'Pearson',
-  'Rieger',
-  'Sellards',
-  'Stephenson',
-  'Watkins',
-];
+import { HALLS } from '@app/constants';
 
 /**
  * Fetch events from Cloud Firestore based on User's permissions.
@@ -90,7 +68,7 @@ const determineCFSEventType = (
   type: publicStatus.type === 'public' ? 'public' : 'private',
   halls:
     publicStatus.type === 'public'
-      ? halls
+      ? HALLS
       : publicStatus.type === 'hall'
       ? [hall]
       : publicStatus.halls,
@@ -126,4 +104,41 @@ export const concatEvents = (publicEvents: Events, privateEvents: Events): Event
   } else {
     return publicEvents.concat(privateEvents);
   }
+};
+
+export interface Filters {
+  searchFilter: string;
+  onSearchFilterChange: (input: { filter: string }) => void;
+}
+
+export const useEventFilters = (eventsUnfiltered: Events): { events: Events; filters: Filters } => {
+  const [searchFilter, setSearchFilter] = useState('');
+
+  const onSearchFilterChange = useCallback((input: { filter: string }): void => {
+    setSearchFilter(input.filter.toLowerCase());
+  }, []);
+
+  const filters = useMemo(
+    () => ({
+      searchFilter,
+      onSearchFilterChange,
+    }),
+    [searchFilter, onSearchFilterChange],
+  );
+
+  const eventsFiltered = useMemo(
+    () =>
+      eventsUnfiltered &&
+      eventsUnfiltered?.filter(({ name, description }) => {
+        const textFound =
+          searchFilter.length === 0 ||
+          name.toLowerCase().includes(searchFilter) ||
+          description.toLowerCase().includes(searchFilter);
+
+        return textFound;
+      }),
+    [eventsUnfiltered, searchFilter],
+  );
+
+  return { events: eventsFiltered, filters };
 };

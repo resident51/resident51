@@ -10,7 +10,7 @@ import SlideMenu from './SlideMenu';
 
 import useStyles from './_jss/Navigation.jss';
 
-const Header: React.FC = ({ children }) => {
+const Navigation: React.FC = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const history = useHistory();
   const classes = useStyles();
@@ -59,4 +59,4 @@ const Header: React.FC = ({ children }) => {
   );
 };
 
-export default Header;
+export default Navigation;

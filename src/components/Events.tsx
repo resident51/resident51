@@ -1,18 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { SignedInUser } from '@app/types';
+import clsx from 'clsx';
+import { Button, Container, IconButton, Paper } from '@material-ui/core';
+import {
+  List as ListIcon,
+  Search as SearchIcon,
+  ViewComfy as ViewComfyIcon,
+} from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
 
+import useDocumentTitle from '@app/hooks/useDocumentTitle';
 import { useEvents } from '@app/contexts/services/Events';
-import { useUser } from '@app/contexts/services/User';
+
+import EventSearch from './events/EventSearch';
+import EventTimeline from './events/EventTimeline';
+
+import useStyles from './_jss/Events.jss';
 
 const Events: React.FC = () => {
-  const { user } = useUser();
-  const { events } = useEvents();
+  useDocumentTitle('Events');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [showingList, setShowingList] = useState(true);
+
+  const history = useHistory();
+
+  const { events, filters } = useEvents();
+  const { searchFilter, onSearchFilterChange } = filters;
+
+  const classes = useStyles();
 
   return (
-    <div>
-      <p>Howdy, {(user as SignedInUser)?.displayName || 'pal'}, this is the events page.</p>
-      <p>Also, there are {events ? events.length : '(loading)'} events.</p>
+    <div className={classes.eventsRoot}>
+      <Container className={classes.eventsNavHeader}>
+        <Paper
+          className={clsx(classes.eventViewToggle, {
+            [classes.buttonIsToggled]: isSearchOpen,
+          })}
+        >
+          <IconButton onClick={(): void => setIsSearchOpen(value => !value)}>
+            <SearchIcon />
+          </IconButton>
+        </Paper>
+        <Paper className={classes.eventViewToggle}>
+          <IconButton onClick={(): void => setShowingList(value => !value)}>
+            {showingList ? <ViewComfyIcon /> : <ListIcon />}
+          </IconButton>
+        </Paper>
+        <Button
+          variant="contained"
+          onClick={(): void => history.push('/events/create')}
+          className={clsx(classes.createEventButton)}
+        >
+          Create Event
+        </Button>
+      </Container>
+      <EventSearch
+        isOpen={isSearchOpen}
+        searchFilter={searchFilter}
+        onSearchFilterChange={onSearchFilterChange}
+      />
+      {events && events.length ? <EventTimeline events={events} /> : 'loading'}
     </div>
   );
 };
