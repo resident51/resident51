@@ -7,7 +7,7 @@ export interface UserRoles {
 export interface User {
   uid: string;
   email: string;
-  emailVerified?: boolean;
+  emailVerified: boolean;
   displayName: string;
   hall: string;
   hallVerified: boolean;
