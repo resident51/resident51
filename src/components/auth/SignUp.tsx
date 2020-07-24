@@ -10,7 +10,9 @@ import { UserCreationData } from '@app/types';
 import { KU_EMAIL_REGEX } from '@app/constants';
 import { useUser } from '@app/contexts/services/User';
 
-import { FormikPasswordField, FormikSelectField, FormikTextField } from '../common/FormFields';
+import PasswordField from '../common/form/PasswordField';
+import SelectField from '../common/form/SelectField';
+import TextField from '../common/form/TextField';
 
 import AuthContentContainer from './AuthContentContainer';
 
@@ -103,21 +105,11 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
         onSubmit={handleSubmit}
       >
         <Form>
-          <FormikTextField name="email" label="KU Email" disabled={isLoading} required />
-          <FormikPasswordField
-            name="password"
-            disabled={isLoading}
-            strengthMeter
-            visibilitySwitch
-          />
-          <FormikTextField
-            name="displayName"
-            label="Preferred Name"
-            disabled={isLoading}
-            required
-          />
+          <TextField name="email" label="KU Email" disabled={isLoading} required />
+          <PasswordField name="password" disabled={isLoading} strengthMeter visibilitySwitch />
+          <TextField name="displayName" label="Preferred Name" disabled={isLoading} required />
           <div className={classes.hallDetailsContainer}>
-            <FormikSelectField
+            <SelectField
               className={classes.hallField}
               name="hall"
               label="Hall"
@@ -125,7 +117,7 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
               disabled={isLoading}
               required
             />
-            <FormikTextField
+            <TextField
               className={classes.roomNumberField}
               name="roomNumber"
               label="Room No."

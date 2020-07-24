@@ -8,7 +8,7 @@ import { KU_EMAIL_REGEX } from '@app/constants';
 import { sendPasswordResetEmail } from '@app/firebase/firebase';
 import { useSnackbar } from '@app/contexts/ui/Snackbar';
 
-import { FormikTextField } from '../common/FormFields';
+import TextField from '../common/form/TextField';
 import { LockQuestion as LockQuestionIcon } from '../common/Icons';
 
 import AuthContentContainer from './AuthContentContainer';
@@ -79,7 +79,7 @@ const ForgotPassword: React.ForwardRefExoticComponent<ForgotPasswordProps> = Rea
           onSubmit={handleSubmit}
         >
           <Form>
-            <FormikTextField name="email" label="Email" disabled={isLoading} required />
+            <TextField name="email" label="Email" disabled={isLoading} required />
             <Button color="primary" variant="contained" type="submit" disabled={isLoading}>
               Submit
             </Button>

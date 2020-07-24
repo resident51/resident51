@@ -9,7 +9,8 @@ import { KU_EMAIL_REGEX } from '@app/constants';
 import { useUser } from '@app/contexts/services/User';
 
 import Link from '../common/Link';
-import { FormikPasswordField, FormikTextField } from '../common/FormFields';
+import PasswordField from '../common/form/PasswordField';
+import TextField from '../common/form/TextField';
 
 import AuthContentContainer from './AuthContentContainer';
 
@@ -82,8 +83,8 @@ const SignIn: React.ForwardRefExoticComponent<SignInProps> = React.forwardRef((p
         onSubmit={handleLoginClick}
       >
         <Form>
-          <FormikTextField label="Email" name="email" disabled={isLoading} required />
-          <FormikPasswordField name="password" disabled={isLoading} visibilitySwitch />
+          <TextField label="Email" name="email" disabled={isLoading} required />
+          <PasswordField name="password" disabled={isLoading} visibilitySwitch />
           <Button color="primary" variant="contained" type="submit" disabled={isLoading}>
             Sign In
           </Button>
