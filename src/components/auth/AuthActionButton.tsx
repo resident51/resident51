@@ -18,20 +18,20 @@ const AuthActionButton: React.FC = () => {
   const [isLoading, setLoading] = useState(false);
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width:400px)');
-  const modalContext = useModal();
+  const { disclose } = useModal();
   const { user, signOut } = useUser();
   const snackbarContext = useSnackbar();
   const history = useHistory();
 
   const discloseAuthModal = useCallback(
     (option: 'sign-in' | 'sign-up', dismissCallback?: () => void): void => {
-      modalContext?.disclose(<AuthModal initialVariant={option} />, {
+      disclose(<AuthModal initialVariant={option} />, {
         disablePaper: true,
         disableTransition: true,
         onDismiss: dismissCallback,
       });
     },
-    [modalContext],
+    [disclose],
   );
   const handleSignIn = useCallback(() => discloseAuthModal('sign-in'), [discloseAuthModal]);
   const handleSignUp = useCallback(() => discloseAuthModal('sign-up'), [discloseAuthModal]);
