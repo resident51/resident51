@@ -41,10 +41,16 @@ const PasswordField: React.FC<PasswordFieldProps> = props => {
   useLayoutEffect(() => {
     if (strengthMeter && fieldRef.current) {
       const { score } = zxcvbn(field.value);
+      type StrengthBarClass =
+        | 'strengthBar0'
+        | 'strengthBar1'
+        | 'strengthBar2'
+        | 'strengthBar3'
+        | 'strengthBar4';
       const strengthBarEl = document.getElementById(strengthBarId.current);
       const strengthBarClasses = clsx(
         classes.strengthBar,
-        !!field.value && (classes as Record<string, string>)[`strengthBar${score}`],
+        !!field.value && classes[`strengthBar${score}` as StrengthBarClass],
       );
       if (!strengthBarEl) {
         const strengthBarContainer = document.createElement('div');
