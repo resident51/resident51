@@ -47,7 +47,7 @@ const VerificationBanner: React.FC = () => {
     >
       Please verify your email by following the link in your inbox.{' '}
       <Link underline="always" onClick={handleVerificationLink}>
-        Resend verification link
+        Send another verification link
       </Link>
     </Alert>
   );
@@ -59,7 +59,7 @@ const VerificationBanner: React.FC = () => {
       icon={false}
       classes={{ message: classes.verificationBannerMessage }}
     >
-      Your hall isn't verified. Please ask your hall president to verify you.
+      You have not been verified with your hall. Please ask your hall president to verify you.
     </Alert>
   );
 
