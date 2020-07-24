@@ -6,17 +6,3 @@ export type DeepPartial<T> = {
     ? ReadonlyArray<DeepPartial<U>>
     : DeepPartial<T[P]>;
 };
-
-export type Hall =
-  | 'Battenfeld'
-  | 'Douthart'
-  | 'Grace Pearson'
-  | 'KK Amini'
-  | 'Krehbiel'
-  | 'Margaret Amini'
-  | 'Miller'
-  | 'Pearson'
-  | 'Rieger'
-  | 'Sellards'
-  | 'Stephenson'
-  | 'Watkins';

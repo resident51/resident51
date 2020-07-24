@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core';
 import { Form, Formik } from 'formik';
 import { PersonAdd as PersonAddIcon } from '@material-ui/icons';
 
-import { UserCreationData } from '@app/types';
+import { Hall, UserCreationData } from '@app/types';
 
 import { HALLS, KU_EMAIL_REGEX } from '@app/constants';
 import { useUser } from '@app/contexts/services/User';
@@ -71,7 +71,7 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
             email: '',
             password: '',
             displayName: '',
-            hall: '',
+            hall: '' as Hall,
             roomNumber: undefined,
           } as UserCreationData
         }
