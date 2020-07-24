@@ -11,7 +11,7 @@ export interface User {
   displayName: string;
   hall: string;
   hallVerified: boolean;
-  roomNumber: number;
+  roomNumber?: string;
   permissions: Record<string, unknown>;
   roles: UserRoles;
 }
@@ -21,5 +21,5 @@ export interface UserCreationData {
   password: string;
   displayName: string;
   hall: string;
-  roomNumber?: number;
+  roomNumber?: string;
 }

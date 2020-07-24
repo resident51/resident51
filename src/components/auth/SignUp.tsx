@@ -98,9 +98,7 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
             .required('Required'),
           displayName: Yup.string().required('Required'),
           hall: Yup.string().required('Required'),
-          roomNumber: Yup.number()
-            .positive('Room number must be positive')
-            .integer('Room number must be a whole number'),
+          roomNumber: Yup.string().matches(/^[0-9]{1,3}[a-zA-Z]?$/, 'Invalid room number'),
         })}
         onSubmit={handleSubmit}
       >
@@ -121,7 +119,6 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
               className={classes.roomNumberField}
               name="roomNumber"
               label="Room No."
-              type="number"
               disabled={isLoading}
             />
           </div>
