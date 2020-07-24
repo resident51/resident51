@@ -18,7 +18,7 @@ interface SignInWrapperProps {
   onSignUpRedirect: () => void;
 }
 
-const SignInWrapper: React.FC<SignInWrapperProps> = props => {
+const SignInWrapper = React.forwardRef<HTMLDivElement, SignInWrapperProps>((props, ref) => {
   const { onClose, onSignUpRedirect } = props;
   const [fpVisible, setFpVisible] = useState(false);
   const classes = useStyles();
@@ -32,7 +32,7 @@ const SignInWrapper: React.FC<SignInWrapperProps> = props => {
   }, []);
 
   return (
-    <div className={classes.signInWrapperRoot}>
+    <div className={classes.signInWrapperRoot} ref={ref}>
       <SignIn
         onClose={onClose}
         onSignUpRedirect={onSignUpRedirect}
@@ -48,6 +48,6 @@ const SignInWrapper: React.FC<SignInWrapperProps> = props => {
       />
     </div>
   );
-};
+});
 
 export default SignInWrapper;

@@ -31,7 +31,7 @@ interface SignInProps {
   onForgotPassword: () => void;
 }
 
-const SignIn: React.ForwardRefExoticComponent<SignInProps> = React.forwardRef((props, ref) => {
+const SignIn: React.FC<SignInProps> = props => {
   const { onClose, onSignUpRedirect, onForgotPassword } = props;
   const [isLoading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
@@ -65,7 +65,6 @@ const SignIn: React.ForwardRefExoticComponent<SignInProps> = React.forwardRef((p
       onClose={onClose}
       onBottomTextClick={onSignUpRedirect}
       isLoading={isLoading}
-      ref={ref}
     >
       <Formik
         initialValues={{
@@ -100,6 +99,6 @@ const SignIn: React.ForwardRefExoticComponent<SignInProps> = React.forwardRef((p
       </Link>
     </AuthContentContainer>
   );
-});
+};
 
 export default SignIn;

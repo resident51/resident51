@@ -14,7 +14,7 @@ type TextFieldProps = Omit<
   reserveHelperTextSpace?: boolean;
 };
 
-const TextField: React.FC<TextFieldProps> = React.forwardRef((props, ref) => {
+const TextField = React.forwardRef<HTMLDivElement, TextFieldProps>((props, ref) => {
   const { required, label, reserveHelperTextSpace = true, ...additionalProps } = props;
   const classes = useStyles();
   const [field, meta] = useField(props.name);
