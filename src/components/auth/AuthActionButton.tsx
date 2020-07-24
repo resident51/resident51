@@ -100,7 +100,7 @@ const AuthActionButton: React.FC = () => {
           }
           return (
             <div className={classes.authActionButton}>
-              <Button color="inherit" onClick={handleSignIn}>
+              <Button className={classes.signInButton} color="inherit" onClick={handleSignIn}>
                 Sign In
               </Button>
               <Button variant="outlined" color="inherit" onClick={handleSignUp}>
