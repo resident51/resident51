@@ -7,7 +7,7 @@ import { PersonAdd as PersonAddIcon } from '@material-ui/icons';
 
 import { UserCreationData } from '@app/types';
 
-import { KU_EMAIL_REGEX } from '@app/constants';
+import { HALLS, KU_EMAIL_REGEX } from '@app/constants';
 import { useUser } from '@app/contexts/services/User';
 
 import PasswordField from '../common/form/PasswordField';
@@ -35,20 +35,6 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const classes = useStyles();
   const { signUp } = useUser();
-  const halls = [
-    'Battenfeld',
-    'Douthart',
-    'Grace Pearson',
-    'KK Amini',
-    'Krehbiel',
-    'Margaret Amini',
-    'Miller',
-    'Pearson',
-    'Rieger',
-    'Sellards',
-    'Stephenson',
-    'Watkins',
-  ];
 
   const handleSubmit = useCallback(
     async (data: UserCreationData) => {
@@ -97,7 +83,9 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
             .min(8, 'Password must be at least 8 characters')
             .required('Required'),
           displayName: Yup.string().required('Required'),
-          hall: Yup.string().required('Required'),
+          hall: Yup.string()
+            .oneOf(HALLS)
+            .required('Required'),
           roomNumber: Yup.string().matches(/^[0-9]{1,3}[a-zA-Z]?$/, 'Invalid room number'),
         })}
         onSubmit={handleSubmit}
@@ -111,7 +99,7 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
               className={classes.hallField}
               name="hall"
               label="Hall"
-              options={halls}
+              options={HALLS}
               disabled={isLoading}
               required
             />
