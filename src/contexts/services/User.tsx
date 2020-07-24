@@ -53,7 +53,7 @@ const UserContextProvider: React.FC = ({ children }) => {
         })
         .catch(err => {
           if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
-            reject(new AuthError(err.code, 'Email or password are incorrect'));
+            reject(new AuthError(err.code, 'Incorrect email or password.'));
           } else {
             reject(new AuthError(err.code, err.message));
           }
