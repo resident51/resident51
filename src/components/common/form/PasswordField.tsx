@@ -2,7 +2,7 @@ import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
 import uniqid from 'uniqid';
-import zxcvbn, { ZXCVBNScore } from 'zxcvbn';
+import zxcvbn from 'zxcvbn';
 import { IconButton, InputAdornment } from '@material-ui/core';
 import {
   Visibility as VisibilityIcon,
@@ -40,7 +40,7 @@ const PasswordField: React.FC<PasswordFieldProps> = props => {
 
   useLayoutEffect(() => {
     if (strengthMeter && fieldRef.current) {
-      const score: ZXCVBNScore = zxcvbn(field.value).score;
+      const { score } = zxcvbn(field.value);
       const strengthBarEl = document.getElementById(strengthBarId.current);
       const strengthBarClasses = clsx(
         classes.strengthBar,
