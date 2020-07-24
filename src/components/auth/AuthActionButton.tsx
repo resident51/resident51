@@ -48,6 +48,10 @@ const AuthActionButton: React.FC = () => {
     setLoading(false);
   }, [signOut, snackbarContext]);
 
+  /**
+   * Disclose a sign in modal when a <rootUrl>/?signIn url is accessed.
+   * Useful for callbacks from firebase auth functions.
+   */
   useEffect(() => {
     const {
       location: { pathname, search },
