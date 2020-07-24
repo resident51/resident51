@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { Alert } from '@material-ui/lab';
 import { Collapse } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
-import { useSnackbar } from 'notistack';
 
 import { LoadingOverlay } from '@app/contexts/ui/LoadingOverlay';
 import { sendAccountVerificationEmail } from '@app/firebase/firebase';
+import { useSnackbar } from '@app/contexts/ui/Snackbar';
 import { useUser } from '@app/contexts/services/User';
 
 import Link from '../common/Link';

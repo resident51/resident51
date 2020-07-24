@@ -3,10 +3,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { AccountCircle, MoreVert } from '@material-ui/icons';
 import { Button, useMediaQuery } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 
 import { LoadingOverlay } from '@app/contexts/ui/LoadingOverlay';
 import { useModal } from '@app/contexts/ui/Modal';
+import { useSnackbar } from '@app/contexts/ui/Snackbar';
 import { useUser } from '@app/contexts/services/User';
 
 import AuthModal from '../auth/AuthModal';

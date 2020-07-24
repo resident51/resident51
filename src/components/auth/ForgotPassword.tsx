@@ -3,10 +3,10 @@ import React, { useCallback, useState } from 'react';
 import * as Yup from 'yup';
 import { Button } from '@material-ui/core';
 import { Form, Formik } from 'formik';
-import { useSnackbar } from 'notistack';
 
 import { KU_EMAIL_REGEX } from '@app/constants';
 import { sendPasswordResetEmail } from '@app/firebase/firebase';
+import { useSnackbar } from '@app/contexts/ui/Snackbar';
 
 import { FormikTextField } from '../common/FormFields';
 import { LockQuestion as LockQuestionIcon } from '../common/Icons';
