@@ -34,7 +34,6 @@ export const verifyUserAsResident = functions.httpsCallable('verifyUserAsResiden
 export const verifyUserAsEditor = functions.httpsCallable('verifyUserAsEditor');
 export const verifyUserAsAdmin = functions.httpsCallable('verifyUserAsAdmin');
 export const logUser = functions.httpsCallable('logUser');
-export const logError = functions.httpsCallable('logError');
 export const createUserWithData = functions.httpsCallable('createUserWithData');
 export const sendAccountVerificationEmail = functions.httpsCallable('sendAccountVerificationEmail');
 export const sendPasswordResetEmail = functions.httpsCallable('sendPasswordResetEmail');
