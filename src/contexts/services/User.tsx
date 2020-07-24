@@ -8,7 +8,7 @@ import React, {
   useState,
 } from 'react';
 
-import { User, UserCreationData } from '@app/types';
+import { SignedInUser, SignedOutUser, UserCreationData } from '@app/types';
 
 import { auth, createUserWithData, store } from '@app/firebase/firebase';
 
@@ -27,7 +27,7 @@ class AuthError extends Error {
 type AuthResult = { status?: 'SUCCESS' | 'PARTIAL_SUCCESS' } | undefined | void;
 
 interface UserCtx {
-  user: User | null | undefined;
+  user?: SignedInUser | SignedOutUser;
   signIn: (email: string, password: string) => Promise<AuthResult>;
   signOut: () => Promise<AuthResult>;
   signUp: (userData: UserCreationData) => Promise<AuthResult>;
@@ -37,7 +37,7 @@ const UserContext = createContext({} as UserCtx);
 export const useUser = (): UserCtx => useContext(UserContext);
 
 const UserContextProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<User | null | undefined>();
+  const [user, setUser] = useState<SignedInUser | SignedOutUser>();
   const [watchUser, setWatchUser] = useState<boolean>(false);
   const userNotify = useRef<PromiseNotification>({});
 
@@ -80,12 +80,12 @@ const UserContextProvider: React.FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = auth().onAuthStateChanged((authUser: firebase.User | null) => {
+    const unsubscribe = auth().onAuthStateChanged(authUser => {
       if (authUser) {
         setWatchUser(true);
       } else {
         setWatchUser(false);
-        setUser(null);
+        setUser({ signedIn: false });
       }
     });
 
@@ -105,7 +105,8 @@ const UserContextProvider: React.FC = ({ children }) => {
               setUser({
                 ...userSnapshot.data(),
                 emailVerified: currentUser.emailVerified,
-              } as User);
+                signedIn: true,
+              } as SignedInUser);
               userNotify.current.resolve?.();
             } else {
               userNotify.current.reject?.(

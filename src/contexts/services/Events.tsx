@@ -7,6 +7,7 @@ import {
   EventTypeFormats,
   Events,
   Hall,
+  SignedInUser,
 } from '@app/types/';
 
 import EventsReducer from '@app/reducers/Events.Reducer';
@@ -38,9 +39,10 @@ const EventsProvider: React.FC = props => {
     // dispatchPrivateEvents
   ] = useReducer(EventsReducer, null);
   const events = concatEvents(publicEvents, privateEvents);
+  const signedInUser = user as SignedInUser;
 
-  const userHall = (user?.uid && user?.hall) || 'Miller'; // #TODO: this is fucking awful
-  const formatSubmittedEvent = formatSubmittedEventByHall(userHall as Hall);
+  const userHall = (signedInUser?.uid && signedInUser?.hall) || 'Miller'; // #TODO: this is fucking awful
+  const formatSubmittedEvent = formatSubmittedEventByHall(userHall);
 
   // Query all public events.
   useEffect(() => {

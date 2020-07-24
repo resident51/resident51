@@ -4,6 +4,8 @@ import { Alert } from '@material-ui/lab';
 import { Collapse } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
 
+import { SignedInUser } from '@app/types';
+
 import { LoadingOverlay } from '@app/contexts/ui/LoadingOverlay';
 import { sendAccountVerificationEmail } from '@app/firebase/firebase';
 import { useSnackbar } from '@app/contexts/ui/Snackbar';
@@ -27,7 +29,7 @@ const VerificationBanner: React.FC = () => {
   const handleVerificationLink = async (): Promise<void> => {
     try {
       setLoading(true);
-      await sendAccountVerificationEmail({ email: user?.email });
+      await sendAccountVerificationEmail({ email: (user as SignedInUser)?.email });
       snackbarContext.enqueueSnackbar('Verification email sent.', { variant: 'success' });
     } catch {
       snackbarContext.enqueueSnackbar('Unable to send verification email. Please try again', {
@@ -63,10 +65,12 @@ const VerificationBanner: React.FC = () => {
     </Alert>
   );
 
-  const banners: React.ReactNode[] = [
-    !user?.emailVerified && emailVerificationBanner,
-    !user?.hallVerified && hallVerificationBanner,
-  ].filter(Boolean);
+  const banners: React.ReactNode[] = user?.signedIn
+    ? [
+        !user?.emailVerified && emailVerificationBanner,
+        !user?.hallVerified && hallVerificationBanner,
+      ].filter(Boolean)
+    : [];
 
   if (!user) {
     return null;

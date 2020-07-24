@@ -18,7 +18,7 @@ export interface UserRoles {
   ashc: string[];
 }
 
-export interface User {
+export interface SignedInUser {
   uid: string;
   email: string;
   emailVerified: boolean;
@@ -28,6 +28,11 @@ export interface User {
   roomNumber?: string;
   permissions: Record<string, unknown>;
   roles: UserRoles;
+  signedIn: true;
+}
+
+export interface SignedOutUser {
+  signedIn: false;
 }
 
 export interface UserCreationData {

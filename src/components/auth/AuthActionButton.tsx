@@ -57,7 +57,13 @@ const AuthActionButton: React.FC = () => {
       location: { pathname, search },
     } = history;
     const queryParams = new URLSearchParams(search.substring(1));
-    if (pathname === '/' && queryParams.get('signIn') !== null && user === null) {
+
+    // Wait until user is initialized
+    if (!user) {
+      return;
+    }
+
+    if (pathname === '/' && queryParams.get('signIn') !== null && user?.signedIn === false) {
       discloseAuthModal('sign-in', () => {
         history.replace({ search: '' });
       });
@@ -73,7 +79,7 @@ const AuthActionButton: React.FC = () => {
         if (user === undefined) {
           // Don't show a button until we know if the user is or isn't logged in.
           return null;
-        } else if (user) {
+        } else if (user.signedIn) {
           return (
             <IconButtonMenu
               className={classes.authActionButton}
