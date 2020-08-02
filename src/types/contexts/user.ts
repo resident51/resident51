@@ -1,16 +1,6 @@
-export type Hall =
-  | 'Battenfeld'
-  | 'Douthart'
-  | 'Grace Pearson'
-  | 'KK Amini'
-  | 'Krehbiel'
-  | 'Margaret Amini'
-  | 'Miller'
-  | 'Pearson'
-  | 'Rieger'
-  | 'Sellards'
-  | 'Stephenson'
-  | 'Watkins';
+import { HALLS } from '@app/constants';
+
+export type Hall = typeof HALLS[number];
 
 export interface UserRoles {
   hall: Hall;

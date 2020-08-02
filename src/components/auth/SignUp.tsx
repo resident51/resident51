@@ -72,7 +72,7 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
             password: '',
             displayName: '',
             hall: '' as Hall,
-            roomNumber: undefined,
+            roomNumber: '',
           } as UserCreationData
         }
         validationSchema={Yup.object({
@@ -84,7 +84,7 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
             .required('Required'),
           displayName: Yup.string().required('Required'),
           hall: Yup.string()
-            .oneOf(HALLS)
+            .oneOf([...HALLS]) // HALLS is readonly and this array has to be mutable
             .required('Required'),
           roomNumber: Yup.string().matches(/^[0-9]{1,3}[a-zA-Z]?$/, 'Invalid room number'),
         })}
@@ -99,7 +99,7 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
               className={classes.hallField}
               name="hall"
               label="Hall"
-              options={HALLS}
+              options={[...HALLS]}
               disabled={isLoading}
               required
             />
