@@ -1,68 +1,142 @@
-import React, { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
-import { FetchedUser, User } from '@app/types';
+import { SignedInUser, SignedOutUser, UserCreationData } from '@app/types';
 
-import UserReducer, { UserAction } from '@app/reducers/User.Reducer';
-import useFirebaseAuth from '@app/hooks/useFirebaseAuth';
-import useUserCollection from '@app/hooks/useUserCollection';
-import { logUser, usersCollection } from '@app/firebase/firebase';
+import { auth, createUserWithData, store } from '@app/firebase/firebase';
 
-import { loggedOutUser } from './utils/UserProps';
-
-export interface UserCtx {
-  user: User;
-  refreshToken: () => Promise<string>;
-  userDispatch: React.Dispatch<UserAction>;
-  isLoggingIn: boolean;
-  setIsLoggingIn: (next: boolean) => void;
-  usersRequestingVerify: FetchedUser[];
-  verifiedResidents: FetchedUser[];
+interface PromiseNotification {
+  resolve?: (result?: AuthResult) => void;
+  reject?: (err: AuthError) => void;
 }
 
-export const UserContext = createContext({} as UserCtx);
-export const useUser = (): UserCtx => useContext<UserCtx>(UserContext);
+class AuthError extends Error {
+  constructor(public readonly code: string | number, public readonly message: string) {
+    super(message);
+    this.name = 'R51AuthError';
+  }
+}
 
-const UserProvider: React.FC = props => {
-  const [user, userDispatch] = useReducer(UserReducer, loggedOutUser);
-  const [userAuth, loginState] = useFirebaseAuth(user, userDispatch);
+type AuthResult = { status?: 'SUCCESS' | 'PARTIAL_SUCCESS' } | undefined | void;
+
+interface UserCtx {
+  user?: SignedInUser | SignedOutUser;
+  signIn: (email: string, password: string) => Promise<AuthResult>;
+  signOut: () => Promise<AuthResult>;
+  signUp: (userData: UserCreationData) => Promise<AuthResult>;
+}
+
+const UserContext = createContext({} as UserCtx);
+export const useUser = (): UserCtx => useContext(UserContext);
+
+const UserContextProvider: React.FC = ({ children }) => {
+  const [user, setUser] = useState<SignedInUser | SignedOutUser>();
+  const [watchUser, setWatchUser] = useState<boolean>(false);
+  const userNotify = useRef<PromiseNotification>({});
+
+  const signIn = useCallback(async (email: string, password: string): Promise<AuthResult> => {
+    return new Promise((resolve, reject) => {
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          userNotify.current = {
+            resolve,
+            reject,
+          };
+        })
+        .catch(err => {
+          if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+            reject(new AuthError(err.code, 'Incorrect email or password.'));
+          } else {
+            reject(new AuthError(err.code, err.message));
+          }
+        });
+    });
+  }, []);
+
+  const signUp = useCallback(
+    async (data: UserCreationData): Promise<AuthResult> => {
+      try {
+        const result = await createUserWithData(data);
+        await signIn(data.email, data.password);
+        return result.data;
+      } catch (e) {
+        throw new AuthError(e.code ?? e.status, e.message);
+      }
+    },
+    [signIn],
+  );
+
+  const signOut = useCallback(() => {
+    setWatchUser(false);
+    return auth().signOut();
+  }, []);
 
   useEffect(() => {
-    logUser();
-  }, [userAuth]);
+    const unsubscribe = auth().onAuthStateChanged(authUser => {
+      if (authUser) {
+        setWatchUser(true);
+      } else {
+        setWatchUser(false);
+        setUser({ signedIn: false });
+      }
+    });
 
-  // Need memoized queries, as firebase creates new values even if two queries are identical
-  const baseQuery = useMemo(() => usersCollection.where('hall', '==', user.hall), [user]);
-  const requestingUsersQuery = useMemo(() => baseQuery.where('permissions', '==', 0), [baseQuery]);
-  const verifiedUsersQuery = useMemo(() => baseQuery.where('permissions', '>=', 1), [baseQuery]);
+    return unsubscribe;
+  }, []);
 
-  const usersRequestingVerify = useUserCollection(user, requestingUsersQuery);
-  const verifiedResidents = useUserCollection(user, verifiedUsersQuery);
+  useEffect(() => {
+    let unsubscribe;
+    const currentUser = auth().currentUser;
+    if (watchUser && currentUser) {
+      unsubscribe = store
+        .collection('users')
+        .doc(currentUser.uid)
+        .onSnapshot({
+          next: userSnapshot => {
+            if (userSnapshot.exists) {
+              setUser({
+                ...userSnapshot.data(),
+                emailVerified: currentUser.emailVerified,
+                signedIn: true,
+              } as SignedInUser);
+              userNotify.current.resolve?.();
+            } else {
+              userNotify.current.reject?.(
+                new AuthError(
+                  'internal/no-user-record',
+                  'User was authenticated but a corresponding record was not found in the store',
+                ),
+              );
+            }
+          },
+          error: err => {
+            userNotify.current.reject?.(new AuthError(err.code, err.message));
+          },
+        });
+    }
 
-  const [isLoggingIn, setIsLoggingIn] = loginState;
-  const refreshToken = (): Promise<string> =>
-    userAuth ? userAuth.getIdToken(true) : Promise.reject('');
+    return unsubscribe;
+  }, [watchUser]);
 
-  return (
-    <UserContext.Provider
-      value={{
-        user,
-        refreshToken,
-        isLoggingIn,
-        setIsLoggingIn,
-        userDispatch,
-        usersRequestingVerify,
-        verifiedResidents,
-      }}
-    >
-      {props.children}
-    </UserContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      user,
+      signIn,
+      signOut,
+      signUp,
+    }),
+    [signIn, signOut, signUp, user],
   );
+
+  return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
 };
 
-export {
-  initializeLoggedInUserState,
-  loggedOutUser,
-  shouldUpdateUserState,
-} from './utils/UserProps';
-
-export default UserProvider;
+export default UserContextProvider;

@@ -12,13 +12,15 @@ export default makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexFlow: 'column',
+    height: '100%',
   },
   title: {
     cursor: 'pointer',
   },
   content: {
+    display: 'flex',
+    flexFlow: 'column',
     flexGrow: 1,
-    padding: theme.spacing(3),
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(7),
     },

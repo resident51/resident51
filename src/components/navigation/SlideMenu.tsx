@@ -87,7 +87,6 @@ const SlideMenu: React.FC<SlideMenuProps> = props => {
           disableEnforceFocus: !open,
         }}
         PaperProps={open ? undefined : { elevation: 2 }}
-        transitionDuration={!isMobile ? 0 : undefined}
       >
         <div className={classes.toolbarOffset} />
         <div className={classes.menuListContainer}>

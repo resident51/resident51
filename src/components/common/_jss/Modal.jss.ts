@@ -8,6 +8,10 @@ export default makeStyles((theme: Theme) => ({
   },
   modalContentContainer: {
     margin: theme.spacing(3),
+
+    '&:focus': {
+      outline: 'none',
+    },
   },
   loadingPaper: {
     borderTopRightRadius: 0,

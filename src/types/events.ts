@@ -1,6 +1,6 @@
 import { firestore } from 'firebase/app';
 
-import { Hall } from './common';
+import { Hall } from '.';
 
 // Common Types
 export type EventId = string;

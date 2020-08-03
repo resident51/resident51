@@ -14,6 +14,7 @@ import Modal from '@app/components/common/Modal';
 export interface ModalOptions {
   disablePaper?: boolean;
   disableIndirectDismissal?: boolean;
+  disableTransition?: boolean;
   onDismiss?: () => void;
 }
 export interface ModalCtx {
@@ -22,7 +23,7 @@ export interface ModalCtx {
   dismiss: () => void;
 }
 
-type ModalProps = Pick<ModalOptions, 'disablePaper' | 'disableIndirectDismissal'>;
+export type ModalProps = Omit<ModalOptions, 'onDismiss'>;
 
 export const ModalContext = createContext<ModalCtx>({} as ModalCtx);
 export const useModal = (): ModalCtx => useContext(ModalContext);
@@ -35,7 +36,7 @@ const ModalProvider: React.FC = props => {
   const dismissCallback = useRef<(() => void) | null>(null);
 
   const disclose = useCallback((content: ReactElement, modalOptions: ModalOptions = {}): void => {
-    if (content.props) {
+    if (content.props && !modalOptions.disablePaper) {
       const clonedContent = React.cloneElement(content, {
         setLoadingIndicator: setLoading,
       });
@@ -45,8 +46,8 @@ const ModalProvider: React.FC = props => {
     }
     dismissCallback.current = modalOptions.onDismiss ?? null;
 
-    const { disablePaper, disableIndirectDismissal } = modalOptions;
-    setModalProps({ disablePaper, disableIndirectDismissal });
+    const newModalProps = { ...modalOptions, onDismiss: undefined };
+    setModalProps(newModalProps);
     setIsOpen(true);
   }, []);
 
@@ -55,7 +56,6 @@ const ModalProvider: React.FC = props => {
       dismissCallback.current();
     }
     dismissCallback.current = null;
-    setModalProps({});
     setIsOpen(false);
     setLoading(false);
     setModalContent(null);

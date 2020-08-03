@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { SignedInUser } from '@app/types';
+
 import { useEvents } from '@app/contexts/services/Events';
 import { useUser } from '@app/contexts/services/User';
 
@@ -9,7 +11,8 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      hey {user.displayName || 'pal'}, there's {events ? events.length : '(loading)'} events.
+      hey {(user as SignedInUser)?.displayName || 'pal'}, there's{' '}
+      {events ? events.length : '(loading)'} events.
     </div>
   );
 };

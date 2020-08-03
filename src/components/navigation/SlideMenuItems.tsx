@@ -110,7 +110,9 @@ const NavListItem: React.FC<NavListItemProps> = props => {
     <>
       <ListItem onClick={handleClick} selected={isSelected} button>
         {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
-        <ListItemText primary={isDrawerOpen ? text : `${text.substring(0, 4)}...`} />
+        <Collapse in={isDrawerOpen} collapsedHeight={32} className={classes.listItemText}>
+          <ListItemText primary={text} />
+        </Collapse>
         {hasSubList ? expandButton : null}
       </ListItem>
       {subList}
@@ -131,7 +133,7 @@ const UtilityListItem: React.FC<UtilityListItemProps> = props => {
     if (props.clickBehavior === 'disclose') {
       if (props.disclosureComponent) {
         props.menuClosingAction();
-        modalContext.disclose(props.disclosureComponent);
+        modalContext.disclose(props.disclosureComponent, { disableIndirectDismissal: false });
       }
     } else if (props.clickBehavior === 'link') {
       if (props.url) {
