@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 import { firestore } from 'firebase';
 import { useHistory } from 'react-router-dom';
 
-import { EventForm as EventFormType, SignedInUser } from '@app/types';
+import { EventForm as EventFormType } from '@app/types';
 
 import useDocumentTitle from '@app/hooks/useDocumentTitle';
 import { eventsCollection } from '@app/firebase/firebase';
@@ -35,7 +35,7 @@ const CreateEvent: React.FC = () => {
       const formattedEvent = formatSubmittedEvent(event, {
         userId: user.uid,
         displayName: user.displayName,
-        hall: (user as SignedInUser).hall,
+        hall: user.hall,
         dateTime: firestore.FieldValue.serverTimestamp(),
       });
 
