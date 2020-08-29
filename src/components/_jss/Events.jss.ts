@@ -29,9 +29,9 @@ export default makeStyles((theme: Theme) => ({
   },
   createEventButton: {
     color: 'white',
-    background: theme.palette.success.main,
+    background: theme.palette.primary.main,
     '&:hover': {
-      background: theme.palette.success.dark,
+      background: theme.palette.primary.dark,
     },
   },
   buttonIsToggled: {
