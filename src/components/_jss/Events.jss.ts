@@ -4,8 +4,8 @@ export default makeStyles((theme: Theme) => ({
   eventsRoot: {
     display: 'flex',
     flexDirection: 'column',
-    overflowY: 'scroll',
-    height: '100%',
+    // overflowY: 'scroll',
+    // height: '100%',
   },
   eventsNavHeader: {
     display: 'flex',

@@ -6,7 +6,7 @@ import { FastField, Field, Form, Formik, FormikHelpers } from 'formik';
 
 import { EventForm as EventFormType, EventR51, Hall, SignedInUser } from '@app/types';
 
-import PromptIfDirty from '../common/PromptIfDirty';
+import PromptIfDirty from '../common/form/PromptIfDirty';
 
 import EventDateInput from './eventForm/Date';
 import EventDescriptionInput from './eventForm/Description';
