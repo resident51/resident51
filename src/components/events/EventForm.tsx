@@ -58,9 +58,9 @@ const FormSectionHeader: React.FC = ({ children }) => {
 };
 
 const EventForm: React.FC<EventFormProps> = props => {
-  const { user, event, onSubmit, eventUpdated = false } = props;
+  const { user, event, onSubmit } = props;
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const formValidationSchema = useMemo(() => validationSchema({ halls: HALLS, eventTypes }), []);
 
