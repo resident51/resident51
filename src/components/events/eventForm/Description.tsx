@@ -2,8 +2,7 @@ import React from 'react';
 
 import { FieldProps } from 'formik';
 
-import { FormikTextField } from '@app/components/common/FormFields';
-
+import TextField from '../../common/form/TextField';
 import { EventFormValues } from '../EventForm';
 
 import useStyles from './_jss/Description.jss';
@@ -11,7 +10,7 @@ import useStyles from './_jss/Description.jss';
 const EventDescriptionInput: React.FC<FieldProps<EventFormValues>> = ({ field }) => {
   const classes = useStyles();
   return (
-    <FormikTextField
+    <TextField
       className={classes.description}
       multiline
       rows={4}

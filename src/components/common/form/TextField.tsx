@@ -6,13 +6,22 @@ import { useField } from 'formik';
 
 import useStyles from './_jss/TextField.jss';
 
-type TextFieldProps = Omit<MuiTextFieldProps,'onBlur' | 'value' | 'error' | 'helperText'> & {
+export type TextFieldProps = Omit<
+  MuiTextFieldProps,
+  'onBlur' | 'value' | 'error' | 'helperText'
+> & {
   name: string; // make name a required prop since formik needs it
   reserveHelperTextSpace?: boolean;
 };
 
 const TextField = React.forwardRef<HTMLDivElement, TextFieldProps>((props, ref) => {
-  const { required, label, reserveHelperTextSpace = true, onChange: onChangeCallback, ...additionalProps } = props;
+  const {
+    required,
+    label,
+    reserveHelperTextSpace = true,
+    onChange: onChangeCallback,
+    ...additionalProps
+  } = props;
   const classes = useStyles();
   const [field, meta] = useField(props.name);
   const formattedLabel = required && typeof label === 'string' ? `${label}*` : label;
@@ -51,6 +60,4 @@ const TextField = React.forwardRef<HTMLDivElement, TextFieldProps>((props, ref) 
   );
 });
 
-// eslint-disable-next-line
-export type { TextFieldProps };
 export default TextField;

@@ -5,7 +5,7 @@ import { Box, Collapse, IconButton, Paper } from '@material-ui/core';
 import { Clear as ClearIcon } from '@material-ui/icons';
 import { Form, Formik } from 'formik';
 
-import { FormikTextField } from '../common/FormFields';
+import TextField from '../common/form/TextField';
 
 import useStyles from './_jss/EventSearch.jss';
 
@@ -46,7 +46,7 @@ const EventSearch: React.FC<EventSearchProps> = props => {
               const clear = (): void => resetForm({ values: { filter: '' } });
               return (
                 <Form>
-                  <FormikTextField
+                  <TextField
                     label="Search events"
                     inputRef={searchInput}
                     name="filter"

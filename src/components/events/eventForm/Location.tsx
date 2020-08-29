@@ -3,9 +3,9 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Collapse, FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 import { FieldProps } from 'formik';
 
-import { FormikTextField } from '@app/components/common/FormFields';
 import { HALLS } from '@app/constants';
 
+import TextField from '../../common/form/TextField';
 import { EventFormValues } from '../EventForm';
 
 import useStyles from './_jss/Location.jss';
@@ -85,7 +85,7 @@ const EventLocationInput: React.FC<FieldProps<EventFormValues>> = props => {
           />
         </div>
         <Collapse in={otherEnabled} className={classes.otherInput}>
-          <FormikTextField
+          <TextField
             name="location"
             inputRef={otherInput}
             className={classes.otherInput}

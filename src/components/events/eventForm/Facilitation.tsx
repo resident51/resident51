@@ -3,8 +3,7 @@ import React from 'react';
 import { FieldProps } from 'formik';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
 
-import { FormikTextField } from '@app/components/common/FormFields';
-
+import TextField from '../../common/form/TextField';
 import { EventFormValues } from '../EventForm';
 
 const orgs = [
@@ -46,7 +45,7 @@ const EventFacilitationInput: React.FC<FieldProps<EventFormValues>> = props => {
       {(values.facilitation.organizationType === 'other' ||
         values.facilitation.organizationType === 'committee') && (
         <FormControl component="fieldset">
-          <FormikTextField
+          <TextField
             name="facilitation.organizationName"
             label={
               values.facilitation.organizationType === 'committee'
