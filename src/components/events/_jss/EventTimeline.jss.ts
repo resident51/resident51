@@ -24,7 +24,7 @@ export default makeStyles((theme: Theme) => ({
     },
   },
   lastTimelineConnector: {
-    background: `linear-gradient(180deg, ${theme.palette.grey[400]} 0%, rgba(189,189,189,0) 100%)`,
+    flexGrow: 0.85,
   },
   eventTimelineContent: {
     paddingLeft: theme.spacing(1),
