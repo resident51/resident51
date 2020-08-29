@@ -35,7 +35,7 @@ const EventSearch: React.FC<EventSearchProps> = props => {
 
   return (
     <Collapse in={isOpen}>
-      <Paper square className={classes.eventSearchFilter}>
+      <Paper elevation={0} square className={classes.eventSearchFilter}>
         <Box className={classes.eventSearchBoxContainer}>
           <Formik
             initialValues={{ filter: searchFilter }}
