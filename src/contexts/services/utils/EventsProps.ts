@@ -68,7 +68,7 @@ const determineCFSEventType = (
   type: publicStatus.type === 'public' ? 'public' : 'private',
   halls:
     publicStatus.type === 'public'
-      ? HALLS
+      ? (HALLS as Hall[])
       : publicStatus.type === 'hall'
       ? [hall]
       : publicStatus.halls,

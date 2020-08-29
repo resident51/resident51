@@ -84,7 +84,7 @@ const SignUp = React.forwardRef<unknown, SignUpProps>((props, ref) => {
             .required('Required'),
           displayName: Yup.string().required('Required'),
           hall: Yup.string()
-            .oneOf([...HALLS]) // HALLS is readonly and this array has to be mutable
+            .oneOf([...HALLS]) // HALLS is readonly and this array has to be mutable. Not fun.
             .required('Required'),
           roomNumber: Yup.string().matches(/^[0-9]{1,3}[a-zA-Z]?$/, 'Invalid room number'),
         })}

@@ -6,8 +6,6 @@ import { FastField, Field, Form, Formik, FormikHelpers } from 'formik';
 
 import { EventForm as EventFormType, EventR51, Hall, SignedInUser } from '@app/types';
 
-import { HALLS, eventTypes } from '@app/constants';
-
 import PromptIfDirty from '../common/PromptIfDirty';
 
 import EventDateInput from './eventForm/Date';
@@ -62,7 +60,7 @@ const EventForm: React.FC<EventFormProps> = props => {
 
   // const classes = useStyles();
 
-  const formValidationSchema = useMemo(() => validationSchema({ halls: HALLS, eventTypes }), []);
+  const formValidationSchema = useMemo(() => validationSchema(), []);
 
   const formInitialValues = useMemo(() => {
     const formEvent = event || ({} as EventR51);

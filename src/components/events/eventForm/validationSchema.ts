@@ -1,13 +1,11 @@
 import * as yup from 'yup';
 import moment from 'moment';
 
-import { EventTypeFormats, Hall } from '@app/types';
+import { Hall } from '@app/types';
 
-type params = {
-  halls: Hall[];
-  eventTypes: EventTypeFormats;
-};
-const generateValidationSchema = ({ halls, eventTypes }: params): yup.ObjectSchema =>
+import { HALLS, eventTypes } from '@app/constants';
+
+const generateValidationSchema = (): yup.ObjectSchema =>
   yup.object().shape({
     name: yup
       .string()
@@ -51,7 +49,7 @@ const generateValidationSchema = ({ halls, eventTypes }: params): yup.ObjectSche
         then: yup
           .array()
           .min(2, 'You must choose at least two halls, one being your own.')
-          .of(yup.string().oneOf(halls, 'Choose from the options provided')),
+          .of(yup.string().oneOf(HALLS as Hall[], 'Choose from the options provided')),
       }),
     }),
     facilitation: yup.object().shape({
