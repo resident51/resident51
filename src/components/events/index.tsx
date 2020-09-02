@@ -1,19 +1,15 @@
 import React from 'react';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import CreateEvent from './CreateEvent';
 import Events from './Events';
-import Home from './Home';
-import NotFound from './NotFound';
 
 const Routes: React.FC = () => (
-  <Switch>
-    <Route component={Home} path="/" exact />
+  <React.Fragment>
     <Route component={Events} path="/events" exact />
     <Route component={CreateEvent} path="/events/create" exact />
-    <Route component={NotFound} />
-  </Switch>
+  </React.Fragment>
 );
 
 export default Routes;

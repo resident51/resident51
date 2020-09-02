@@ -12,8 +12,8 @@ import { useHistory } from 'react-router-dom';
 import useDocumentTitle from '@app/hooks/useDocumentTitle';
 import { useEvents } from '@app/contexts/services/Events';
 
-import EventSearch from './events/EventSearch';
-import EventTimeline from './events/EventTimeline';
+import EventSearch from './EventSearch';
+import EventTimeline from './EventTimeline';
 
 import useStyles from './_jss/Events.jss';
 

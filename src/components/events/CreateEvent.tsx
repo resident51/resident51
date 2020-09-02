@@ -12,7 +12,7 @@ import { eventsCollection } from '@app/firebase/firebase';
 import { useEvents } from '@app/contexts/services/Events';
 import { useUser } from '@app/contexts/services/User';
 
-import EventForm from './events/EventForm';
+import EventForm from './EventForm';
 
 import useStyles from './_jss/CreateEvent.jss';
 
