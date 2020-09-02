@@ -21,9 +21,8 @@ import {
   Restaurant,
 } from '@material-ui/icons';
 
-import { EventR51 } from '@app/types';
+import { EventR51, SignedInUser, SignedOutUser } from '@app/types';
 
-import { canUpdateEvent } from '@app/utils';
 import { eventTypes } from '@app/constants';
 import { useModal } from '@app/contexts/ui/Modal';
 import { useUser } from '@app/contexts/services/User';
@@ -31,6 +30,9 @@ import { useUser } from '@app/contexts/services/User';
 import EventDetails from './EventDetails';
 
 import useStyles from './_jss/Event.jss';
+
+const canUpdateEvent = (user: SignedInUser | SignedOutUser | undefined): boolean =>
+  !!user?.signedIn;
 
 interface EventTypeIcon {
   [type: string]: (className: string) => React.ReactElement;
@@ -55,7 +57,7 @@ const Event: React.FC<EventProps> = ({ event, suppressDetailsModal = false }) =>
   const classes = useStyles();
   const EventIcon = eventTypeIcon[type](classes[type]); // make less ugly
 
-  const canUpdate = canUpdateEvent(event.publicStatus, user);
+  const canUpdate = canUpdateEvent(user);
 
   const onEventClick = useCallback(() => {
     if (!suppressDetailsModal) {
