@@ -1,22 +1,13 @@
 import React, { useMemo } from 'react';
 
-import clsx from 'clsx';
-import {
-  Timeline,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineItem,
-  TimelineOppositeContent,
-  TimelineSeparator,
-} from '@material-ui/lab';
-import { Typography } from '@material-ui/core';
+import moment from 'moment';
+import { Timeline } from '@material-ui/lab';
 
 import { EventR51 } from '@app/types';
 
 import { months } from '@app/constants';
 
-import EventList from './EventList';
+import EventTimelinePartition from './EventTimelinePartition';
 
 import useStyles from './_jss/EventTimeline.jss';
 
@@ -24,74 +15,94 @@ import useStyles from './_jss/EventTimeline.jss';
  * Convert a string with the month and year into a display-worth string that is specific to the
  * current year.
  *
- * @param {string} monthId string identifying the month and year. Example 2,2005 === March 2005
+ * @param {string} monthKey string identifying the month and year. Example 2,2005 === March 2005
  * @param {string} currentYear the current year as a string
  */
-const monthIdToMonthYearString = (monthId: string, currentYear: string): string => {
-  const [month, year] = monthId.split(',');
+const monthIdToMonthYearString = (monthKey: string, currentYear: string): string => {
+  const year = monthKey.slice(0, 4);
+  const month = monthKey.slice(-2);
   const yearString = currentYear === year ? '' : ` ${year}`;
   const monthFull = months[+month];
   const monthString = yearString.length === 0 ? monthFull : monthFull.substring(0, 3);
   return `${monthString}${yearString}`;
 };
 
-interface EventTimelineProps {
-  events: EventR51[];
-}
+/**
+ * Convert a number to a two-digit string.
+ */
+const to2Digit = (num: number): string => `0${num}`.slice(-2);
 
-type EventPartitionList = { monthId: string; events: EventR51[] }[];
+type PartitionSet = {
+  today: EventR51[];
+  thisWeek: EventR51[];
+  month: EventR51[];
+  months: { [monthKey: string]: EventR51[] };
+};
 
-const EventTimeline: React.FC<EventTimelineProps> = ({ events }) => {
+const EventTimeline: React.FC<{ events: EventR51[] }> = ({ events }) => {
   const classes = useStyles();
 
   const eventPartitions = useMemo(() => {
-    return events.reduce<EventPartitionList>((partitions, event) => {
-      const eventDate = new Date(event.dateTime);
-      const monthIdentifier = `${eventDate.getMonth()},${eventDate.getFullYear()}`;
-      if (partitions.length && partitions[partitions.length - 1].monthId === monthIdentifier) {
-        partitions[partitions.length - 1].events.push(event);
+    const sortedEvents = [...events].sort((e1, e2) => e1.dateTime - e2.dateTime);
+
+    const partitions: PartitionSet = {
+      today: [],
+      thisWeek: [],
+      month: [],
+      months: {},
+    };
+    const day = moment().dayOfYear();
+    const week = moment().isoWeek();
+    const month = moment().month();
+
+    for (let i = 0; i < sortedEvents.length; i++) {
+      const event = sortedEvents[i];
+      const eventMoment = moment(new Date(event.dateTime));
+      if (eventMoment.dayOfYear() === day) {
+        partitions.today.push(event);
+      } else if (eventMoment.isoWeek() === week) {
+        partitions.thisWeek.push(event);
+      } else if (eventMoment.month() === month) {
+        partitions.month.push(event);
       } else {
-        partitions.push({ monthId: monthIdentifier, events: [event] });
+        // eg. April 2020 becomes 202003
+        const monthKey = `${eventMoment.year()}${to2Digit(eventMoment.month())}`;
+        if (partitions.months[monthKey]) {
+          partitions.months[monthKey].push(event);
+        } else {
+          partitions.months[monthKey] = [event];
+        }
       }
-      return partitions;
-    }, []);
+    }
+    return partitions;
   }, [events]);
 
-  const eventDate = new Date();
   const currentYearString = `${new Date().getFullYear()}`;
-  const monthIdNow = `${eventDate.getMonth()},${eventDate.getFullYear()}`;
-  const firstPartitionIsThisMonth = eventPartitions[0].monthId === monthIdNow;
+
+  const todayPartition = eventPartitions.today.length > 0 && (
+    <EventTimelinePartition text="Today" events={eventPartitions.today} />
+  );
+  const thisWeekPartition = eventPartitions.thisWeek.length > 0 && (
+    <EventTimelinePartition text="This Week" events={eventPartitions.thisWeek} />
+  );
+  const thisMonthPartition = eventPartitions.month.length > 0 && (
+    <EventTimelinePartition text="This Week" events={eventPartitions.month} />
+  );
 
   return (
     <Timeline align="left" className={classes.eventTimelineRoot}>
-      {eventPartitions.map((partition, index) => {
-        const marker = (
-          <Typography variant="body2" color="textSecondary">
-            {index === 0 && firstPartitionIsThisMonth
-              ? 'This month'
-              : monthIdToMonthYearString(partition.monthId, currentYearString)}
-          </Typography>
-        );
-        return (
-          <TimelineItem key={partition.monthId}>
-            <TimelineOppositeContent className={classes.timelineMarkerDefault}>
-              {marker}
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot />
-              <TimelineConnector
-                className={clsx({
-                  [classes.lastTimelineConnector]: index === eventPartitions.length - 1,
-                })}
-              />
-            </TimelineSeparator>
-            <TimelineContent className={classes.eventTimelineContent}>
-              <div className={classes.timelineMarkerSmall}>{marker}</div>
-              <EventList events={partition.events} />
-            </TimelineContent>
-          </TimelineItem>
-        );
-      })}
+      {todayPartition}
+      {thisWeekPartition}
+      {thisMonthPartition}
+      {Object.entries(eventPartitions.months)
+        .sort((month1, month2) => Number(month1[0]) - Number(month2[0]))
+        .map(([monthKey, eventList], index, arr) => {
+          const isLast = index === arr.length - 1;
+          const text = monthIdToMonthYearString(monthKey, currentYearString);
+          return (
+            <EventTimelinePartition key={monthKey} text={text} events={eventList} isLast={isLast} />
+          );
+        })}
     </Timeline>
   );
 };

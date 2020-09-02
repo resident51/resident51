@@ -30,7 +30,7 @@ const EventList: React.FC<EventListProps> = ({ events, showDivider = false }) =>
 
   return (
     <List className={classes.eventList}>
-      {events?.map((event, index, arr) => (
+      {eventsSorted.map((event, index, arr) => (
         <React.Fragment key={event.id}>
           <Event event={event} />
           {showDivider && index < arr.length - 1 ? (
