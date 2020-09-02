@@ -51,9 +51,10 @@ const EventTimeline: React.FC<{ events: EventR51[] }> = ({ events }) => {
       month: [],
       months: {},
     };
-    const day = moment().dayOfYear();
-    const week = moment().isoWeek();
-    const month = moment().month();
+    const now = moment();
+    const day = now.dayOfYear();
+    const week = now.isoWeek();
+    const month = now.month();
 
     for (let i = 0; i < sortedEvents.length; i++) {
       const event = sortedEvents[i];
@@ -95,14 +96,19 @@ const EventTimeline: React.FC<{ events: EventR51[] }> = ({ events }) => {
       {thisWeekPartition}
       {thisMonthPartition}
       {Object.entries(eventPartitions.months)
+
+        // Sort by monthKeys, which have the form "202003" for April 2020, for example.
         .sort((month1, month2) => Number(month1[0]) - Number(month2[0]))
-        .map(([monthKey, eventList], index, arr) => {
-          const isLast = index === arr.length - 1;
-          const text = monthIdToMonthYearString(monthKey, currentYearString);
-          return (
-            <EventTimelinePartition key={monthKey} text={text} events={eventList} isLast={isLast} />
-          );
-        })}
+
+        // Now that the monthly partitions are sorted by date, render one for each upcoming month.
+        .map(([monthKey, eventList], index, arr) => (
+          <EventTimelinePartition
+            key={monthKey}
+            text={monthIdToMonthYearString(monthKey, currentYearString)}
+            events={eventList}
+            isLast={index === arr.length - 1}
+          />
+        ))}
     </Timeline>
   );
 };
