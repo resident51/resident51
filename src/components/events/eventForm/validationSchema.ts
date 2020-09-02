@@ -10,7 +10,7 @@ const generateValidationSchema = (): yup.ObjectSchema =>
     name: yup
       .string()
       .min(5, 'Provide a more descriptive name!')
-      .max(50, 'Whoa whoa whoa, calm down bud, we said 50 characters or less!')
+      .max(75, 'Whoa whoa whoa, calm down bud, keep it under 75 characters!')
       .required('Please provide the name of the event.'),
     type: yup
       .string()

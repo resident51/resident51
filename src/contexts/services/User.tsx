@@ -104,6 +104,7 @@ const UserContextProvider: React.FC = ({ children }) => {
             if (userSnapshot.exists) {
               setUser({
                 ...userSnapshot.data(),
+                uid: userSnapshot.id,
                 emailVerified: currentUser.emailVerified,
                 signedIn: true,
               } as SignedInUser);

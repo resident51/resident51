@@ -117,7 +117,7 @@ const EventForm: React.FC<EventFormProps> = props => {
             <Field name="facilitation" component={EventFacilitationInput} />
 
             <Grid container direction="row" justify="center" alignItems="center">
-              <Button color="primary" variant="contained" disabled={isSubmitting}>
+              <Button color="primary" variant="contained" type="submit" disabled={isSubmitting}>
                 Submit
               </Button>
             </Grid>

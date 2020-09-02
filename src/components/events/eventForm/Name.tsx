@@ -12,7 +12,7 @@ const EventNameInput: React.FC<FieldProps<EventFormValues>> = ({ field }) => {
 
   return (
     <TextField
-      inputProps={{ maxLength: 50 }}
+      inputProps={{ maxLength: 75 }}
       className={classes.name}
       name={field.name}
       label="Event name"
