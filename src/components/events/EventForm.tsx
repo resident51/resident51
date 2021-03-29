@@ -57,6 +57,7 @@ const FormSectionHeader: React.FC = ({ children }) => {
 
 const EventForm: React.FC<EventFormProps> = props => {
   const { user, event, onSubmit } = props;
+  const classes = useStyles();
 
   // const classes = useStyles();
 
@@ -116,7 +117,13 @@ const EventForm: React.FC<EventFormProps> = props => {
             <FormSectionHeader>6. Extra info</FormSectionHeader>
             <Field name="facilitation" component={EventFacilitationInput} />
 
-            <Grid container direction="row" justify="center" alignItems="center">
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              className={classes.buttonGrid}
+            >
               <Button color="primary" variant="contained" type="submit" disabled={isSubmitting}>
                 Submit
               </Button>

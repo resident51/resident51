@@ -21,10 +21,16 @@ import { EventFormValues } from '../EventForm';
 
 import useStyles from './_jss/Public.jss';
 
-const types = [
-  ['public', 'Open to anyone'],
-  ['halls', 'Multiple halls'],
-  ['hall', 'My hall'],
+enum PublicType {
+  PUBLIC = 'public',
+  MULTIPLE_HALLS = 'halls',
+  SINGLE_HALL = 'hall',
+}
+
+const types: Array<[PublicType, string]> = [
+  [PublicType.PUBLIC, 'Open to anyone'],
+  [PublicType.MULTIPLE_HALLS, 'Multiple halls'],
+  [PublicType.SINGLE_HALL, 'My hall'],
 ];
 
 const EventPublicInput: React.FC<FieldProps<EventFormValues>> = props => {
@@ -68,8 +74,8 @@ const EventPublicInput: React.FC<FieldProps<EventFormValues>> = props => {
           />
         ))}
       </RadioGroup>
-      <Collapse in={values.publicStatus.type === 'halls'}>
-        {values.publicStatus.type === 'halls' && (
+      <Collapse in={values.publicStatus.type === PublicType.MULTIPLE_HALLS}>
+        {values.publicStatus.type === PublicType.MULTIPLE_HALLS && (
           <FormControl component="fieldset" className={classes.fullWidth}>
             <FormLabel component="legend">Which halls?</FormLabel>
             <FormGroup aria-label="position" className={classes.hallSelection}>

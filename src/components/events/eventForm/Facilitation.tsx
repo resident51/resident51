@@ -6,7 +6,9 @@ import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@ma
 import TextField from '../../common/form/TextField';
 import { EventFormValues } from '../EventForm';
 
-const orgs = [
+import useStyles from './_jss/Facilitation.jss';
+
+const organizations = [
   ['hall', 'My Hall'],
   ['ASHC', 'ASHC'],
   ['staff', 'Hall Staff'],
@@ -19,28 +21,32 @@ const EventFacilitationInput: React.FC<FieldProps<EventFormValues>> = props => {
   const { values } = props.form;
   const { field } = props;
 
+  const classes = useStyles();
+
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">Organizers</FormLabel>
       <RadioGroup row aria-label="facilitation" name="facilitation" defaultValue="top">
-        {orgs.map(([code, formal]) => (
-          <FormControlLabel
-            key={code}
-            id={`event-facilitation-${code}`}
-            value={code}
-            label={formal}
-            labelPlacement="end"
-            control={
-              <Radio
-                name="facilitation.organizationType"
-                checked={values.facilitation.organizationType === code}
-                onChange={field.onChange}
-                color="primary"
-                required
-              />
-            }
-          />
-        ))}
+        <div className={classes.facilitationContainer}>
+          {organizations.map(([code, formal]) => (
+            <FormControlLabel
+              key={code}
+              id={`event-facilitation-${code}`}
+              value={code}
+              label={formal}
+              labelPlacement="end"
+              control={
+                <Radio
+                  name="facilitation.organizationType"
+                  checked={values.facilitation.organizationType === code}
+                  onChange={field.onChange}
+                  color="primary"
+                  required
+                />
+              }
+            />
+          ))}
+        </div>
       </RadioGroup>
       {(values.facilitation.organizationType === 'other' ||
         values.facilitation.organizationType === 'committee') && (

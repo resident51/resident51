@@ -26,6 +26,9 @@ export default makeStyles((theme: Theme) => ({
   publicTypes: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr 1fr',
+    [theme.breakpoints.up('md')]: {
+      width: '800px',
+    },
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: '1fr 1fr',
       gridTemplateRows: '1fr 1fr',
@@ -34,6 +37,7 @@ export default makeStyles((theme: Theme) => ({
         gridTemplateRows: '1fr 1fr 1fr',
       },
     },
+    width: '100%',
   },
   otherLocationContainer: {
     margin: 'unset',
