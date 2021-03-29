@@ -26,6 +26,11 @@ interface EventTimelinePartitionProps {
 const EventTimelinePartition: React.FC<EventTimelinePartitionProps> = props => {
   const { events, text, isLast } = props;
   const classes = useStyles();
+
+  if (events.length === 0) {
+    return null;
+  }
+
   return (
     <TimelineItem>
       <TimelineOppositeContent className={classes.timelineMarkerDefault}>

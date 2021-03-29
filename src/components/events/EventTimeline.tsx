@@ -80,23 +80,30 @@ const EventTimeline: React.FC<{ events: EventR51[] }> = ({ events }) => {
 
   const currentYearString = `${new Date().getFullYear()}`;
 
-  const todayPartition = eventPartitions.today.length > 0 && (
-    <EventTimelinePartition text="Today" events={eventPartitions.today} />
-  );
-  const thisWeekPartition = eventPartitions.thisWeek.length > 0 && (
-    <EventTimelinePartition text="This Week" events={eventPartitions.thisWeek} />
-  );
-  const thisMonthPartition = eventPartitions.month.length > 0 && (
-    <EventTimelinePartition text="This Week" events={eventPartitions.month} />
-  );
+  const monthsWithEvents = Object.entries(eventPartitions.months);
 
   return (
     <Timeline align="left" className={classes.eventTimelineRoot}>
-      {todayPartition}
-      {thisWeekPartition}
-      {thisMonthPartition}
-      {Object.entries(eventPartitions.months)
-
+      <EventTimelinePartition
+        text="Today"
+        events={eventPartitions.today}
+        isLast={
+          eventPartitions.thisWeek.length === 0 &&
+          eventPartitions.month.length === 0 &&
+          monthsWithEvents.length === 0
+        }
+      />
+      <EventTimelinePartition
+        text="This Week"
+        events={eventPartitions.thisWeek}
+        isLast={eventPartitions.month.length === 0 && monthsWithEvents.length === 0}
+      />
+      <EventTimelinePartition
+        text="This Month"
+        events={eventPartitions.month}
+        isLast={monthsWithEvents.length === 0}
+      />
+      {monthsWithEvents
         // Sort by monthKeys, which have the form "202003" for April 2020, for example.
         .sort((month1, month2) => Number(month1[0]) - Number(month2[0]))
 
