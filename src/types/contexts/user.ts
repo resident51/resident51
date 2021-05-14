@@ -1,6 +1,4 @@
-import { HALLS } from '@app/constants';
-
-export type Hall = typeof HALLS[number];
+import { Hall } from '@app/types';
 
 export interface UserRoles {
   hall: Hall;

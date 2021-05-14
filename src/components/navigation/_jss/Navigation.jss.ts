@@ -25,4 +25,9 @@ export default makeStyles((theme: Theme) => ({
       marginLeft: theme.spacing(7),
     },
   },
+  container: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    flexGrow: 1,
+  },
 }));
